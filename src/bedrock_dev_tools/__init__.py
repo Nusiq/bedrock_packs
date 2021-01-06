@@ -2,10 +2,11 @@
 Python module for working with Minecraft bedrock edition projects.
 '''
 from __future__ import annotations
-from abc import ABC, abstractclassmethod, abstractmethod, abstractproperty, abstractstaticmethod
+from abc import ABC, abstractclassmethod, abstractmethod, abstractproperty
 
 from typing import Callable, ClassVar, Dict, List, Optional, Tuple, TypeVar, Generic, Type, Union, cast
 from copy import copy
+from uuid import UUID
 from pathlib import Path
 
 from bedrock_dev_tools.json import JSONCDecoder, JSONWalker, JSONWalkerDict, JSONWalkerStr
@@ -28,19 +29,92 @@ MCFILE_MULTI = TypeVar('MCFILE_MULTI', bound='McFileMulti')
 class Project:
     '''A collection of behavior packs and resource packs.'''
     def __init__(self, path: Optional[Path]=None) -> None:
-        self.bps: List[BehaviorPack] = []
-        self.rps: List[ResourcePack] = []
+        self._bps: List[BehaviorPack] = []  # Read only (use bps)
+        self._rps: List[ResourcePack] = []  # Read only (use rps)
         if path is not None:
             bps_path = path / 'behavior_packs'
             rps_path = path / 'resource_packs'
             if bps_path.is_dir():
                 for p in bps_path.iterdir():
                     if p.is_dir():
-                        self.bps.append(BehaviorPack(p, self))
+                        self._bps.append(BehaviorPack(p, self))
             if rps_path.is_dir():
                 for p in rps_path.iterdir():
                     if p.is_dir():
-                        self.rps.append(ResourcePack(p, self))
+                        self._rps.append(ResourcePack(p, self))
+
+
+    @property
+    def bps(self) -> Tuple[BehaviorPack, ...]:
+        '''tuple with behaviorpacks from this project'''
+        return tuple(self._bps)
+
+    @property
+    def rps(self) -> Tuple[ResourcePack, ...]:
+        '''tuple with resourcepacks from this project'''
+        return tuple(self._rps)
+
+    def uuid_bps(self) -> Dict[str, BehaviorPack]:
+        '''
+        A view of :class:`BehaviorPack`s from this project. The packs
+        without UUID are skipped.
+
+        :returns: a dictionary with packs uuids for keys and packs for values
+        '''
+        result: Dict[str, BehaviorPack] = {}
+        for bp in self.bps:
+            try:
+                result[bp.uuid] = bp
+            except:
+                pass
+        return result
+
+    def uuid_rps(self) -> Dict[str, ResourcePack]:
+        '''
+        A view of :class:`ResourcePack`s from this project. The packs
+        without UUID are skipped.
+
+        :returns: a dictionary with packs uuids for keys and packs for values
+        '''
+        result: Dict[str, ResourcePack] = {}
+        for rp in self.rps:
+            try:
+                result[rp.uuid] = rp
+            except:
+                pass
+        return result
+
+    def path_bps(self) -> Dict[Path, BehaviorPack]:
+        '''
+        A view of :class:`BehaviorPack`s from this project.
+
+        :returns: a dictionary with packs paths for keys and packs for values
+        '''
+        result: Dict[Path, BehaviorPack] = {}
+        for bp in self.bps:
+            result[bp.path] = bp
+        return result
+
+    def path_rps(self) -> Dict[Path, ResourcePack]:
+        '''
+        A view of :class:`ResourcePack`s from this project.
+
+        :returns: a dictionary with packs paths for keys and packs for values
+        '''
+        result: Dict[Path, ResourcePack] = {}
+        for rp in self.rps:
+            result[rp.path] = rp
+        return result
+
+    def add_bp(self, pack: BehaviorPack) -> None:
+        '''Adds behavior pack to this project'''
+        self._bps.append(pack)
+        pack.project = self
+
+    def add_rp(self, pack: ResourcePack) -> None:
+        '''Adds behavior pack to this project'''
+        self._rps.append(pack)
+        pack.project = self
 
     @property
     def bp_entities(self) -> BpEntities:
@@ -63,7 +137,7 @@ class Project:
             [i.animation_controllers for i in self.rps])
 
 # PACKS
-class Pack:
+class Pack(ABC):
     '''
     Behavior pack or resource pack. A collection of
     :class:`McFileCollection`s.
@@ -71,7 +145,24 @@ class Pack:
     def __init__(self, path: Path, project: Optional[Project]=None) -> None:
         self.project: Optional[Project] = project
         self.path: Path = path
+        self._manifest: Optional[JSONWalker] = None
 
+    @property
+    def manifest(self) -> JSONWalker:
+        ''':class:`JSONWalker` for manifest file'''
+        if self._manifest is None:
+            manifest_path = self.path / 'manifest.json'
+            with manifest_path.open('r') as f:
+                self._manifest = JSONWalker.load(f)
+        return self._manifest
+
+    @property
+    def uuid(self) -> str:
+        '''the UUID from manifest.'''
+        uuid_walker = (self.manifest / 'header' / 'uuid')
+        if isinstance(uuid_walker, JSONWalkerStr):
+            return uuid_walker.data
+        raise AttributeError('Unable to get uuid')
 
 class BehaviorPack(Pack):
     '''A part of a project or standalone behavior pack.'''
