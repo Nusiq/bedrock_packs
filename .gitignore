@@ -1,0 +1,12 @@
+**/.mypy_cache/**
+dist/**
+**/src/*.egg-info/**
+*~
+*.swp
+*.swo
+.*.swp
+.*.swo
+*.pyc
+codegen/**
+.vscode/**
+local_files/**
