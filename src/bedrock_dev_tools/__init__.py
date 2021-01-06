@@ -18,11 +18,11 @@ __version__ = '.'.join([str(x) for x in VERSION])
 
 
 # Type variables
-MCPACK = TypeVar('MCPACK', bound='Pack')
-MCFILE_COLLECTION = TypeVar('MCFILE_COLLECTION', bound='McFileCollection')
-MCFILE = TypeVar('MCFILE', bound='McFile')
-MCFILE_SINGLE = TypeVar('MCFILE_SINGLE', bound='McFileSingle')
-MCFILE_MULTI = TypeVar('MCFILE_MULTI', bound='McFileMulti')
+MCPACK = TypeVar('MCPACK', bound='_Pack')
+MCFILE_COLLECTION = TypeVar('MCFILE_COLLECTION', bound='_McFileCollection')
+MCFILE = TypeVar('MCFILE', bound='_McFile')
+MCFILE_SINGLE = TypeVar('MCFILE_SINGLE', bound='_McFileSingle')
+MCFILE_MULTI = TypeVar('MCFILE_MULTI', bound='_McFileMulti')
 
 
 # PROJECT
@@ -137,10 +137,10 @@ class Project:
             [i.animation_controllers for i in self.rps])
 
 # PACKS
-class Pack(ABC):
+class _Pack(ABC):
     '''
     Behavior pack or resource pack. A collection of
-    :class:`McFileCollection`s.
+    :class:`_McFileCollection`s.
     '''
     def __init__(self, path: Path, project: Optional[Project]=None) -> None:
         self.project: Optional[Project] = project
@@ -164,7 +164,7 @@ class Pack(ABC):
             return uuid_walker.data
         raise AttributeError('Unable to get uuid')
 
-class BehaviorPack(Pack):
+class BehaviorPack(_Pack):
     '''A part of a project or standalone behavior pack.'''
     def __init__(self, path: Path, project: Optional[Project]=None) -> None:
         super().__init__(path, project=project)
@@ -183,7 +183,7 @@ class BehaviorPack(Pack):
             self._animation_controllers = BpAnimationControllers(pack=self)
         return self._animation_controllers
 
-class ResourcePack(Pack):
+class ResourcePack(_Pack):
     '''A part of a project or standalone resource pack.'''
     def __init__(self, path: Path, project: Optional[Project]=None) -> None:
         super().__init__(path, project=project)
@@ -203,9 +203,9 @@ class ResourcePack(Pack):
         return self._animation_controllers
 
 # OBJECT COLLECTIONS (GENERIC)
-class McFileCollection(Generic[MCPACK, MCFILE]):
+class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
     '''
-    Collection of :class:`McFile`s.
+    Collection of :class:`_McFile`s.
     '''
     pack_path: ClassVar[str]
 
@@ -214,10 +214,7 @@ class McFileCollection(Generic[MCPACK, MCFILE]):
             objects: Optional[List[MCFILE]]=None,
             path: Optional[Path]=None,
             pack: Optional[MCPACK]=None) -> None:
-        if type(self) is McFileCollection:
-            raise TypeError(
-                f"Can't instantiate abstract class {type(self).__name__}")
-        
+
         if objects is None and pack is None and path is None:
             raise ValueError(
                 'You must provide "path", "objects" or "pack" to '
@@ -322,7 +319,7 @@ class McFileCollection(Generic[MCPACK, MCFILE]):
 # Additional method definitions form McFileCollection which couldn't be added
 # to the class due to Typing limitations
 def _mc_object_collection_reload_objects(
-        self: McFileCollection,
+        self: _McFileCollection,
         pattern: str,
         collected_type: Type[MCFILE]):
     '''Reducing boilerplate code...'''
@@ -336,8 +333,8 @@ def _mc_object_collection_reload_objects(
         self.add(obj)
 
 def _mc_object_collection__add__(
-        self: McFileCollection,
-        other: McFileCollection,
+        self: _McFileCollection,
+        other: _McFileCollection,
         self_type: Type[MCFILE_COLLECTION]) -> MCFILE_COLLECTION:
     '''Reducing boilerplate code...'''
     if not isinstance(other, type(self)):
@@ -356,8 +353,8 @@ def _mc_object_collection_combined_collections(
         objects.extend(collection.objects)
     return cls(objects=objects)
 
-class McPackCollectionSingle(McFileCollection[MCPACK, MCFILE_SINGLE]):
-    '''A collection of :class:`McFileSingle` objects.'''
+class _McPackCollectionSingle(_McFileCollection[MCPACK, MCFILE_SINGLE]):
+    '''A collection of :class:`_McFileSingle` objects.'''
     def _quick_access_list_views(
             self) -> Tuple[Dict[Path, List[str]], Dict[str, List[MCFILE_SINGLE]]]:
         '''
@@ -387,8 +384,8 @@ class McPackCollectionSingle(McFileCollection[MCPACK, MCFILE_SINGLE]):
                 id_items[identifier] = [obj]
         return (path_ids, id_items)
 
-class McPackCollectionMulti(McFileCollection[MCPACK, MCFILE_MULTI]):
-    '''A collection of :class:`McFileMulti` objects.'''
+class _McPackCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
+    '''A collection of :class:`_McFileMulti` objects.'''
     def _quick_access_list_views(
             self) -> Tuple[Dict[Path, List[str]], Dict[str, List[MCFILE_MULTI]]]:
         '''
@@ -420,7 +417,7 @@ class McPackCollectionMulti(McFileCollection[MCPACK, MCFILE_MULTI]):
         return (path_ids, id_items)
 
 # OBJECTS (GENERIC)
-class McFile(Generic[MCFILE_COLLECTION]):
+class _McFile(Generic[MCFILE_COLLECTION], ABC):
     def __init__(self, path: Path) -> None:
         self._owning_collection: Optional[MCFILE_COLLECTION] = None
         self._original_path: Path = copy(path)
@@ -430,12 +427,12 @@ class McFile(Generic[MCFILE_COLLECTION]):
     def owning_collection(self) -> Optional[MCFILE_COLLECTION]:
         return self._owning_collection
 
-class McFileSingle(McFile[MCFILE_COLLECTION]):
+class _McFileSingle(_McFile[MCFILE_COLLECTION]):
     '''McFile with single Minecraft object'''
     @abstractproperty
     def identifier(self) -> str: ...
 
-class JsonMcFileSingle(McFileSingle[MCFILE_COLLECTION]):
+class _JsonMcFileSingle(_McFileSingle[MCFILE_COLLECTION]):
     '''McFile that has JSON in it, with single Minecraft object'''
     def __init__(self, path: Path) -> None:
         super().__init__(path)
@@ -447,12 +444,12 @@ class JsonMcFileSingle(McFileSingle[MCFILE_COLLECTION]):
     def json(self) -> JSONWalker:
         return self._json
 
-class McFileMulti(McFile[MCFILE_COLLECTION]):
+class _McFileMulti(_McFile[MCFILE_COLLECTION]):
     '''McFile with multiple Minecraft objects'''
     @abstractproperty
     def identifiers(self) -> Tuple[str, ...]: ...
 
-class JsonMcFileMulti(McFileMulti[MCFILE_COLLECTION]):
+class JsonMcFileMulti(_McFileMulti[MCFILE_COLLECTION]):
     '''McFile that has JSON in it, with multiple Minecraft objects'''
     def __init__(self, path: Path) -> None:
         super().__init__(path)
@@ -468,7 +465,7 @@ class JsonMcFileMulti(McFileMulti[MCFILE_COLLECTION]):
     def __getitem__(self, key: str) -> JSONWalker: ...
 
 # OBJECT COLLECTIONS (IMPLEMENTATIONS)
-class BpEntities(McPackCollectionSingle[BehaviorPack, 'BpEntity']):
+class BpEntities(_McPackCollectionSingle[BehaviorPack, 'BpEntity']):
     pack_path = 'entities'
     def reload_objects(self) -> None:
         _mc_object_collection_reload_objects(self, '**/*.json', BpEntity)
@@ -478,7 +475,7 @@ class BpEntities(McPackCollectionSingle[BehaviorPack, 'BpEntity']):
     def combined_collections(cls, collections: List[BpEntities]) -> BpEntities:
         return _mc_object_collection_combined_collections(cls, collections)
 
-class RpEntities(McPackCollectionSingle[ResourcePack, 'RpEntity']):
+class RpEntities(_McPackCollectionSingle[ResourcePack, 'RpEntity']):
     pack_path = 'entity'
     def reload_objects(self) -> None:
         _mc_object_collection_reload_objects(self, '**/*.json', RpEntity)
@@ -488,7 +485,7 @@ class RpEntities(McPackCollectionSingle[ResourcePack, 'RpEntity']):
     def combined_collections(cls, collections: List[RpEntities]) -> RpEntities:
         return _mc_object_collection_combined_collections(cls, collections)
 
-class BpAnimationControllers(McPackCollectionMulti[
+class BpAnimationControllers(_McPackCollectionMulti[
         BehaviorPack, 'BpAnimationController']):  # TODO - there can be multiple animaton controllers in one file.
     pack_path = 'animation_controllers'
     def reload_objects(self) -> None:
@@ -503,7 +500,7 @@ class BpAnimationControllers(McPackCollectionMulti[
     ) -> BpAnimationControllers:
         return _mc_object_collection_combined_collections(cls, collections)
 
-class RpAnimationControllers(McPackCollectionMulti[
+class RpAnimationControllers(_McPackCollectionMulti[
         ResourcePack, 'RpAnimationController']):  # TODO - there can be multiple animaton controllers in one file.
     pack_path = 'animation_controllers'
     def reload_objects(self) -> None:
@@ -519,7 +516,7 @@ class RpAnimationControllers(McPackCollectionMulti[
         return _mc_object_collection_combined_collections(cls, collections)
 
 # OBJECTS (IMPLEMENTATION)
-class BpEntity(JsonMcFileSingle[BpEntities]):
+class BpEntity(_JsonMcFileSingle[BpEntities]):
     @property
     def identifier(self) -> str:
         id_walker = (
@@ -528,7 +525,7 @@ class BpEntity(JsonMcFileSingle[BpEntities]):
             return id_walker.data
         raise AttributeError("Can't get identifier attribute.")
 
-class RpEntity(JsonMcFileSingle[RpEntities]):
+class RpEntity(_JsonMcFileSingle[RpEntities]):
     @property
     def identifier(self) -> str:
         id_walker = (
@@ -538,7 +535,7 @@ class RpEntity(JsonMcFileSingle[RpEntities]):
             return id_walker.data
         raise AttributeError("Can't get identifier attribute.")
 
-class AnimationController(JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
+class _AnimationController(JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
     @property
     def identifiers(self) -> Tuple[str, ...]:
         id_walker = (self.json / "animation_controllers")
@@ -554,5 +551,5 @@ class AnimationController(JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
                 return id_walker / key
         raise KeyError(key)
 
-class BpAnimationController(AnimationController[BpAnimationControllers]): ...
-class RpAnimationController(AnimationController[RpAnimationControllers]): ...
+class BpAnimationController(_AnimationController[BpAnimationControllers]): ...
+class RpAnimationController(_AnimationController[RpAnimationControllers]): ...
