@@ -3,13 +3,17 @@ Python module for working with Minecraft bedrock edition projects.
 '''
 from __future__ import annotations
 from abc import ABC, abstractclassmethod, abstractmethod, abstractproperty
+from json.decoder import JSONDecodeError
+from re import split
 
-from typing import Callable, ClassVar, Dict, List, NewType, Optional, Tuple, TypeVar, Generic, Type, Union, cast
+from typing import ClassVar, Dict, List, Optional, Tuple, TypeVar, Generic, Union
 from copy import copy
 from uuid import UUID
 from pathlib import Path
 
-from bedrock_dev_tools.json import JSONCDecoder, JSONWalker, JSONWalkerDict, JSONWalkerStr
+from typing_extensions import Literal
+
+from bedrock_dev_tools.json import JSONCDecoder, JSONWalker, JSONWalkerDict, JSONWalkerInvalidPath, JSONWalkerList, JSONWalkerStr
 
 # Package version
 VERSION = (0, 1)
@@ -146,6 +150,11 @@ class Project:
             [i.items for i in self.bps])
 
     @property
+    def rp_items(self) -> RpItems:
+        return RpItems.combined_collections(
+            [i.items for i in self.rps])
+
+    @property
     def bp_loot_tables(self) -> BpLootTables:
         return BpLootTables.combined_collections(
             [i.loot_tables for i in self.bps])
@@ -164,6 +173,13 @@ class Project:
     def bp_trades(self) -> BpTrades:
         return BpTrades.combined_collections(
             [i.trades for i in self.bps])
+
+    @property
+    def rp_models(self) -> RpModels:
+        return RpModels.combined_collections(
+            [i.models for i in self.rps])
+
+
 
 # PACKS
 class _Pack(ABC):
@@ -268,6 +284,8 @@ class ResourcePack(_Pack):
         self._entities: Optional[RpEntities] = None
         self._animation_controllers: Optional[RpAnimationControllers] = None
         self._animations: Optional[RpAnimations] = None
+        self._items: Optional[RpItems] = None
+        self._models: Optional[RpModels] = None
 
     @property
     def entities(self) -> RpEntities:
@@ -286,6 +304,18 @@ class ResourcePack(_Pack):
         if self._animations is None:
             self._animations = RpAnimations(pack=self)
         return self._animations
+
+    @property
+    def items(self) -> RpItems:
+        if self._items is None:
+            self._items = RpItems(pack=self)
+        return self._items
+
+    @property
+    def models(self) -> RpModels:
+        if self._models is None:
+            self._models = RpModels(pack=self)
+        return self._models
 
 # OBJECT COLLECTIONS (GENERIC)
 class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
@@ -469,7 +499,7 @@ class _McFileMulti(_McFile[MCFILE_COLLECTION]):
     @abstractproperty
     def identifiers(self) -> Tuple[str, ...]: ...
 
-class JsonMcFileMulti(_McFileMulti[MCFILE_COLLECTION]):
+class _JsonMcFileMulti(_McFileMulti[MCFILE_COLLECTION]):
     '''McFile that has JSON in it, with multiple Minecraft objects'''
     def __init__(
             self, path: Path,
@@ -507,7 +537,7 @@ class RpEntity(_JsonMcFileSingle['RpEntities']):
             return id_walker.data
         raise AttributeError("Can't get identifier attribute.")
 
-class _AnimationController(JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
+class _AnimationController(_JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
     @property
     def identifiers(self) -> Tuple[str, ...]:
         id_walker = (self.json / "animation_controllers")
@@ -525,7 +555,7 @@ class _AnimationController(JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
 class BpAnimationController(_AnimationController['BpAnimationControllers']): ...
 class RpAnimationController(_AnimationController['RpAnimationControllers']): ...
 
-class _Animation(JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
+class _Animation(_JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
     @property
     def identifiers(self) -> Tuple[str, ...]:
         id_walker = (self.json / "animations")
@@ -553,6 +583,15 @@ class BpBlock(_JsonMcFileSingle['BpBlocks']):
         raise AttributeError("Can't get identifier attribute.")
 
 class BpItem(_JsonMcFileSingle['BpItems']):
+    @property
+    def identifier(self) -> str:
+        id_walker = (
+            self.json / "minecraft:item" / "description" / "identifier")
+        if isinstance(id_walker, JSONWalkerStr):
+            return id_walker.data
+        raise AttributeError("Can't get identifier attribute.")
+
+class RpItem(_JsonMcFileSingle['RpItems']):
     @property
     def identifier(self) -> str:
         id_walker = (
@@ -600,6 +639,61 @@ class BpTrade(_JsonMcFileSingle['BpTrades']):
             raise AttributeError("Can't get identifier attribute.")
         return self.path.relative_to(
             self.owning_collection.pack.path).as_posix()
+
+class RpModel(_JsonMcFileMulti['RpModels']):
+    @property
+    def format_version(self) -> Tuple[int, ...]:
+        '''
+        Return the format version of the model or guess the version based
+        on the file structure if it's missing.
+
+        :returns: format version of the model file
+        '''
+        format_version: Tuple[int, ...] = (1, 8, 0)
+        try:
+            id_walker = self.json / 'format_version'
+            if isinstance(id_walker, JSONWalkerStr):
+                format_version = tuple(
+                    [int(i) for i in id_walker.data.split('.')])
+        except:  # Guessing the format version instead
+            id_walker = self.json / 'minecraft:geometry'
+            if isinstance(id_walker, JSONWalkerList):
+                format_version = (1, 16, 0)
+        return format_version
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        if self.format_version <= (1, 10, 0):
+            if isinstance(self.json, JSONWalkerDict):
+                for k in self.json.data.keys():
+                    if isinstance(k, str) and k.startswith('geometry.'):
+                        result.append(k)
+        else:  # Probably something <= 1.16.0
+            id_walker = (
+                self.json / 'minecraft:geometry' // int / 'description' /
+                'identifier')
+            for i in id_walker:
+                if isinstance(i, JSONWalkerStr):
+                    if i.data.startswith('geometry.'):
+                        result.append(i.data)
+        return tuple(result)
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        if not key.startswith('.geometry'):
+            raise AttributeError("Key must start with '.geometry'")
+        if self.format_version <= (1, 10, 0):
+            if isinstance(self.json, JSONWalkerDict):
+                return self.json / key
+        else:  # Probably something <= 1.16.0
+            id_walker = (
+                self.json / 'minecraft:geometry' // int)
+            for model in id_walker:
+                if not isinstance(
+                        model / 'description' / 'identifier' / key,
+                        JSONWalkerInvalidPath):
+                    return model
+        raise AttributeError("Can't get identifier attribute.")
 
 
 # OBJECT COLLECTIONS (IMPLEMENTATIONS)
@@ -762,6 +856,18 @@ class BpItems(_McPackCollectionSingle[BehaviorPack, BpItem]):
     def _make_collection_object(self, path: Path) -> BpItem:
         return BpItem(path, self)
 
+class RpItems(_McPackCollectionSingle[ResourcePack, RpItem]):
+    pack_path = 'items'
+    file_pattern = '**/*.json'
+    @classmethod
+    def _init_from_objects(cls, objects: List[RpItem]) -> RpItems:
+        return RpItems(objects=objects)
+    @classmethod
+    def combined_collections(cls, collections: List[RpItems]) -> RpItems:
+        return super().combined_collections(collections)  # type: ignore
+    def _make_collection_object(self, path: Path) -> RpItem:
+        return RpItem(path, self)
+
 class BpLootTables(_McPackCollectionSingle[BehaviorPack, BpLootTable]):
     pack_path = 'loot_tables'
     file_pattern = '**/*.json'
@@ -809,3 +915,15 @@ class BpTrades(_McPackCollectionSingle[BehaviorPack, BpTrade]):
         return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpTrade:
         return BpTrade(path, self)
+
+class RpModels(_McPackCollectionMulti[ResourcePack, RpModel]):
+    pack_path = 'models'
+    file_pattern = '**/*.json'
+    @classmethod
+    def _init_from_objects(cls, objects: List[RpModel]) -> RpModels:
+        return RpModels(objects=objects)
+    @classmethod
+    def combined_collections(cls, collections: List[RpModels]) -> RpModels:
+        return super().combined_collections(collections)  # type: ignore
+    def _make_collection_object(self, path: Path) -> RpModel:
+        return RpModel(path, self)

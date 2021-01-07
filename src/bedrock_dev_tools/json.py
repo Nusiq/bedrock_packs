@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Dict, Generic, IO, List, NewType, Tuple, Type, TypeVar, Union
+from typing import Dict, Generic, IO, Iterator, List, NewType, Tuple, Type, TypeVar, Union
 import re
 import json
 from json import scanner, JSONDecodeError  # type: ignore
@@ -520,3 +520,7 @@ class JsonSplitWalker:
 
     def __add__(self, other: JsonSplitWalker) -> JsonSplitWalker:
         return JsonSplitWalker(self.data + other.data)
+
+    def __iter__(self) -> Iterator[JSONWalker]:
+        for i in self.data:
+            yield i
