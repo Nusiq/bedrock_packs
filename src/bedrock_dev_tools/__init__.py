@@ -43,7 +43,6 @@ class Project:
                     if p.is_dir():
                         self._rps.append(ResourcePack(p, self))
 
-
     @property
     def bps(self) -> Tuple[BehaviorPack, ...]:
         '''tuple with behaviorpacks from this project'''
@@ -136,6 +135,36 @@ class Project:
         return RpAnimationControllers.combined_collections(
             [i.animation_controllers for i in self.rps])
 
+    @property
+    def bp_blocks(self) -> BpBlocks:
+        return BpBlocks.combined_collections(
+            [i.blocks for i in self.bps])
+
+    @property
+    def bp_items(self) -> BpItems:
+        return BpItems.combined_collections(
+            [i.items for i in self.bps])
+
+    @property
+    def bp_loot_tables(self) -> BpLootTables:
+        return BpLootTables.combined_collections(
+            [i.loot_tables for i in self.bps])
+
+    @property
+    def bp_functions(self) -> BpFunctions:
+        return BpFunctions.combined_collections(
+            [i.functions for i in self.bps])
+
+    @property
+    def bp_spawn_rules(self) -> BpSpawnRules:
+        return BpSpawnRules.combined_collections(
+            [i.spawn_rules for i in self.bps])
+
+    @property
+    def bp_trades(self) -> BpTrades:
+        return BpTrades.combined_collections(
+            [i.trades for i in self.bps])
+
 # PACKS
 class _Pack(ABC):
     '''
@@ -170,6 +199,13 @@ class BehaviorPack(_Pack):
         super().__init__(path, project=project)
         self._entities: Optional[BpEntities] = None
         self._animation_controllers: Optional[BpAnimationControllers] = None
+        self._animations: Optional[BpAnimations] = None
+        self._blocks: Optional[BpBlocks] = None
+        self._items: Optional[BpItems] = None
+        self._loot_tables: Optional[BpLootTables] = None
+        self._functions: Optional[BpFunctions] = None
+        self._spawn_rules: Optional[BpSpawnRules] = None
+        self._trades: Optional[BpTrades] = None
 
     @property
     def entities(self) -> BpEntities:
@@ -183,12 +219,55 @@ class BehaviorPack(_Pack):
             self._animation_controllers = BpAnimationControllers(pack=self)
         return self._animation_controllers
 
+    @property
+    def animations(self) -> BpAnimations:
+        if self._animations is None:
+            self._animations = BpAnimations(pack=self)
+        return self._animations
+
+    @property
+    def blocks(self) -> BpBlocks:
+        if self._blocks is None:
+            self._blocks = BpBlocks(pack=self)
+        return self._blocks
+
+    @property
+    def items(self) -> BpItems:
+        if self._items is None:
+            self._items = BpItems(pack=self)
+        return self._items
+
+    @property
+    def loot_tables(self) -> BpLootTables:
+        if self._loot_tables is None:
+            self._loot_tables = BpLootTables(pack=self)
+        return self._loot_tables
+
+    @property
+    def functions(self) -> BpFunctions:
+        if self._functions is None:
+            self._functions = BpFunctions(pack=self)
+        return self._functions
+
+    @property
+    def spawn_rules(self) -> BpSpawnRules:
+        if self._spawn_rules is None:
+            self._spawn_rules = BpSpawnRules(pack=self)
+        return self._spawn_rules
+
+    @property
+    def trades(self) -> BpTrades:
+        if self._trades is None:
+            self._trades = BpTrades(pack=self)
+        return self._trades
+
 class ResourcePack(_Pack):
     '''A part of a project or standalone resource pack.'''
     def __init__(self, path: Path, project: Optional[Project]=None) -> None:
         super().__init__(path, project=project)
         self._entities: Optional[RpEntities] = None
         self._animation_controllers: Optional[RpAnimationControllers] = None
+        self._animations: Optional[RpAnimations] = None
 
     @property
     def entities(self) -> RpEntities:
@@ -201,6 +280,12 @@ class ResourcePack(_Pack):
         if self._animation_controllers is None:
             self._animation_controllers = RpAnimationControllers(pack=self)
         return self._animation_controllers
+
+    @property
+    def animations(self) -> RpAnimations:
+        if self._animations is None:
+            self._animations = RpAnimations(pack=self)
+        return self._animations
 
 # OBJECT COLLECTIONS (GENERIC)
 class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
@@ -327,7 +412,7 @@ def _mc_object_collection_reload_objects(
         if not fp.is_file():
             continue
         try:
-            obj = collected_type(fp)
+            obj = collected_type(fp, owning_collection=self)
         except AttributeError:
             continue
         self.add(obj)
@@ -418,9 +503,12 @@ class _McPackCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
 
 # OBJECTS (GENERIC)
 class _McFile(Generic[MCFILE_COLLECTION], ABC):
-    def __init__(self, path: Path) -> None:
-        self._owning_collection: Optional[MCFILE_COLLECTION] = None
-        self._original_path: Path = copy(path)
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]=None
+    ) -> None:
+        self._owning_collection: Optional[
+            MCFILE_COLLECTION] = owning_collection
         self.path: Path = path
 
     @property
@@ -434,8 +522,11 @@ class _McFileSingle(_McFile[MCFILE_COLLECTION]):
 
 class _JsonMcFileSingle(_McFileSingle[MCFILE_COLLECTION]):
     '''McFile that has JSON in it, with single Minecraft object'''
-    def __init__(self, path: Path) -> None:
-        super().__init__(path)
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]=None
+    ) -> None:
+        super().__init__(path, owning_collection=owning_collection)
         with path.open('r') as f:
             self._json: JSONWalker = JSONWalker.load(
                 f, cls=JSONCDecoder)  # read only (use json)
@@ -451,8 +542,11 @@ class _McFileMulti(_McFile[MCFILE_COLLECTION]):
 
 class JsonMcFileMulti(_McFileMulti[MCFILE_COLLECTION]):
     '''McFile that has JSON in it, with multiple Minecraft objects'''
-    def __init__(self, path: Path) -> None:
-        super().__init__(path)
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]=None
+    ) -> None:
+        super().__init__(path, owning_collection=owning_collection)
         with path.open('r') as f:
             self._json: JSONWalker = JSONWalker.load(
                 f, cls=JSONCDecoder)  # read only (use json)
@@ -515,6 +609,126 @@ class RpAnimationControllers(_McPackCollectionMulti[
     ) -> RpAnimationControllers:
         return _mc_object_collection_combined_collections(cls, collections)
 
+class BpAnimations(_McPackCollectionMulti[
+        BehaviorPack, 'BpAnimation']):  # TODO - there can be multiple animaton controllers in one file.
+    pack_path = 'animations'
+    def reload_objects(self) -> None:
+        _mc_object_collection_reload_objects(
+            self, '**/*.json', BpAnimation)
+    def __add__(self, other: BpAnimations) -> BpAnimations:
+        return _mc_object_collection__add__(
+            self, other, BpAnimations)
+    @classmethod
+    def combined_collections(
+        cls, collections: List[BpAnimations]
+    ) -> BpAnimations:
+        return _mc_object_collection_combined_collections(cls, collections)
+
+class RpAnimations(_McPackCollectionMulti[
+        ResourcePack, 'RpAnimation']):  # TODO - there can be multiple animaton controllers in one file.
+    pack_path = 'animations'
+    def reload_objects(self) -> None:
+        _mc_object_collection_reload_objects(
+            self, '**/*.json', RpAnimation)
+    def __add__(self, other: RpAnimations) -> RpAnimations:
+        return _mc_object_collection__add__(
+            self, other, RpAnimations)
+    @classmethod
+    def combined_collections(
+        cls, collections: List[RpAnimations]
+    ) -> RpAnimations:
+        return _mc_object_collection_combined_collections(cls, collections)
+
+class BpBlocks(_McPackCollectionSingle[
+        BehaviorPack, 'BpBlock']):
+    pack_path = 'blocks'
+    def reload_objects(self) -> None:
+        _mc_object_collection_reload_objects(
+            self, '**/*.json', BpBlock)
+    def __add__(self, other: BpBlocks) -> BpBlocks:
+        return _mc_object_collection__add__(
+            self, other, BpBlocks)
+    @classmethod
+    def combined_collections(
+        cls, collections: List[BpBlocks]
+    ) -> BpBlocks:
+        return _mc_object_collection_combined_collections(cls, collections)
+
+class BpItems(_McPackCollectionSingle[
+        BehaviorPack, 'BpItem']):
+    pack_path = 'items'
+    def reload_objects(self) -> None:
+        _mc_object_collection_reload_objects(
+            self, '**/*.json', BpItem)
+    def __add__(self, other: BpItems) -> BpItems:
+        return _mc_object_collection__add__(
+            self, other, BpItems)
+    @classmethod
+    def combined_collections(
+        cls, collections: List[BpItems]
+    ) -> BpItems:
+        return _mc_object_collection_combined_collections(cls, collections)
+
+class BpLootTables(_McPackCollectionSingle[
+        BehaviorPack, 'BpLootTable']):
+    pack_path = 'loot_tables'
+    def reload_objects(self) -> None:
+        _mc_object_collection_reload_objects(
+            self, '**/*.json', BpLootTable)
+    def __add__(self, other: BpLootTables) -> BpLootTables:
+        return _mc_object_collection__add__(
+            self, other, BpLootTables)
+    @classmethod
+    def combined_collections(
+        cls, collections: List[BpLootTables]
+    ) -> BpLootTables:
+        return _mc_object_collection_combined_collections(cls, collections)
+
+class BpFunctions(_McPackCollectionSingle[
+        BehaviorPack, 'BpFunction']):
+    pack_path = 'functions'
+    def reload_objects(self) -> None:
+        _mc_object_collection_reload_objects(
+            self, '**/*.mcfunction', BpFunction)
+    def __add__(self, other: BpFunctions) -> BpFunctions:
+        return _mc_object_collection__add__(
+            self, other, BpFunctions)
+    @classmethod
+    def combined_collections(
+        cls, collections: List[BpFunctions]
+    ) -> BpFunctions:
+        return _mc_object_collection_combined_collections(cls, collections)
+
+class BpSpawnRules(_McPackCollectionSingle[
+        BehaviorPack, 'BpSpawnRule']):
+    pack_path = 'spawn_rules'
+    def reload_objects(self) -> None:
+        _mc_object_collection_reload_objects(
+            self, '**/*.json', BpSpawnRule)
+    def __add__(self, other: BpSpawnRules) -> BpSpawnRules:
+        return _mc_object_collection__add__(
+            self, other, BpSpawnRules)
+    @classmethod
+    def combined_collections(
+        cls, collections: List[BpSpawnRules]
+    ) -> BpSpawnRules:
+        return _mc_object_collection_combined_collections(cls, collections)
+
+class BpTrades(_McPackCollectionSingle[
+        BehaviorPack, 'BpTrade']):
+    pack_path = 'trading'
+    def reload_objects(self) -> None:
+        _mc_object_collection_reload_objects(
+            self, '**/*.json', BpTrade)
+    def __add__(self, other: BpTrades) -> BpTrades:
+        return _mc_object_collection__add__(
+            self, other, BpTrades)
+    @classmethod
+    def combined_collections(
+        cls, collections: List[BpTrades]
+    ) -> BpTrades:
+        return _mc_object_collection_combined_collections(cls, collections)
+
 # OBJECTS (IMPLEMENTATION)
 class BpEntity(_JsonMcFileSingle[BpEntities]):
     @property
@@ -553,3 +767,80 @@ class _AnimationController(JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
 
 class BpAnimationController(_AnimationController[BpAnimationControllers]): ...
 class RpAnimationController(_AnimationController[RpAnimationControllers]): ...
+
+class _Animation(JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        id_walker = (self.json / "animations")
+        if isinstance(id_walker, JSONWalkerDict):
+            return tuple(
+                [k for k in id_walker.data.keys() if isinstance(k, str)])
+        raise AttributeError("Can't get identifier attribute.")
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        id_walker = (self.json / "animations")
+        if isinstance(id_walker, JSONWalkerDict):
+            if key in id_walker.data:
+                return id_walker / key
+        raise KeyError(key)
+
+class BpAnimation(_Animation[BpAnimations]): ...
+class RpAnimation(_Animation[RpAnimations]): ...
+
+class BpBlock(_JsonMcFileSingle[BpBlocks]):
+    @property
+    def identifier(self) -> str:
+        id_walker = (
+            self.json / "minecraft:block" / "description" / "identifier")
+        if isinstance(id_walker, JSONWalkerStr):
+            return id_walker.data
+        raise AttributeError("Can't get identifier attribute.")
+
+class BpItem(_JsonMcFileSingle[BpItems]):
+    @property
+    def identifier(self) -> str:
+        id_walker = (
+            self.json / "minecraft:item" / "description" / "identifier")
+        if isinstance(id_walker, JSONWalkerStr):
+            return id_walker.data
+        raise AttributeError("Can't get identifier attribute.")
+
+class BpLootTable(_JsonMcFileSingle[BpLootTables]):
+    @property
+    def identifier(self) -> str:
+        if (
+                self.owning_collection is None or
+                self.owning_collection.pack is None):
+            raise AttributeError("Can't get identifier attribute.")
+        return self.path.relative_to(
+            self.owning_collection.pack.path).as_posix()
+
+class BpFunction(_McFileSingle[BpFunctions]):
+    @property
+    def identifier(self) -> str:
+        if (
+                self.owning_collection is None or
+                self.owning_collection.pack is None):
+            raise AttributeError("Can't get identifier attribute.")
+        return self.path.relative_to(
+            self.owning_collection.pack.path / 'functions'
+        ).with_suffix('').as_posix()
+
+class BpSpawnRule(_JsonMcFileSingle[BpSpawnRules]):
+    @property
+    def identifier(self) -> str:
+        id_walker = (
+            self.json / "minecraft:spawn_rules" / "description" / "identifier")
+        if isinstance(id_walker, JSONWalkerStr):
+            return id_walker.data
+        raise AttributeError("Can't get identifier attribute.")
+
+class BpTrade(_JsonMcFileSingle[BpTrades]):
+    @property
+    def identifier(self) -> str:
+        if (
+                self.owning_collection is None or
+                self.owning_collection.pack is None):
+            raise AttributeError("Can't get identifier attribute.")
+        return self.path.relative_to(
+            self.owning_collection.pack.path).as_posix()
