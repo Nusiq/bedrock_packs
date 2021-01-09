@@ -419,7 +419,7 @@ class JSONWalker(Generic[J]):
             return JSONWalkerIndexError(None, path)
         except KeyError:  # bad dictionary key
             return JSONWalkerKeyError(None, path)
-        except TypeError:  # data doesn't accept this type of key
+        except: # TypeError:  # data doesn't accept this type of key
             return JSONWalkerInvalidPath(None, path)
 
     def __floordiv__(self, key: JSON_SPLIT_KEY) -> JsonSplitWalker:

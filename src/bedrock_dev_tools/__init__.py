@@ -66,10 +66,8 @@ class Project:
         '''
         result: Dict[str, BehaviorPack] = {}
         for bp in self.bps:
-            try:
+            if bp.uuid is not None:
                 result[bp.uuid] = bp
-            except:
-                pass
         return result
 
     def uuid_rps(self) -> Dict[str, ResourcePack]:
@@ -81,10 +79,8 @@ class Project:
         '''
         result: Dict[str, ResourcePack] = {}
         for rp in self.rps:
-            try:
+            if rp.uuid is not None:
                 result[rp.uuid] = rp
-            except:
-                pass
         return result
 
     def path_bps(self) -> Dict[Path, BehaviorPack]:
@@ -208,21 +204,25 @@ class _Pack(ABC):
         self._manifest: Optional[JSONWalker] = None
 
     @property
-    def manifest(self) -> JSONWalker:
+    def manifest(self) -> Optional[JSONWalker]:
         ''':class:`JSONWalker` for manifest file'''
         if self._manifest is None:
             manifest_path = self.path / 'manifest.json'
-            with manifest_path.open('r') as f:
-                self._manifest = JSONWalker.load(f)
+            try:
+                with manifest_path.open('r') as f:
+                    self._manifest = JSONWalker.load(f)
+            except:
+                return None
         return self._manifest
 
     @property
-    def uuid(self) -> str:
+    def uuid(self) -> Optional[str]:
         '''the UUID from manifest.'''
-        uuid_walker = (self.manifest / 'header' / 'uuid')
-        if isinstance(uuid_walker, JSONWalkerStr):
-            return uuid_walker.data
-        raise AttributeError('Unable to get uuid')
+        if self.manifest is not None:
+            uuid_walker = (self.manifest / 'header' / 'uuid')
+            if isinstance(uuid_walker, JSONWalkerStr):
+                return uuid_walker.data
+        return None
 
 class BehaviorPack(_Pack):
     '''A part of a project or standalone behavior pack.'''
@@ -523,9 +523,12 @@ class _JsonMcFileSingle(_McFileSingle[MCFILE_COLLECTION]):
             owning_collection: Optional[MCFILE_COLLECTION]=None
     ) -> None:
         super().__init__(path, owning_collection=owning_collection)
-        with path.open('r') as f:
-            self._json: JSONWalker = JSONWalker.load(
-                f, cls=JSONCDecoder)  # read only (use json)
+        self._json: JSONWalker = JSONWalker.from_json(None)
+        try:
+            with path.open('r') as f:
+                self._json = JSONWalker.load(f, cls=JSONCDecoder)
+        except:
+            pass  # self._json remains None walker
 
     @property
     def json(self) -> JSONWalker:
@@ -543,9 +546,12 @@ class _JsonMcFileMulti(_McFileMulti[MCFILE_COLLECTION]):
             owning_collection: Optional[MCFILE_COLLECTION]=None
     ) -> None:
         super().__init__(path, owning_collection=owning_collection)
-        with path.open('r') as f:
-            self._json: JSONWalker = JSONWalker.load(
-                f, cls=JSONCDecoder)  # read only (use json)
+        self._json: JSONWalker = JSONWalker.from_json(None)
+        try:
+            with path.open('r') as f:
+                self._json = JSONWalker.load(f, cls=JSONCDecoder)
+        except:
+            pass  # self._json remains None walker
 
     @property
     def json(self) -> JSONWalker:
