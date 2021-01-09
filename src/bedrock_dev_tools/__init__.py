@@ -379,20 +379,19 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
 
     def __init__(
             self, *,
-            objects: Optional[List[MCFILE]]=None,
             path: Optional[Path]=None,
             pack: Optional[MCPACK]=None) -> None:
 
-        if objects is None and pack is None and path is None:
+        if pack is None and path is None:
             raise ValueError(
-                'You must provide "path", "objects" or "pack" to '
+                'You must provide "path" or "pack" to '
                 f'{type(self).__name__} constructor')
         if pack is not None and path is not None:
             raise ValueError(
                 "You can't use both 'pack' and 'path' in "
                 f'{type(self).__name__} constructor')
 
-        self._objects: Optional[List[MCFILE]] = objects  # None->Lazy evaluation
+        self._objects: Optional[List[MCFILE]] = None  # Lazy evaluation
         self._pack: Optional[MCPACK] = pack  # read only (use pack)
         self._path: Optional[Path] = path  # read only (use path)
 
