@@ -470,7 +470,7 @@ class JSONWalker(Generic[J]):
                 result: List[JSONWalker] = []
                 for k, v in self.data.items():
                     if re.fullmatch(key, k):
-                        result.append(JSONWalker.from_json(v, k))
+                        result.append(JSONWalker.from_json(v, (k,)))
                 return JsonSplitWalker(result)
         else:  # INVALID KEY TYPE
             raise TypeError(

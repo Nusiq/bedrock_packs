@@ -175,10 +175,25 @@ class Project:
             [i.trades for i in self.bps])
 
     @property
+    def bp_recipes(self) -> BpRecipes:
+        return BpRecipes.combined_collections(
+            [i.recipes for i in self.bps])
+
+
+    @property
     def rp_models(self) -> RpModels:
         return RpModels.combined_collections(
             [i.models for i in self.rps])
 
+    @property
+    def rp_particles(self) -> RpParticles:
+        return RpParticles.combined_collections(
+            [i.particles for i in self.rps])
+
+    @property
+    def rp_render_controllers(self) -> RpRenderControllers:
+        return RpRenderControllers.combined_collections(
+            [i.render_controllers for i in self.rps])
 
 
 # PACKS
@@ -222,6 +237,7 @@ class BehaviorPack(_Pack):
         self._functions: Optional[BpFunctions] = None
         self._spawn_rules: Optional[BpSpawnRules] = None
         self._trades: Optional[BpTrades] = None
+        self._recipes: Optional[BpRecipes] = None
 
     @property
     def entities(self) -> BpEntities:
@@ -277,6 +293,12 @@ class BehaviorPack(_Pack):
             self._trades = BpTrades(pack=self)
         return self._trades
 
+    @property
+    def recipes(self) -> BpRecipes:
+        if self._recipes is None:
+            self._recipes = BpRecipes(pack=self)
+        return self._recipes
+
 class ResourcePack(_Pack):
     '''A part of a project or standalone resource pack.'''
     def __init__(self, path: Path, project: Optional[Project]=None) -> None:
@@ -286,6 +308,8 @@ class ResourcePack(_Pack):
         self._animations: Optional[RpAnimations] = None
         self._items: Optional[RpItems] = None
         self._models: Optional[RpModels] = None
+        self._particles: Optional[RpParticles] = None
+        self._render_controllers: Optional[RpRenderControllers] = None
 
     @property
     def entities(self) -> RpEntities:
@@ -316,6 +340,18 @@ class ResourcePack(_Pack):
         if self._models is None:
             self._models = RpModels(pack=self)
         return self._models
+
+    @property
+    def particles(self) -> RpParticles:
+        if self._particles is None:
+            self._particles = RpParticles(pack=self)
+        return self._particles
+
+    @property
+    def render_controllers(self) -> RpRenderControllers:
+        if self._render_controllers is None:
+            self._render_controllers = RpRenderControllers(pack=self)
+        return self._render_controllers
 
 # OBJECT COLLECTIONS (GENERIC)
 class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
@@ -695,6 +731,55 @@ class RpModel(_JsonMcFileMulti['RpModels']):
                     return model
         raise AttributeError("Can't get identifier attribute.")
 
+class RpParticle(_JsonMcFileSingle['RpParticles']):
+    @property
+    def identifier(self) -> str:
+        id_walker = (
+            self.json / "particle_effect" / "description" / "identifier")
+        if isinstance(id_walker, JSONWalkerStr):
+            return id_walker.data
+        raise AttributeError("Can't get identifier attribute.")
+
+class RpRenderController(_JsonMcFileMulti['RpRenderControllers']):  # GENERIC
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        id_walker = (self.json / "render_controllers")
+        if isinstance(id_walker, JSONWalkerDict):
+            return tuple(
+                [k for k in id_walker.data.keys() if isinstance(k, str)])
+        raise AttributeError("Can't get identifier attribute.")
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        id_walker = (self.json / "render_controllers")
+        if isinstance(id_walker, JSONWalkerDict):
+            if key in id_walker.data:
+                return id_walker / key
+        raise KeyError(key)
+
+class BpRecipe(_JsonMcFileMulti['BpRecipes']):
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        id_walker = (
+            self.json // '(minecraft:recipe_shaped)|(minecraft:recipe_furnace)'
+            '|(minecraft:recipe_shapeless)|(minecraft:recipe_brewing_mix)|'
+            '(minecraft:recipe_brewing_container)' / "description"  /
+            "identifier")
+        result: List[str] = []
+        for identifier_walker in id_walker.data:
+            if isinstance(identifier_walker, JSONWalkerStr):
+                result.append(identifier_walker.data)
+        return tuple(result)
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        id_walker = (
+            self.json // '(minecraft:recipe_shaped)|(minecraft:recipe_furnace)'
+            '|(minecraft:recipe_shapeless)|(minecraft:recipe_brewing_mix)|'
+            '(minecraft:recipe_brewing_container)' / "description"  /
+            "identifier")
+        if isinstance(id_walker, JSONWalkerDict):
+            if key in id_walker.data:
+                return id_walker / key
+        raise KeyError(key)
 
 # OBJECT COLLECTIONS (IMPLEMENTATIONS)
 class _McPackCollectionSingle(_McFileCollection[MCPACK, MCFILE_SINGLE]):
@@ -927,3 +1012,39 @@ class RpModels(_McPackCollectionMulti[ResourcePack, RpModel]):
         return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> RpModel:
         return RpModel(path, self)
+
+class RpParticles(_McPackCollectionSingle[ResourcePack, RpParticle]):
+    pack_path = 'particles'
+    file_pattern = '**/*.json'
+    @classmethod
+    def _init_from_objects(cls, objects: List[RpParticle]) -> RpParticles:
+        return RpParticles(objects=objects)
+    @classmethod
+    def combined_collections(cls, collections: List[RpParticles]) -> RpParticles:
+        return super().combined_collections(collections)  # type: ignore
+    def _make_collection_object(self, path: Path) -> RpParticle:
+        return RpParticle(path, self)
+
+class RpRenderControllers(_McPackCollectionMulti[ResourcePack, RpRenderController]):
+    pack_path = 'render_controllers'
+    file_pattern = '**/*.json'
+    @classmethod
+    def _init_from_objects(cls, objects: List[RpRenderController]) -> RpRenderControllers:
+        return RpRenderControllers(objects=objects)
+    @classmethod
+    def combined_collections(cls, collections: List[RpRenderControllers]) -> RpRenderControllers:
+        return super().combined_collections(collections)  # type: ignore
+    def _make_collection_object(self, path: Path) -> RpRenderController:
+        return RpRenderController(path, self)
+
+class BpRecipes(_McPackCollectionMulti[BehaviorPack, BpRecipe]):
+    pack_path = 'recipes'
+    file_pattern = '**/*.json'
+    @classmethod
+    def _init_from_objects(cls, objects: List[BpRecipe]) -> BpRecipes:
+        return BpRecipes(objects=objects)
+    @classmethod
+    def combined_collections(cls, collections: List[BpRecipes]) -> BpRecipes:
+        return super().combined_collections(collections)  # type: ignore
+    def _make_collection_object(self, path: Path) -> BpRecipe:
+        return BpRecipe(path, self)
