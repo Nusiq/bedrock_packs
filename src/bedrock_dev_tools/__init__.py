@@ -359,7 +359,7 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
     Collection of :class:`_McFile`s.
     '''
     pack_path: ClassVar[str]
-    file_pattern: ClassVar[str]
+    file_patterns: ClassVar[Tuple[str, ...]]
 
     def __init__(
             self, *,
@@ -457,14 +457,15 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
         raise KeyError(f'{str(path_key)}:{id_key}:{index}')
 
     def reload_objects(self) -> None:
-        for fp in self.path.glob(self.__class__.file_pattern):
-            if not fp.is_file():
-                continue
-            try:
-                obj: MCFILE = self._make_collection_object(fp)
-            except AttributeError:
-                continue
-            self.add(obj)
+        for file_pattern in self.__class__.file_patterns:
+            for fp in self.path.glob(file_pattern):
+                if not fp.is_file():
+                    continue
+                try:
+                    obj: MCFILE = self._make_collection_object(fp)
+                except AttributeError:
+                    continue
+                self.add(obj)
 
     # Different for _McFileMulti and _McFileSingle collections
     @abstractmethod
@@ -847,7 +848,7 @@ class _McPackCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
 
 class BpEntities(_McPackCollectionSingle[BehaviorPack, BpEntity]):
     pack_path = 'entities'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpEntity]) -> BpEntities:
         return BpEntities(objects=objects)
@@ -859,7 +860,7 @@ class BpEntities(_McPackCollectionSingle[BehaviorPack, BpEntity]):
 
 class RpEntities(_McPackCollectionSingle[ResourcePack, RpEntity]):
     pack_path = 'entity'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[RpEntity]) -> RpEntities:
         return RpEntities(objects=objects)
@@ -871,7 +872,7 @@ class RpEntities(_McPackCollectionSingle[ResourcePack, RpEntity]):
 
 class BpAnimationControllers(_McPackCollectionMulti[BehaviorPack, BpAnimationController]):
     pack_path = 'animation_controllers'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpAnimationController]) -> BpAnimationControllers:
         return BpAnimationControllers(objects=objects)
@@ -883,7 +884,7 @@ class BpAnimationControllers(_McPackCollectionMulti[BehaviorPack, BpAnimationCon
 
 class RpAnimationControllers(_McPackCollectionMulti[ResourcePack, RpAnimationController]):
     pack_path = 'animation_controllers'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[RpAnimationController]) -> RpAnimationControllers:
         return RpAnimationControllers(objects=objects)
@@ -895,7 +896,7 @@ class RpAnimationControllers(_McPackCollectionMulti[ResourcePack, RpAnimationCon
 
 class BpAnimations(_McPackCollectionMulti[BehaviorPack, BpAnimation]):
     pack_path = 'animations'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpAnimation]) -> BpAnimations:
         return BpAnimations(objects=objects)
@@ -907,7 +908,7 @@ class BpAnimations(_McPackCollectionMulti[BehaviorPack, BpAnimation]):
 
 class RpAnimations(_McPackCollectionMulti[ResourcePack, RpAnimation]):
     pack_path = 'animations'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[RpAnimation]) -> RpAnimations:
         return RpAnimations(objects=objects)
@@ -919,7 +920,7 @@ class RpAnimations(_McPackCollectionMulti[ResourcePack, RpAnimation]):
 
 class BpBlocks(_McPackCollectionSingle[BehaviorPack, BpBlock]):
     pack_path = 'blocks'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpBlock]) -> BpBlocks:
         return BpBlocks(objects=objects)
@@ -931,7 +932,7 @@ class BpBlocks(_McPackCollectionSingle[BehaviorPack, BpBlock]):
 
 class BpItems(_McPackCollectionSingle[BehaviorPack, BpItem]):
     pack_path = 'items'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpItem]) -> BpItems:
         return BpItems(objects=objects)
@@ -943,7 +944,7 @@ class BpItems(_McPackCollectionSingle[BehaviorPack, BpItem]):
 
 class RpItems(_McPackCollectionSingle[ResourcePack, RpItem]):
     pack_path = 'items'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[RpItem]) -> RpItems:
         return RpItems(objects=objects)
@@ -955,7 +956,7 @@ class RpItems(_McPackCollectionSingle[ResourcePack, RpItem]):
 
 class BpLootTables(_McPackCollectionSingle[BehaviorPack, BpLootTable]):
     pack_path = 'loot_tables'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpLootTable]) -> BpLootTables:
         return BpLootTables(objects=objects)
@@ -967,7 +968,7 @@ class BpLootTables(_McPackCollectionSingle[BehaviorPack, BpLootTable]):
 
 class BpFunctions(_McPackCollectionSingle[BehaviorPack, BpFunction]):
     pack_path = 'functions'
-    file_pattern = '**/*.mcfunction'
+    file_patterns = ('**/*.mcfunction',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpFunction]) -> BpFunctions:
         return BpFunctions(objects=objects)
@@ -979,7 +980,7 @@ class BpFunctions(_McPackCollectionSingle[BehaviorPack, BpFunction]):
 
 class BpSpawnRules(_McPackCollectionSingle[BehaviorPack, BpSpawnRule]):
     pack_path = 'spawn_rules'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpSpawnRule]) -> BpSpawnRules:
         return BpSpawnRules(objects=objects)
@@ -991,7 +992,7 @@ class BpSpawnRules(_McPackCollectionSingle[BehaviorPack, BpSpawnRule]):
 
 class BpTrades(_McPackCollectionSingle[BehaviorPack, BpTrade]):
     pack_path = 'trading'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpTrade]) -> BpTrades:
         return BpTrades(objects=objects)
@@ -1003,7 +1004,7 @@ class BpTrades(_McPackCollectionSingle[BehaviorPack, BpTrade]):
 
 class RpModels(_McPackCollectionMulti[ResourcePack, RpModel]):
     pack_path = 'models'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[RpModel]) -> RpModels:
         return RpModels(objects=objects)
@@ -1015,7 +1016,7 @@ class RpModels(_McPackCollectionMulti[ResourcePack, RpModel]):
 
 class RpParticles(_McPackCollectionSingle[ResourcePack, RpParticle]):
     pack_path = 'particles'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[RpParticle]) -> RpParticles:
         return RpParticles(objects=objects)
@@ -1027,7 +1028,7 @@ class RpParticles(_McPackCollectionSingle[ResourcePack, RpParticle]):
 
 class RpRenderControllers(_McPackCollectionMulti[ResourcePack, RpRenderController]):
     pack_path = 'render_controllers'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[RpRenderController]) -> RpRenderControllers:
         return RpRenderControllers(objects=objects)
@@ -1039,7 +1040,7 @@ class RpRenderControllers(_McPackCollectionMulti[ResourcePack, RpRenderControlle
 
 class BpRecipes(_McPackCollectionMulti[BehaviorPack, BpRecipe]):
     pack_path = 'recipes'
-    file_pattern = '**/*.json'
+    file_patterns = ('**/*.json',)
     @classmethod
     def _init_from_objects(cls, objects: List[BpRecipe]) -> BpRecipes:
         return BpRecipes(objects=objects)
