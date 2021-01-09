@@ -3,17 +3,13 @@ Python module for working with Minecraft bedrock edition projects.
 '''
 from __future__ import annotations
 from abc import ABC, abstractclassmethod, abstractmethod, abstractproperty
-from json.decoder import JSONDecodeError
-from re import split
 
 from typing import ClassVar, Dict, List, Optional, Tuple, TypeVar, Generic, Union
-from copy import copy
-from uuid import UUID
 from pathlib import Path
 
-from typing_extensions import Literal
-
-from bedrock_dev_tools.json import JSONCDecoder, JSONWalker, JSONWalkerDict, JSONWalkerInvalidPath, JSONWalkerList, JSONWalkerStr
+from .json import (
+    JSONCDecoder, JSONWalker, JSONWalkerDict, JSONWalkerInvalidPath,
+    JSONWalkerList, JSONWalkerStr)
 
 # Package version
 VERSION = (0, 1)
@@ -375,7 +371,6 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
             raise ValueError(
                 "You can't use both 'pack' and 'path' in "
                 f'{type(self).__name__} constructor')
-            
 
         self._objects: Optional[List[MCFILE]] = objects  # None->Lazy evaluation
         self._pack: Optional[MCPACK] = pack  # read only (use pack)
@@ -736,7 +731,7 @@ class RpModel(_JsonMcFileMulti['RpModels']):
                         model / 'description' / 'identifier' / key,
                         JSONWalkerInvalidPath):
                     return model
-        raise AttributeError("Can't get identifier attribute.")
+        raise AttributeError("Can't get identifier attribute.")  # TODO - remove this
 
 class RpParticle(_JsonMcFileSingle['RpParticles']):
     @property
@@ -1049,3 +1044,110 @@ class BpRecipes(_McPackCollectionMulti[BehaviorPack, BpRecipe]):
         return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpRecipe:
         return BpRecipe(path, self)
+
+# SPECIAL PACK FILES - ONE FILE/PACK (GENERICS)
+class _McSpecialPackFile(Generic[MCPACK], ABC):
+    pack_path: ClassVar[str]
+
+    def __init__(
+            self, *,
+            path: Optional[Path]=None,
+            pack: Optional[MCPACK]=None) -> None:
+        if pack is None and path is None:
+            raise ValueError(
+                'You must provide "path" or "pack" to '
+                f'{type(self).__name__} constructor')
+        if pack is not None and path is not None:
+            raise ValueError(
+                "You can't use both 'pack' and 'path' in "
+                f'{type(self).__name__} constructor')
+
+        self._pack: Optional[MCPACK] = pack  # read only (use pack)
+        self._path: Optional[Path] = path  # read only (use path)
+
+    @property
+    def pack(self) -> Optional[MCPACK]:
+        return self._pack
+
+    @property
+    def path(self) -> Path:
+        if self.pack is not None:  # Get path from pack
+            return self.pack.path / self.__class__.pack_path
+        if self._path is None:
+            raise AttributeError("Can't get 'path' attribute.")
+        return self._path
+
+class _McSpecialPackFileMulti(_McSpecialPackFile[MCPACK]):
+    @abstractproperty
+    def identifiers(self) -> Tuple[str, ...]: ...
+
+    @abstractmethod
+    def __getitem__(self, key: str) -> JSONWalker: ...
+
+class _JsonMcSpecialPackFileMulti(_McSpecialPackFileMulti[MCPACK]):
+    def __init__(
+            self,  *,
+            path: Optional[Path]=None,
+            pack: Optional[MCPACK]=None) -> None:
+        super().__init__(path=path, pack=pack)
+        self._json: JSONWalker = JSONWalker.from_json(None)
+        try:
+            with self.path.open('r') as f:
+                self._json = JSONWalker.load(f, cls=JSONCDecoder)
+        except:
+            pass  # self._json remains None walker
+
+    @property
+    def json(self) -> JSONWalker:
+        return self._json
+
+# SPECIAL PACK FILES - ONE FILE/PACK (IMPLEMENTATIONS)
+class RpSoundDefinitionsJson(_JsonMcSpecialPackFileMulti[ResourcePack]):
+    @property
+    def format_version(self) -> Tuple[int, ...]:
+        '''
+        Return the format version of the sounds.json file or guess the version
+        based on the file structure if it's missing.
+
+        :returns: format version of the sounds.json file file
+        '''
+        # Legacy format (no format_version)
+        format_version: Tuple[int, ...] = tuple()
+        try:
+            id_walker = self.json / 'format_version'
+            if isinstance(id_walker, JSONWalkerStr):
+                format_version = tuple(
+                    [int(i) for i in id_walker.data.split('.')])
+        except:  # Guessing the format version instead
+            id_walker = self.json / 'sound_definitions'
+            if isinstance(id_walker, JSONWalkerDict):
+                format_version = (1, 14, 0)
+        return format_version
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:  # TODO - implement
+        result: List[str] = []
+        if self.format_version <= (1, 14, 0):
+            id_walker = self.json / 'sound_definitions'
+            if isinstance(id_walker, JSONWalkerDict):
+                for key in id_walker.data.keys():
+                    if isinstance(key, str):
+                        result.append(key)
+        else:
+            if isinstance(self.json, JSONWalkerDict):
+                for key in self.json.data.keys():
+                    if isinstance(key, str) and key != 'format_version':
+                        result.append(key)
+        return tuple(result)
+
+    def __getitem__(self, key: str) -> JSONWalker:  # TODO - implement
+        if key != 'format_version':
+            if self.format_version <= (1, 14, 0):
+                walker = self.json / 'sound_definitions' / key
+                if not isinstance(walker, JSONWalkerInvalidPath):
+                    return walker
+            else:
+                walker = self.json / key
+                if not isinstance(walker, JSONWalkerInvalidPath):
+                    return walker
+        raise KeyError(key)
