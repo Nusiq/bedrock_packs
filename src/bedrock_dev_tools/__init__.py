@@ -514,7 +514,7 @@ class _McFile(Generic[MCFILE_COLLECTION], ABC):
 class _McFileSingle(_McFile[MCFILE_COLLECTION]):
     '''McFile with single Minecraft object'''
     @abstractproperty
-    def identifier(self) -> str: ...
+    def identifier(self) -> Optional[str]: ...
 
 class _JsonMcFileSingle(_McFileSingle[MCFILE_COLLECTION]):
     '''McFile that has JSON in it, with single Minecraft object'''
@@ -557,22 +557,22 @@ class _JsonMcFileMulti(_McFileMulti[MCFILE_COLLECTION]):
 # OBJECTS (IMPLEMENTATION)
 class BpEntity(_JsonMcFileSingle['BpEntities']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:entity" / "description" / "identifier")
         if isinstance(id_walker, JSONWalkerStr):
             return id_walker.data
-        raise AttributeError("Can't get identifier attribute.")
+        return None
 
 class RpEntity(_JsonMcFileSingle['RpEntities']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:client_entity" / "description" /
             "identifier")
         if isinstance(id_walker, JSONWalkerStr):
             return id_walker.data
-        raise AttributeError("Can't get identifier attribute.")
+        return None
 
 class _AnimationController(_JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
     @property
@@ -581,7 +581,7 @@ class _AnimationController(_JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
         if isinstance(id_walker, JSONWalkerDict):
             return tuple(
                 [k for k in id_walker.data.keys() if isinstance(k, str)])
-        raise AttributeError("Can't get identifier attribute.")
+        return tuple()
 
     def __getitem__(self, key: str) -> JSONWalker:
         id_walker = (self.json / "animation_controllers")
@@ -599,7 +599,7 @@ class _Animation(_JsonMcFileMulti[MCFILE_COLLECTION]):  # GENERIC
         if isinstance(id_walker, JSONWalkerDict):
             return tuple(
                 [k for k in id_walker.data.keys() if isinstance(k, str)])
-        raise AttributeError("Can't get identifier attribute.")
+        return tuple()
 
     def __getitem__(self, key: str) -> JSONWalker:
         id_walker = (self.json / "animations")
@@ -612,68 +612,68 @@ class RpAnimation(_Animation['RpAnimations']): ...
 
 class BpBlock(_JsonMcFileSingle['BpBlocks']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:block" / "description" / "identifier")
         if isinstance(id_walker, JSONWalkerStr):
             return id_walker.data
-        raise AttributeError("Can't get identifier attribute.")
+        return None
 
 class BpItem(_JsonMcFileSingle['BpItems']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:item" / "description" / "identifier")
         if isinstance(id_walker, JSONWalkerStr):
             return id_walker.data
-        raise AttributeError("Can't get identifier attribute.")
+        return None
 
 class RpItem(_JsonMcFileSingle['RpItems']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:item" / "description" / "identifier")
         if isinstance(id_walker, JSONWalkerStr):
             return id_walker.data
-        raise AttributeError("Can't get identifier attribute.")
+        return None
 
 class BpLootTable(_JsonMcFileSingle['BpLootTables']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         if (
                 self.owning_collection is None or
                 self.owning_collection.pack is None):
-            raise AttributeError("Can't get identifier attribute.")
+            return None
         return self.path.relative_to(
             self.owning_collection.pack.path).as_posix()
 
 class BpFunction(_McFileSingle['BpFunctions']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         if (
                 self.owning_collection is None or
                 self.owning_collection.pack is None):
-            raise AttributeError("Can't get identifier attribute.")
+            return None
         return self.path.relative_to(
             self.owning_collection.pack.path / 'functions'
         ).with_suffix('').as_posix()
 
 class BpSpawnRule(_JsonMcFileSingle['BpSpawnRules']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:spawn_rules" / "description" / "identifier")
         if isinstance(id_walker, JSONWalkerStr):
             return id_walker.data
-        raise AttributeError("Can't get identifier attribute.")
+        return None
 
 class BpTrade(_JsonMcFileSingle['BpTrades']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         if (
                 self.owning_collection is None or
                 self.owning_collection.pack is None):
-            raise AttributeError("Can't get identifier attribute.")
+            return None
         return self.path.relative_to(
             self.owning_collection.pack.path).as_posix()
 
@@ -734,12 +734,12 @@ class RpModel(_JsonMcFileMulti['RpModels']):
 
 class RpParticle(_JsonMcFileSingle['RpParticles']):
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "particle_effect" / "description" / "identifier")
         if isinstance(id_walker, JSONWalkerStr):
             return id_walker.data
-        raise AttributeError("Can't get identifier attribute.")
+        return None
 
 class RpRenderController(_JsonMcFileMulti['RpRenderControllers']):  # GENERIC
     @property
@@ -748,7 +748,7 @@ class RpRenderController(_JsonMcFileMulti['RpRenderControllers']):  # GENERIC
         if isinstance(id_walker, JSONWalkerDict):
             return tuple(
                 [k for k in id_walker.data.keys() if isinstance(k, str)])
-        raise AttributeError("Can't get identifier attribute.")
+        return tuple()
 
     def __getitem__(self, key: str) -> JSONWalker:
         id_walker = (self.json / "render_controllers")
@@ -798,20 +798,18 @@ class _McPackCollectionSingle(_McFileCollection[MCPACK, MCFILE_SINGLE]):
         path_ids: Dict[Path, List[str]] = {}
         id_items: Dict[str, List[MCFILE_SINGLE]] = {}
         for obj in self.objects:
-            try:
-                identifier = obj.identifier
-            except AttributeError:
-                continue  # Skip items with invalid identifier
+            if obj.identifier is None:
+                continue
             # path -> identifier
-            if identifier in path_ids:
-                path_ids[obj.path].append(identifier)
+            if obj.path in path_ids:
+                path_ids[obj.path].append(obj.identifier)
             else:
-                path_ids[obj.path] = [identifier]
+                path_ids[obj.path] = [obj.identifier]
             # identifier -> item
             if obj.path in id_items:
-                id_items[identifier].append(obj)
+                id_items[obj.identifier].append(obj)
             else:
-                id_items[identifier] = [obj]
+                id_items[obj.identifier] = [obj]
         return (path_ids, id_items)
 
 class _McPackCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
@@ -829,13 +827,9 @@ class _McPackCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
         path_ids: Dict[Path, List[str]] = {}
         id_items: Dict[str, List[MCFILE_MULTI]] = {}
         for obj in self.objects:
-            try:
-                identifiers = obj.identifiers
-            except AttributeError:
-                continue  # Skip items with invalid identifier
             # path -> identifier
-            for identifier in identifiers:
-                if identifier in path_ids:
+            for identifier in obj.identifiers:
+                if obj.path in path_ids:
                     path_ids[obj.path].append(identifier)
                 else:
                     path_ids[obj.path] = [identifier]
