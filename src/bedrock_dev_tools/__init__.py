@@ -4,7 +4,9 @@ Python module for working with Minecraft bedrock edition projects.
 from __future__ import annotations
 from abc import ABC, abstractclassmethod, abstractmethod, abstractproperty
 
-from typing import ClassVar, Dict, List, Optional, Tuple, TypeVar, Generic, Union
+from typing import (
+    ClassVar, Dict, List, Optional, Reversible, Sequence, Tuple, Type, TypeVar, Generic,
+    Union)
 from pathlib import Path
 
 from .json import (
@@ -112,81 +114,99 @@ class Project:
         pack.project = self
 
     @property
-    def bp_entities(self) -> BpEntities:
-        return BpEntities.combined_collections(
-            [i.entities for i in self.bps])
+    def bp_entities(
+            self) -> _MFCQuery[BpEntity]:
+        return _MFCQuery(BpEntities, [i.entities for i in self.bps])
+
 
     @property
-    def rp_entities(self) -> RpEntities:
-        return RpEntities.combined_collections(
-            [i.entities for i in self.rps])
+    def rp_entities(
+            self) -> _MFCQuery[RpEntity]:
+        return _MFCQuery(RpEntities, [i.entities for i in self.rps])
+
 
     @property
-    def bp_animation_controllers(self) -> BpAnimationControllers:
-        return BpAnimationControllers.combined_collections(
+    def bp_animation_controllers(
+            self) -> _MFCQuery[BpAnimationController]:
+        return _MFCQuery(
+            BpAnimationControllers,
             [i.animation_controllers for i in self.bps])
 
+
     @property
-    def rp_animation_controllers(self) -> RpAnimationControllers:
-        return RpAnimationControllers.combined_collections(
+    def rp_animation_controllers(
+            self) -> _MFCQuery[RpAnimationController]:
+        return _MFCQuery(
+            RpAnimationControllers,
             [i.animation_controllers for i in self.rps])
 
-    @property
-    def bp_blocks(self) -> BpBlocks:
-        return BpBlocks.combined_collections(
-            [i.blocks for i in self.bps])
 
     @property
-    def bp_items(self) -> BpItems:
-        return BpItems.combined_collections(
-            [i.items for i in self.bps])
-
-    @property
-    def rp_items(self) -> RpItems:
-        return RpItems.combined_collections(
-            [i.items for i in self.rps])
-
-    @property
-    def bp_loot_tables(self) -> BpLootTables:
-        return BpLootTables.combined_collections(
-            [i.loot_tables for i in self.bps])
-
-    @property
-    def bp_functions(self) -> BpFunctions:
-        return BpFunctions.combined_collections(
-            [i.functions for i in self.bps])
-
-    @property
-    def bp_spawn_rules(self) -> BpSpawnRules:
-        return BpSpawnRules.combined_collections(
-            [i.spawn_rules for i in self.bps])
-
-    @property
-    def bp_trades(self) -> BpTrades:
-        return BpTrades.combined_collections(
-            [i.trades for i in self.bps])
-
-    @property
-    def bp_recipes(self) -> BpRecipes:
-        return BpRecipes.combined_collections(
-            [i.recipes for i in self.bps])
+    def bp_blocks(
+            self) -> _MFCQuery[BpBlock]:
+        return _MFCQuery(BpBlocks, [i.blocks for i in self.bps])
 
 
     @property
-    def rp_models(self) -> RpModels:
-        return RpModels.combined_collections(
-            [i.models for i in self.rps])
+    def bp_items(
+            self) -> _MFCQuery[BpItem]:
+        return _MFCQuery(BpItems, [i.items for i in self.bps])
+
 
     @property
-    def rp_particles(self) -> RpParticles:
-        return RpParticles.combined_collections(
-            [i.particles for i in self.rps])
+    def rp_items(
+            self) -> _MFCQuery[RpItem]:
+        return _MFCQuery(RpItems, [i.items for i in self.rps])
+
 
     @property
-    def rp_render_controllers(self) -> RpRenderControllers:
-        return RpRenderControllers.combined_collections(
-            [i.render_controllers for i in self.rps])
+    def bp_loot_tables(
+            self) -> _MFCQuery[BpLootTable]:
+        return _MFCQuery(BpLootTables, [i.loot_tables for i in self.bps])
 
+
+    @property
+    def bp_functions(
+            self) -> _MFCQuery[BpFunction]:
+        return _MFCQuery(BpFunctions, [i.functions for i in self.bps])
+
+
+    @property
+    def bp_spawn_rules(
+            self) -> _MFCQuery[BpSpawnRule]:
+        return _MFCQuery(BpSpawnRules, [i.spawn_rules for i in self.bps])
+
+
+    @property
+    def bp_trades(
+            self) -> _MFCQuery[BpTrade]:
+        return _MFCQuery(BpTrades, [i.trades for i in self.bps])
+
+
+    @property
+    def bp_recipes(
+            self) -> _MFCQuery[BpRecipe]:
+        return _MFCQuery(BpRecipes, [i.recipes for i in self.bps])
+
+
+
+    @property
+    def rp_models(
+            self) -> _MFCQuery[RpModel]:
+        return _MFCQuery(RpModels, [i.models for i in self.rps])
+
+
+    @property
+    def rp_particles(
+            self) -> _MFCQuery[RpParticle]:
+        return _MFCQuery(RpParticles, [i.particles for i in self.rps])
+
+
+    @property
+    def rp_render_controllers(
+            self) -> _MFCQuery[RpRenderController]:
+        return  _MFCQuery(
+            RpRenderControllers, [i.render_controllers for i in self.rps])
 
 # PACKS
 class _Pack(ABC):
@@ -435,13 +455,13 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
                 if len(id_list) == 1:
                     id_key = id_list[0]
                 else:
-                    raise KeyError(f'{str(path_key)}:{id_key}:{index}')
+                    raise KeyError(key)
             elif id_key not in id_list:
-                raise KeyError(f'{str(path_key)}:{id_key}:{index}')
+                raise KeyError(key)
             obj_list = id_items[id_key]
         else:  # path_key is None
             if id_key is None:
-                raise KeyError(f'{str(path_key)}:{id_key}:{index}')
+                raise KeyError(key)
             obj_list = id_items[id_key]
         # Search narrowed down to list of objects and the index
         # The return statement
@@ -449,7 +469,7 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
             return obj_list[index]
         elif len(obj_list) == 1:
             return obj_list[0]
-        raise KeyError(f'{str(path_key)}:{id_key}:{index}')
+        raise KeyError(key)
 
     def reload_objects(self) -> None:
         for file_pattern in self.__class__.file_patterns:
@@ -462,35 +482,56 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
                     continue
                 self.add(obj)
 
+    @classmethod
+    def get_item_from_combined_collections(
+            self, collections: Reversible[_McFileCollection[MCPACK, MCFILE]],
+            key: Union[str, slice]) -> MCFILE:
+        '''
+        Looks for _McFile in multiple _McFileCollections returns the result
+        from the topmost collection.
+        '''
+        for collection in reversed(collections):
+            try:
+                return collection[key]
+            except:
+                pass
+        raise KeyError(key)
+
     # Different for _McFileMulti and _McFileSingle collections
+    @abstractmethod
+    def keys(self) -> Tuple[str, ...]: ...
+
     @abstractmethod
     def _quick_access_list_views(
     self) -> Tuple[Dict[Path, List[str]], Dict[str, List[MCFILE]]]: ...
-
-    # METHODS THAT REQUIRE FURTHER SPECIFICATION IN SUBCLASSES (for their
-    # content or type annotations)
-    @abstractclassmethod
-    def _init_from_objects(cls, objects: List[MCFILE]):
-        '''
-        Needs subclass type annotation
-        :returns: self.__class__
-        '''
 
     @abstractmethod
     def _make_collection_object(self, path: Path) -> MCFILE:
         '''Create an object connected to self from path'''
 
-    @abstractclassmethod
-    def combined_collections(cls, collections: List):
-        '''
-        Needs subclass type annotation
-        :collections: List[self.__class__]
-        :returns: self.__class___
-        '''
-        objects: List[MCFILE] = []
-        for collection in collections:
-            objects.extend(collection.objects)
-        return cls._init_from_objects(objects=objects)
+class _MFCQuery(Generic[MCFILE]):
+    '''
+    "M - Mc, F - file, C - collection, query" - used in :class:`Project` to
+    provide methods for finding McFiles in McFileCollections that belong to
+    that project.
+    '''
+    def __init__(
+            self,
+            collections_type: Type[_McFileCollection[MCPACK, MCFILE]],
+            collections: Sequence[_McFileCollection[MCPACK, MCFILE]]):
+        self.collections = collections
+        self.collections_type = collections_type
+
+    def __getitem__(self, key: Union[str, slice]) -> MCFILE:
+        return self.collections_type.get_item_from_combined_collections(
+            self.collections, key)
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        for collection in self.collections:
+            result.extend(collection.keys())
+        return tuple(set(result))
 
 # OBJECTS (GENERIC)
 class _McFile(Generic[MCFILE_COLLECTION], ABC):
@@ -786,6 +827,13 @@ class BpRecipe(_JsonMcFileMulti['BpRecipes']):
 # OBJECT COLLECTIONS (IMPLEMENTATIONS)
 class _McPackCollectionSingle(_McFileCollection[MCPACK, MCFILE_SINGLE]):
     '''A collection of :class:`_McFileSingle` objects.'''
+    def keys(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        for obj in self.objects:
+            if not obj.identifier is None:
+                result.append(obj.identifier)
+        return tuple(set(result))
+
     def _quick_access_list_views(
             self) -> Tuple[Dict[Path, List[str]], Dict[str, List[MCFILE_SINGLE]]]:
         '''
@@ -815,6 +863,12 @@ class _McPackCollectionSingle(_McFileCollection[MCPACK, MCFILE_SINGLE]):
 
 class _McPackCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
     '''A collection of :class:`_McFileMulti` objects.'''
+    def keys(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        for obj in self.objects:
+            result.extend(obj.identifiers)
+        return tuple(set(result))
+
     def _quick_access_list_views(
             self) -> Tuple[Dict[Path, List[str]], Dict[str, List[MCFILE_MULTI]]]:
         '''
@@ -844,204 +898,103 @@ class _McPackCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
 class BpEntities(_McPackCollectionSingle[BehaviorPack, BpEntity]):
     pack_path = 'entities'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpEntity]) -> BpEntities:
-        return BpEntities(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpEntities]) -> BpEntities:
-        return super().combined_collections(collections)  # type: ignore
+
     def _make_collection_object(self, path: Path) -> BpEntity:
         return BpEntity(path, self)
 
 class RpEntities(_McPackCollectionSingle[ResourcePack, RpEntity]):
     pack_path = 'entity'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[RpEntity]) -> RpEntities:
-        return RpEntities(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[RpEntities]) -> RpEntities:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> RpEntity:
         return RpEntity(path, self)
 
 class BpAnimationControllers(_McPackCollectionMulti[BehaviorPack, BpAnimationController]):
     pack_path = 'animation_controllers'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpAnimationController]) -> BpAnimationControllers:
-        return BpAnimationControllers(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpAnimationControllers]) -> BpAnimationControllers:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpAnimationController:
         return BpAnimationController(path, self)
 
 class RpAnimationControllers(_McPackCollectionMulti[ResourcePack, RpAnimationController]):
     pack_path = 'animation_controllers'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[RpAnimationController]) -> RpAnimationControllers:
-        return RpAnimationControllers(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[RpAnimationControllers]) -> RpAnimationControllers:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> RpAnimationController:
         return RpAnimationController(path, self)
 
 class BpAnimations(_McPackCollectionMulti[BehaviorPack, BpAnimation]):
     pack_path = 'animations'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpAnimation]) -> BpAnimations:
-        return BpAnimations(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpAnimations]) -> BpAnimations:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpAnimation:
         return BpAnimation(path, self)
 
 class RpAnimations(_McPackCollectionMulti[ResourcePack, RpAnimation]):
     pack_path = 'animations'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[RpAnimation]) -> RpAnimations:
-        return RpAnimations(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[RpAnimations]) -> RpAnimations:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> RpAnimation:
         return RpAnimation(path, self)
 
 class BpBlocks(_McPackCollectionSingle[BehaviorPack, BpBlock]):
     pack_path = 'blocks'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpBlock]) -> BpBlocks:
-        return BpBlocks(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpBlocks]) -> BpBlocks:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpBlock:
         return BpBlock(path, self)
 
 class BpItems(_McPackCollectionSingle[BehaviorPack, BpItem]):
     pack_path = 'items'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpItem]) -> BpItems:
-        return BpItems(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpItems]) -> BpItems:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpItem:
         return BpItem(path, self)
 
 class RpItems(_McPackCollectionSingle[ResourcePack, RpItem]):
     pack_path = 'items'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[RpItem]) -> RpItems:
-        return RpItems(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[RpItems]) -> RpItems:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> RpItem:
         return RpItem(path, self)
 
 class BpLootTables(_McPackCollectionSingle[BehaviorPack, BpLootTable]):
     pack_path = 'loot_tables'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpLootTable]) -> BpLootTables:
-        return BpLootTables(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpLootTables]) -> BpLootTables:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpLootTable:
         return BpLootTable(path, self)
 
 class BpFunctions(_McPackCollectionSingle[BehaviorPack, BpFunction]):
     pack_path = 'functions'
     file_patterns = ('**/*.mcfunction',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpFunction]) -> BpFunctions:
-        return BpFunctions(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpFunctions]) -> BpFunctions:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpFunction:
         return BpFunction(path, self)
 
 class BpSpawnRules(_McPackCollectionSingle[BehaviorPack, BpSpawnRule]):
     pack_path = 'spawn_rules'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpSpawnRule]) -> BpSpawnRules:
-        return BpSpawnRules(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpSpawnRules]) -> BpSpawnRules:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpSpawnRule:
         return BpSpawnRule(path, self)
 
 class BpTrades(_McPackCollectionSingle[BehaviorPack, BpTrade]):
     pack_path = 'trading'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpTrade]) -> BpTrades:
-        return BpTrades(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpTrades]) -> BpTrades:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpTrade:
         return BpTrade(path, self)
 
 class RpModels(_McPackCollectionMulti[ResourcePack, RpModel]):
     pack_path = 'models'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[RpModel]) -> RpModels:
-        return RpModels(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[RpModels]) -> RpModels:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> RpModel:
         return RpModel(path, self)
 
 class RpParticles(_McPackCollectionSingle[ResourcePack, RpParticle]):
     pack_path = 'particles'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[RpParticle]) -> RpParticles:
-        return RpParticles(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[RpParticles]) -> RpParticles:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> RpParticle:
         return RpParticle(path, self)
 
 class RpRenderControllers(_McPackCollectionMulti[ResourcePack, RpRenderController]):
     pack_path = 'render_controllers'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[RpRenderController]) -> RpRenderControllers:
-        return RpRenderControllers(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[RpRenderControllers]) -> RpRenderControllers:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> RpRenderController:
         return RpRenderController(path, self)
 
 class BpRecipes(_McPackCollectionMulti[BehaviorPack, BpRecipe]):
     pack_path = 'recipes'
     file_patterns = ('**/*.json',)
-    @classmethod
-    def _init_from_objects(cls, objects: List[BpRecipe]) -> BpRecipes:
-        return BpRecipes(objects=objects)
-    @classmethod
-    def combined_collections(cls, collections: List[BpRecipes]) -> BpRecipes:
-        return super().combined_collections(collections)  # type: ignore
     def _make_collection_object(self, path: Path) -> BpRecipe:
         return BpRecipe(path, self)
 
