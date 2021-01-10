@@ -4,7 +4,7 @@ import os
 # Path to file with VERSION
 init_path = os.path.join(
     os.path.dirname(__file__),
-    'src', 'bedrock_dev_tools', '__init__.py'
+    'src', 'bedrock_packs', '__init__.py'
 )
 
 # Line that defines VERSION
