@@ -1370,24 +1370,18 @@ class InteractiveBlockSoundEvent(RpSoundsJsonPartWithSound):
         return result
 
 class InteractiveEntitySoundEvent(RpSoundsJsonPart):
-    # @property
-    # def sound(self) -> Optional[str]:
-    #     if isinstance(self.json, JSONWalkerStr):
-    #         return self.json.data
-    #     walker = self.json / 'sound'
-    #     if isinstance(walker, JSONWalkerStr):
-    #         return walker.data
-    #     event_key = self.json.parent_key
-    #     if isinstance(event_key, str):
-    #         walker = (
-    #             self.json.parent.parent.parent.parent / 'defaults' / 'events' /
-    #             event_key)
-    #         if isinstance(walker, JSONWalkerStr):
-    #             return walker.data
-    #         walker = walker / 'sound'
-    #         if isinstance(walker, JSONWalkerStr):
-    #             return walker.data
-    #     return None
+    @property
+    def sounds(self) -> Dict[str, str]:
+        '''
+        A dictionary with sounds used by this event where key is a block name
+        and value is the sound name.
+        '''
+        result: Dict[str, str] = {}
+        if isinstance(self.json, JSONWalkerDict):
+            for k, v in self.json.data.items():
+                if isinstance(k, str) and isinstance(v, str):
+                    result[k] = v
+        return result
 
     @property
     def pitch(self) -> Optional[Tuple[float, float]]:
