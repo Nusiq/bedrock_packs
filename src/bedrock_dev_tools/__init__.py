@@ -2,15 +2,15 @@
 Python module for working with Minecraft bedrock edition projects.
 '''
 from __future__ import annotations
-from abc import ABC, abstractclassmethod, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod, abstractproperty
 
 from typing import (
-    ClassVar, Dict, List, Optional, Reversible, Sequence, Tuple, Type, TypeVar, Generic,
+    ClassVar, Dict, List, NamedTuple, Optional, Reversible, Sequence, Tuple, Type, TypeVar, Generic,
     Union)
 from pathlib import Path
 
 from .json import (
-    JSONCDecoder, JSONWalker, JSONWalkerDict, JSONWalkerInvalidPath,
+    JSONCDecoder, JSONWalker, JSONWalkerDict, JSONWalkerFloat, JSONWalkerInt, JSONWalkerInvalidPath,
     JSONWalkerList, JSONWalkerStr)
 
 # Package version
@@ -25,8 +25,11 @@ MCFILE_COLLECTION = TypeVar('MCFILE_COLLECTION', bound='_McFileCollection')
 MCFILE = TypeVar('MCFILE', bound='_McFile')
 MCFILE_SINGLE = TypeVar('MCFILE_SINGLE', bound='_McFileSingle')
 MCFILE_MULTI = TypeVar('MCFILE_MULTI', bound='_McFileMulti')
-
-
+JSON_MC_PACK_FILE_MULTI = TypeVar(
+    'JSON_MC_PACK_FILE_MULTI',
+    bound='_JsonMcPackFileMulti')
+RP_SOUNDS_JSON_PART = TypeVar('RP_SOUNDS_JSON_PART', bound='RpSoundsJsonPart')
+RP_SOUNDS_JSON_PART_KEY = TypeVar('RP_SOUNDS_JSON_PART_KEY')
 # PROJECT
 class Project:
     '''A collection of behavior packs and resource packs.'''
@@ -118,12 +121,10 @@ class Project:
             self) -> _MFCQuery[BpEntity]:
         return _MFCQuery(BpEntities, [i.entities for i in self.bps])
 
-
     @property
     def rp_entities(
             self) -> _MFCQuery[RpEntity]:
         return _MFCQuery(RpEntities, [i.entities for i in self.rps])
-
 
     @property
     def bp_animation_controllers(
@@ -132,7 +133,6 @@ class Project:
             BpAnimationControllers,
             [i.animation_controllers for i in self.bps])
 
-
     @property
     def rp_animation_controllers(
             self) -> _MFCQuery[RpAnimationController]:
@@ -140,73 +140,96 @@ class Project:
             RpAnimationControllers,
             [i.animation_controllers for i in self.rps])
 
-
     @property
     def bp_blocks(
             self) -> _MFCQuery[BpBlock]:
         return _MFCQuery(BpBlocks, [i.blocks for i in self.bps])
-
 
     @property
     def bp_items(
             self) -> _MFCQuery[BpItem]:
         return _MFCQuery(BpItems, [i.items for i in self.bps])
 
-
     @property
     def rp_items(
             self) -> _MFCQuery[RpItem]:
         return _MFCQuery(RpItems, [i.items for i in self.rps])
-
 
     @property
     def bp_loot_tables(
             self) -> _MFCQuery[BpLootTable]:
         return _MFCQuery(BpLootTables, [i.loot_tables for i in self.bps])
 
-
     @property
     def bp_functions(
             self) -> _MFCQuery[BpFunction]:
         return _MFCQuery(BpFunctions, [i.functions for i in self.bps])
-
 
     @property
     def bp_spawn_rules(
             self) -> _MFCQuery[BpSpawnRule]:
         return _MFCQuery(BpSpawnRules, [i.spawn_rules for i in self.bps])
 
-
     @property
     def bp_trades(
             self) -> _MFCQuery[BpTrade]:
         return _MFCQuery(BpTrades, [i.trades for i in self.bps])
-
 
     @property
     def bp_recipes(
             self) -> _MFCQuery[BpRecipe]:
         return _MFCQuery(BpRecipes, [i.recipes for i in self.bps])
 
-
-
     @property
     def rp_models(
             self) -> _MFCQuery[RpModel]:
         return _MFCQuery(RpModels, [i.models for i in self.rps])
-
 
     @property
     def rp_particles(
             self) -> _MFCQuery[RpParticle]:
         return _MFCQuery(RpParticles, [i.particles for i in self.rps])
 
-
     @property
     def rp_render_controllers(
             self) -> _MFCQuery[RpRenderController]:
         return  _MFCQuery(
             RpRenderControllers, [i.render_controllers for i in self.rps])
+
+    @property
+    def rp_sound_definitions(
+            self) -> _JMPFMQuery[RpSoundDefinitionsJson]:
+        return _JMPFMQuery([i.sound_definitions for i in self.rps])
+
+    @property
+    def rp_sounds_json_block_sound_event(
+            self) -> _BlockSoundEventQuery:
+        return _BlockSoundEventQuery(
+            [i.sounds_json for i in self.rps])
+
+    @property
+    def rp_sounds_json_entity_sound_event(
+            self) -> _EntitySoundEventQuery:
+        return _EntitySoundEventQuery(
+            [i.sounds_json for i in self.rps])
+
+    @property
+    def rp_sounds_json_individual_sound_event(
+            self) -> _IndividualSoundEventQuery:
+        return _IndividualSoundEventQuery(
+            [i.sounds_json for i in self.rps])
+
+    @property
+    def rp_sounds_json_interactive_block_sound_event(
+            self) -> _InteractiveBlockSoundEventQuery:
+        return _InteractiveBlockSoundEventQuery(
+            [i.sounds_json for i in self.rps])
+
+    @property
+    def rp_sounds_json_interactive_entity_sound_event(
+            self) -> _InteractiveEntitySoundEventQuery:
+        return _InteractiveEntitySoundEventQuery(
+            [i.sounds_json for i in self.rps])
 
 # PACKS
 class _Pack(ABC):
@@ -326,6 +349,8 @@ class ResourcePack(_Pack):
         self._models: Optional[RpModels] = None
         self._particles: Optional[RpParticles] = None
         self._render_controllers: Optional[RpRenderControllers] = None
+        self._sound_definitions: Optional[RpSoundDefinitionsJson] = None
+        self._sounds_json: Optional[RpSoundsJson] = None
 
     @property
     def entities(self) -> RpEntities:
@@ -368,6 +393,18 @@ class ResourcePack(_Pack):
         if self._render_controllers is None:
             self._render_controllers = RpRenderControllers(pack=self)
         return self._render_controllers
+
+    @property
+    def sound_definitions(self) -> RpSoundDefinitionsJson:
+        if self._sound_definitions is None:
+            self._sound_definitions = RpSoundDefinitionsJson(pack=self)
+        return self._sound_definitions
+
+    @property
+    def sounds_json(self) -> RpSoundsJson:
+        if self._sounds_json is None:
+            self._sounds_json = RpSoundsJson(pack=self)
+        return self._sounds_json
 
 # OBJECT COLLECTIONS (GENERIC)
 class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
@@ -508,6 +545,7 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
     def _make_collection_object(self, path: Path) -> MCFILE:
         '''Create an object connected to self from path'''
 
+# Query
 class _MFCQuery(Generic[MCFILE]):
     '''
     "M - Mc, F - file, C - collection, query" - used in :class:`Project` to
@@ -771,7 +809,7 @@ class RpModel(_JsonMcFileMulti['RpModels']):
                         model / 'description' / 'identifier' / key,
                         JSONWalkerInvalidPath):
                     return model
-        raise AttributeError("Can't get identifier attribute.")  # TODO - remove this
+        raise KeyError(key)
 
 class RpParticle(_JsonMcFileSingle['RpParticles']):
     @property
@@ -997,8 +1035,8 @@ class BpRecipes(_McPackCollectionMulti[BehaviorPack, BpRecipe]):
     def _make_collection_object(self, path: Path) -> BpRecipe:
         return BpRecipe(path, self)
 
-# SPECIAL PACK FILES - ONE FILE/PACK (GENERICS)
-class _McSpecialPackFile(Generic[MCPACK], ABC):
+# SPECIAL PACK FILES - ONE FILE PER PACK (GENERICS)
+class _McPackFile(Generic[MCPACK], ABC):
     pack_path: ClassVar[str]
 
     def __init__(
@@ -1029,14 +1067,7 @@ class _McSpecialPackFile(Generic[MCPACK], ABC):
             raise AttributeError("Can't get 'path' attribute.")
         return self._path
 
-class _McSpecialPackFileMulti(_McSpecialPackFile[MCPACK]):
-    @abstractproperty
-    def identifiers(self) -> Tuple[str, ...]: ...
-
-    @abstractmethod
-    def __getitem__(self, key: str) -> JSONWalker: ...
-
-class _JsonMcSpecialPackFileMulti(_McSpecialPackFileMulti[MCPACK]):
+class _JsonMcPackFile(_McPackFile[MCPACK]):
     def __init__(
             self,  *,
             path: Optional[Path]=None,
@@ -1053,8 +1084,43 @@ class _JsonMcSpecialPackFileMulti(_McSpecialPackFileMulti[MCPACK]):
     def json(self) -> JSONWalker:
         return self._json
 
+class _JsonMcPackFileMulti(_JsonMcPackFile[MCPACK]):
+    @abstractproperty
+    def identifiers(self) -> Tuple[str, ...]: ...
+
+    @abstractmethod
+    def __getitem__(self, key: str) -> JSONWalker: ...
+
+# Query
+class _JMPFMQuery(Generic[JSON_MC_PACK_FILE_MULTI]):
+    '''
+    "J - Json, M -Mc, P - Pack, F- File, M -Multi, query" - used
+    in :class:`Project` to provide methods for finding McSpecialPackFiles that
+    belong to the project.
+    '''
+    def __init__(self, pack_files: Sequence[JSON_MC_PACK_FILE_MULTI]):
+        self.pack_files = pack_files
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        for pack_file in reversed(self.pack_files):
+            try:
+                aaa=  pack_file[key]
+                return aaa
+            except:
+                pass
+        raise KeyError(key)
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        for pack_file in self.pack_files:
+            result.extend(pack_file.identifiers)
+        return tuple(set(result))
+
 # SPECIAL PACK FILES - ONE FILE/PACK (IMPLEMENTATIONS)
-class RpSoundDefinitionsJson(_JsonMcSpecialPackFileMulti[ResourcePack]):
+class RpSoundDefinitionsJson(_JsonMcPackFileMulti[ResourcePack]):
+    pack_path: ClassVar[str] = 'sounds/sound_definitions.json'
+
     @property
     def format_version(self) -> Tuple[int, ...]:
         '''
@@ -1077,7 +1143,7 @@ class RpSoundDefinitionsJson(_JsonMcSpecialPackFileMulti[ResourcePack]):
         return format_version
 
     @property
-    def identifiers(self) -> Tuple[str, ...]:  # TODO - implement
+    def identifiers(self) -> Tuple[str, ...]:
         result: List[str] = []
         if self.format_version <= (1, 14, 0):
             id_walker = self.json / 'sound_definitions'
@@ -1092,7 +1158,7 @@ class RpSoundDefinitionsJson(_JsonMcSpecialPackFileMulti[ResourcePack]):
                         result.append(key)
         return tuple(result)
 
-    def __getitem__(self, key: str) -> JSONWalker:  # TODO - implement
+    def __getitem__(self, key: str) -> JSONWalker:
         if key != 'format_version':
             if self.format_version <= (1, 14, 0):
                 walker = self.json / 'sound_definitions' / key
@@ -1103,3 +1169,402 @@ class RpSoundDefinitionsJson(_JsonMcSpecialPackFileMulti[ResourcePack]):
                 if not isinstance(walker, JSONWalkerInvalidPath):
                     return walker
         raise KeyError(key)
+
+# SOUNDS.JSON
+class RpSoundsJson(_JsonMcPackFile[ResourcePack]):
+    pack_path: ClassVar[str] = 'sounds.json'
+
+    def __init__(
+            self, *,
+            path: Optional[Path]=None,
+            pack: Optional[ResourcePack]=None) -> None:
+        super().__init__(path=path, pack=pack)
+
+    @property
+    def block_sound_event(self) -> _BlockSoundEventQuery:
+        return _BlockSoundEventQuery((self,))
+    @property
+    def entity_sound_event(self) -> _EntitySoundEventQuery:
+        return _EntitySoundEventQuery((self,))
+    @property
+    def individual_sound_event(self) -> _IndividualSoundEventQuery:
+        return _IndividualSoundEventQuery((self,))
+    @property
+    def interactive_block_sound_event(
+            self) -> _InteractiveBlockSoundEventQuery:
+        return _InteractiveBlockSoundEventQuery((self,))
+    @property
+    def interactive_entity_sound_event(
+            self) -> _InteractiveEntitySoundEventQuery:
+        return _InteractiveEntitySoundEventQuery((self,))
+
+# Various parts of the sounds.json file
+class RpSoundsJsonPart(ABC):
+    def __init__(self, sounds_json: RpSoundsJson, json: JSONWalker):
+        self.sounds_json = sounds_json
+        self.json = json
+
+    @staticmethod
+    def _get_float_tuple(walker) -> Optional[Tuple[float, float]]:
+        '''
+        Used to access pitch and volume from walker.
+        '''
+        if isinstance(walker, JSONWalkerList):
+            data = walker.data
+            if (
+                    len(data) == 2 and isinstance(data[0], (float, int)) and
+                    isinstance(data[1], (float, int))):
+                return (data[0], data[1])
+        elif isinstance(walker, (JSONWalkerFloat, JSONWalkerInt)):
+            return (walker.data, walker.data)
+        return None
+
+    @abstractproperty
+    def pitch(self) -> Optional[Tuple[float, float]]: ...
+
+    @abstractproperty
+    def volume(self) -> Optional[Tuple[float, float]]: ...
+
+class RpSoundsJsonPartWithSound(RpSoundsJsonPart):
+    @abstractproperty
+    def sound(self) -> Optional[str]: ...
+
+class BlockSoundEvent(RpSoundsJsonPartWithSound):
+    @property
+    def sound(self) -> Optional[str]:
+        walker = self.json / 'sound'
+        if isinstance(walker, JSONWalkerStr):
+            return walker.data
+        # Try to get the value from defaults
+        walker = self.json.parent / 'default'
+        if isinstance(walker, JSONWalkerStr):
+            return walker.data
+        return None
+
+    @property
+    def pitch(self) -> Optional[Tuple[float, float]]:
+        result = RpSoundsJsonPart._get_float_tuple(self.json / 'pitch')
+        if result is None:
+            result = RpSoundsJsonPart._get_float_tuple(
+                self.json.parent.parent / 'pitch')
+        return result
+
+    @property
+    def volume(self) -> Optional[Tuple[float, float]]:
+        result = RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+        if result is None:
+            result = RpSoundsJsonPart._get_float_tuple(
+                self.json.parent.parent / 'volume')
+        return result
+
+class EntitySoundEvent(RpSoundsJsonPartWithSound):
+    @property
+    def sound(self) -> Optional[str]:
+        if isinstance(self.json, JSONWalkerStr):
+            return self.json.data
+        walker = self.json / 'sound'
+        if isinstance(walker, JSONWalkerStr):
+            return walker.data
+        event_key = self.json.parent_key
+        if isinstance(event_key, str):
+            walker = (
+                self.json.parent.parent.parent.parent / 'defaults' / 'events' /
+                event_key)
+            if isinstance(walker, JSONWalkerStr):
+                return walker.data
+            walker = walker / 'sound'
+            if isinstance(walker, JSONWalkerStr):
+                return walker.data
+        return None
+
+    @property
+    def pitch(self) -> Optional[Tuple[float, float]]:
+        result = RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+        if result is not None:
+            return result
+        result = RpSoundsJsonPart._get_float_tuple(
+            self.json.parent.parent / 'volume')
+        if result is not None:
+            return result
+        event_key = self.json.parent_key
+        if isinstance(event_key, str):
+            walker = (
+                self.json.parent.parent.parent.parent / 'defaults' /
+                'events' / event_key / 'volume')
+            result = RpSoundsJsonPart._get_float_tuple(walker)
+            if result is not None:
+                return result
+            walker = (
+                self.json.parent.parent.parent.parent / 'defaults' / 'volume')
+            result = RpSoundsJsonPart._get_float_tuple(walker)
+            if result is not None:
+                return result
+        return None
+
+    @property
+    def volume(self) -> Optional[Tuple[float, float]]:
+        result = RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+        if result is not None:
+            return result
+        result = RpSoundsJsonPart._get_float_tuple(
+            self.json.parent.parent / 'volume')
+        if result is not None:
+            return result
+        event_key = self.json.parent_key
+        if isinstance(event_key, str):
+            walker = (
+                self.json.parent.parent.parent.parent / 'defaults' /
+                'events' / event_key / 'volume')
+            result = RpSoundsJsonPart._get_float_tuple(walker)
+            if result is not None:
+                return result
+            walker = (
+                self.json.parent.parent.parent.parent / 'defaults' / 'volume')
+            result = RpSoundsJsonPart._get_float_tuple(walker)
+            if result is not None:
+                return result
+        return None
+
+class IndividualSoundEvent(RpSoundsJsonPartWithSound):
+    @property
+    def sound(self) -> Optional[str]:
+        walker = self.json / 'sound'
+        if isinstance(walker, JSONWalkerStr):
+            return walker.data
+        return None
+
+    @property
+    def pitch(self) -> Optional[Tuple[float, float]]:
+        return RpSoundsJsonPart._get_float_tuple(self.json / 'pitch')
+
+    @property
+    def volume(self) -> Optional[Tuple[float, float]]:
+        return RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+
+class InteractiveBlockSoundEvent(RpSoundsJsonPartWithSound):
+    @property
+    def sound(self) -> Optional[str]:
+        walker = self.json / 'sound'
+        if isinstance(walker, JSONWalkerStr):
+            return walker.data
+        # Try to get the value from defaults
+        walker = self.json.parent / 'default'
+        if isinstance(walker, JSONWalkerStr):
+            return walker.data
+        return None
+
+    @property
+    def pitch(self) -> Optional[Tuple[float, float]]:
+        result = RpSoundsJsonPart._get_float_tuple(self.json / 'pitch')
+        if result is None:
+            result = RpSoundsJsonPart._get_float_tuple(
+                self.json.parent.parent / 'pitch')
+        return result
+
+    @property
+    def volume(self) -> Optional[Tuple[float, float]]:
+        result = RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+        if result is None:
+            result = RpSoundsJsonPart._get_float_tuple(
+                self.json.parent.parent / 'volume')
+        return result
+
+class InteractiveEntitySoundEvent(RpSoundsJsonPart):
+    # @property
+    # def sound(self) -> Optional[str]:
+    #     if isinstance(self.json, JSONWalkerStr):
+    #         return self.json.data
+    #     walker = self.json / 'sound'
+    #     if isinstance(walker, JSONWalkerStr):
+    #         return walker.data
+    #     event_key = self.json.parent_key
+    #     if isinstance(event_key, str):
+    #         walker = (
+    #             self.json.parent.parent.parent.parent / 'defaults' / 'events' /
+    #             event_key)
+    #         if isinstance(walker, JSONWalkerStr):
+    #             return walker.data
+    #         walker = walker / 'sound'
+    #         if isinstance(walker, JSONWalkerStr):
+    #             return walker.data
+    #     return None
+
+    @property
+    def pitch(self) -> Optional[Tuple[float, float]]:
+        result = RpSoundsJsonPart._get_float_tuple(
+            self.json.parent.parent / 'volume')
+        if result is not None:
+            return result
+        event_key = self.json.parent_key
+        if isinstance(event_key, str):
+            walker = (
+                self.json.parent.parent.parent.parent / 'defaults' /
+                'events' / event_key / 'default' / 'volume')
+            result = RpSoundsJsonPart._get_float_tuple(walker)
+            if result is not None:
+                return result
+            walker = (
+                self.json.parent.parent.parent.parent / 'defaults' / 'volume')
+            result = RpSoundsJsonPart._get_float_tuple(walker)
+            if result is not None:
+                return result
+        return None
+
+    @property
+    def volume(self) -> Optional[Tuple[float, float]]:
+        result = RpSoundsJsonPart._get_float_tuple(
+            self.json.parent.parent / 'volume')
+        event_key = self.json.parent_key
+        if isinstance(event_key, str):
+            walker = (
+                self.json.parent.parent.parent.parent / 'defaults' /
+                'events' / event_key / 'default' / 'volume')
+            result = RpSoundsJsonPart._get_float_tuple(walker)
+            if result is not None:
+                return result
+            walker = (
+                self.json.parent.parent.parent.parent / 'defaults' / 'volume')
+            result = RpSoundsJsonPart._get_float_tuple(walker)
+            if result is not None:
+                return result
+        return None
+
+
+# sounds.json queries (used by )
+class _RSJPQuery(Generic[RP_SOUNDS_JSON_PART, RP_SOUNDS_JSON_PART_KEY]):
+    '''
+    "R - Rp, S - Sounds, J - Json, P - Part, query" - used in :class:`Project`
+    and :class:`RpSoundsJsonPart` to get info about parts of sounds.json
+    file(s).
+    '''
+    def __init__(self, sounds_json_collection: Sequence[RpSoundsJson]) -> None:
+        self.sounds_json_collection = sounds_json_collection
+
+    def __getitem__(
+        self, key: RP_SOUNDS_JSON_PART_KEY) -> RP_SOUNDS_JSON_PART: ...
+
+    def keys(self) -> Tuple[RP_SOUNDS_JSON_PART_KEY, ...]: ...
+
+class _BlockSoundEventQuery(_RSJPQuery[BlockSoundEvent, Tuple[str, str]]):
+    def __getitem__(self, key: Tuple[str, str]) -> BlockSoundEvent:
+        for collection in reversed(self.sounds_json_collection):
+            if key[1] == 'default':
+                raise KeyError(key)
+            walker = (
+                collection.json / 'block_sounds' / key[0] / 'events' / key[1])
+            if not isinstance(walker, JSONWalkerInvalidPath):
+                return BlockSoundEvent(collection, walker)
+        raise KeyError(key)
+
+    def keys(self) -> Tuple[Tuple[str, str], ...]:
+        result: List[Tuple[str, str]] = []
+        for collection in self.sounds_json_collection:
+            walkers = (
+                collection.json / 'block_sounds' // str / 'events' // str)
+            for walker in walkers:
+                k0 = walker.parent.parent.parent_key  # block_sounds/->[str]<-
+                k1 = walker.parent_key  # block_sounds/[str]/events/->[str]<-
+                if (
+                        not isinstance(k0, str) or not isinstance(k1, str) or
+                        k1 == 'default'):
+                    continue
+                result.append((k0, k1))
+        return tuple(set(result))
+
+class _EntitySoundEventQuery(_RSJPQuery[EntitySoundEvent, Tuple[str, str]]):
+    def __getitem__(self, key: Tuple[str, str]) -> EntitySoundEvent:
+        for collection in reversed(self.sounds_json_collection):
+            walker = (
+                collection.json / 'entity_sounds' / 'entities' / key[0] /
+                'events' / key[1])
+            if not isinstance(walker, JSONWalkerInvalidPath):
+                return EntitySoundEvent(collection, walker)
+        raise KeyError(key)
+
+    def keys(self) -> Tuple[Tuple[str, str], ...]:
+        result: List[Tuple[str, str]] = []
+        for collection in self.sounds_json_collection:
+            walkers = (
+                collection.json / 'entity_sounds' / 'entities' // str /
+                'events' // str)
+            for walker in walkers:
+                k0 = walker.parent.parent.parent_key  # entity_sounds/->[str]<-
+                k1 = walker.parent_key  # entity_sounds/[str]/events/->[str]<-
+                if not isinstance(k0, str) or not isinstance(k1, str):
+                    continue
+                result.append((k0, k1))
+        return tuple(set(result))
+
+class _IndividualSoundEventQuery(_RSJPQuery[IndividualSoundEvent, str]):
+    def __getitem__(self, key: str) -> IndividualSoundEvent:
+        for collection in reversed(self.sounds_json_collection):
+            walker = (
+                collection.json / 'individual_event_sounds' / 'events' / key)
+            if not isinstance(walker, JSONWalkerInvalidPath):
+                return IndividualSoundEvent(collection, walker)
+        raise KeyError(key)
+
+    def keys(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        for collection in self.sounds_json_collection:
+            walkers = (
+                collection.json / 'individual_event_sounds' / 'events' // str)
+            for walker in walkers:
+                key = walker.parent_key  # block_sounds/[str]/events/->[str]<-
+                if not isinstance(key, str):
+                    continue
+                result.append(key)
+        return tuple(set(result))
+
+class _InteractiveBlockSoundEventQuery(
+        _RSJPQuery[InteractiveBlockSoundEvent, Tuple[str, str]]):
+    def __getitem__(self, key: Tuple[str, str]) -> InteractiveBlockSoundEvent:
+        for collection in reversed(self.sounds_json_collection):
+            if key[1] == 'default':
+                raise KeyError(key)
+            walker = (
+                collection.json / 'interactive_sounds' / 'block_sounds' /
+                key[0] / 'events' / key[1])
+            if not isinstance(walker, JSONWalkerInvalidPath):
+                return InteractiveBlockSoundEvent(collection, walker)
+        raise KeyError(key)
+
+    def keys(self) -> Tuple[Tuple[str, str], ...]:
+        result: List[Tuple[str, str]] = []
+        for collection in self.sounds_json_collection:
+            walkers = (
+                collection.json / 'interactive_sounds' / 'block_sounds' //
+                str / 'events' // str)
+            for walker in walkers:
+                k0 = walker.parent.parent.parent_key  # block_sounds/->[str]<-
+                k1 = walker.parent_key  # block_sounds/[str]/events/->[str]<-
+                if (
+                        not isinstance(k0, str) or not isinstance(k1, str) or
+                        k1 == 'default'):
+                    continue
+                result.append((k0, k1))
+        return tuple(set(result))
+
+class _InteractiveEntitySoundEventQuery(_RSJPQuery[InteractiveEntitySoundEvent, Tuple[str, str]]):
+    def __getitem__(self, key: Tuple[str, str]) -> InteractiveEntitySoundEvent:
+        for collection in reversed(self.sounds_json_collection):
+            walker = (
+                collection.json / 'interactive_sounds' / 'entity_sounds' /
+                'entities' / key[0] / 'events' / key[1])
+            if not isinstance(walker, JSONWalkerInvalidPath):
+                return InteractiveEntitySoundEvent(collection, walker)
+        raise KeyError(key)
+
+    def keys(self) -> Tuple[Tuple[str, str], ...]:
+        result: List[Tuple[str, str]] = []
+        for collection in self.sounds_json_collection:
+            walkers = (
+                collection.json / 'interactive_sounds' / 'entity_sounds' /
+                'entities' // str / 'events' // str)
+            for walker in walkers:
+                k0 = walker.path[-3]  # entity_sounds/->[str]<-
+                k1 = walker.path[-1]  # entity_sounds/[str]/events/->[str]<-
+                if not isinstance(k0, str) or not isinstance(k1, str):
+                    continue
+                result.append((k0, k1))
+        return tuple(set(result))

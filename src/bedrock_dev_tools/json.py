@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Dict, Generic, IO, Iterator, List, NewType, Tuple, Type, TypeVar, Union
+from typing import Dict, Generic, IO, Iterator, List, NewType, Tuple, Type, TypeVar, Union, Optional
 import re
 import json
 from json import scanner, JSONDecodeError  # type: ignore
@@ -358,11 +358,27 @@ class JSONWalker(Generic[J]):
     '''
     Safe access to data accessed with json.load without risk of exceptions.
     '''
-    def __init__(self, data: J, path: Tuple[JSON_KEY, ...] = ()):
+    def __init__(
+            self, data: J, *,
+            parent: Optional[JSONWalker]=None,
+            parent_key: Optional[JSON_KEY]=None):
         self._data: J = data
-        self._path: Tuple[JSON_KEY, ...] = path
+        self._parent = parent
+        self._parent_key = parent_key
         if type(self) is JSONWalker:
             raise TypeError("Can't instantiate abstract class JSONWalker")
+
+    @property
+    def parent(self) -> JSONWalker:
+        if self._parent is None:
+            raise KeyError("You can't get parent of the root object.")
+        return self._parent
+
+    @property
+    def parent_key(self) -> JSON_KEY:
+        if self._parent_key is None:
+            raise KeyError("You can't get parent of the root object.")
+        return self._parent_key
 
     @staticmethod
     def loads(json_text: Union[str, bytes], **kwargs) -> JSONWalker:
@@ -381,25 +397,28 @@ class JSONWalker(Generic[J]):
         return JSONWalker.from_json(data)
 
     @staticmethod
-    def from_json(data: JSON, path: Tuple[JSON_KEY, ...] = ()) -> JSONWalker:
+    def from_json(
+            data: JSON, *,
+            parent: Optional[JSONWalker]=None,
+            parent_key: Optional[JSON_KEY]=None) -> JSONWalker:
         '''
         Create :class:`JSONWalker` from valid parsed JSON file. Input data is
         not validated. Passing invalid data may result in ValueError.
         '''
         if isinstance(data, dict):
-            return JSONWalkerDict(data, path)
+            return JSONWalkerDict(data, parent=parent, parent_key=parent_key)
         elif isinstance(data, list):
-            return JSONWalkerList(data, path)
+            return JSONWalkerList(data, parent=parent, parent_key=parent_key)
         elif isinstance(data, str):
-            return JSONWalkerStr(data, path)
+            return JSONWalkerStr(data, parent=parent, parent_key=parent_key)
         elif isinstance(data, float):
-            return JSONWalkerFloat(data, path)
+            return JSONWalkerFloat(data, parent=parent, parent_key=parent_key)
         elif isinstance(data, int):
-            return JSONWalkerInt(data, path)
+            return JSONWalkerInt(data, parent=parent, parent_key=parent_key)
         elif isinstance(data, bool):
-            return JSONWalkerBool(data, path)
+            return JSONWalkerBool(data, parent=parent, parent_key=parent_key)
         elif isinstance(data, type(None)):
-            return JSONWalkerNone(data, path)
+            return JSONWalkerNone(data, parent=parent, parent_key=parent_key)
         else:
             raise ValueError('Input data is not JSON.')
 
@@ -409,18 +428,28 @@ class JSONWalker(Generic[J]):
 
     @property
     def path(self) -> Tuple[JSON_KEY, ...]:
-        return self._path
+        result: List[JSON_KEY] = []
+        result.reverse()
+        parent = self
+        try:
+            while True:
+                result.append(parent.parent_key)
+                parent = parent.parent
+        except KeyError:
+            pass
+        return tuple(reversed(result))
 
     def __truediv__(self, key: JSON_KEY) -> JSONWalker:
-        path: Tuple[JSON_KEY, ...] = self.path + (key,)
         try:
-            return JSONWalker.from_json(self.data[key], path)  # type: ignore
+            return JSONWalker.from_json(
+                self.data[key],  # type: ignore
+                parent=self, parent_key=key)
         except IndexError:  # index out of list bounds
-            return JSONWalkerIndexError(None, path)
+            return JSONWalkerIndexError(None, parent=self, parent_key=key)
         except KeyError:  # bad dictionary key
-            return JSONWalkerKeyError(None, path)
+            return JSONWalkerKeyError(None, parent=self, parent_key=key)
         except: # TypeError:  # data doesn't accept this type of key
-            return JSONWalkerInvalidPath(None, path)
+            return JSONWalkerInvalidPath(None, parent=self, parent_key=key)
 
     def __floordiv__(self, key: JSON_SPLIT_KEY) -> JsonSplitWalker:
         '''
@@ -442,26 +471,26 @@ class JSONWalker(Generic[J]):
         if key is None:
             if isinstance(self.data, dict):
                 return JsonSplitWalker([
-                    JSONWalker.from_json(v, self.path+(k,))
+                    JSONWalker.from_json(v, parent=self, parent_key=k)
                     for k, v in self.data.items()
                 ])
             elif isinstance(self.data, list):
                 return JsonSplitWalker([
-                    JSONWalker.from_json(v, self.path+(i,))
+                    JSONWalker.from_json(v, parent=self, parent_key=i)
                     for i, v in enumerate(self.data)
                 ])
         # ANY LIST ITEM
         elif key is int:
             if isinstance(self.data, list):
                 return JsonSplitWalker([
-                    JSONWalker.from_json(v, self.path+(i,))
+                    JSONWalker.from_json(v, parent=self, parent_key=i)
                     for i, v in enumerate(self.data)
                 ])
         # ANY DICT ITEM
         elif key is str:
             if isinstance(self.data, dict):
                 return JsonSplitWalker([
-                    JSONWalker.from_json(v, self.path+(k,))
+                    JSONWalker.from_json(v, parent=self, parent_key=k)
                     for k, v in self.data.items()
                 ])
         # REGEX DICT ITEM
@@ -470,7 +499,8 @@ class JSONWalker(Generic[J]):
                 result: List[JSONWalker] = []
                 for k, v in self.data.items():
                     if re.fullmatch(key, k):
-                        result.append(JSONWalker.from_json(v, (k,)))
+                        result.append(JSONWalker.from_json(
+                            v, parent=self, parent_key=k))
                 return JsonSplitWalker(result)
         else:  # INVALID KEY TYPE
             raise TypeError(
@@ -478,6 +508,16 @@ class JSONWalker(Generic[J]):
                 'str, int, or None')
         # DATA DOESN'T ACCEPT THIS TYPE OF KEY
         return JsonSplitWalker([])
+
+    def set(self, value: JSON) -> JSONWalker:
+        '''
+        Change the value of the item at this JSON path.
+
+        :returns: New JSONWalker with adequate type.
+        '''
+        self.parent.data[self.parent_key] = value
+        return self.parent / self.parent_key
+
 
 class JSONWalkerDict(JSONWalker[Dict]): ...
 class JSONWalkerList(JSONWalker[List]): ...
