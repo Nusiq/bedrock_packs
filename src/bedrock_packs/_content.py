@@ -19,7 +19,7 @@ MCFILE_MULTI = TypeVar('MCFILE_MULTI', bound='_McFileMulti')
 UNIQUE_MC_FILE_JSON_MULTI = TypeVar(
     'UNIQUE_MC_FILE_JSON_MULTI',
     bound='_UniqueMcFileJsonMulti')
-RP_SOUNDS_JSON_PART = TypeVar('RP_SOUNDS_JSON_PART', bound='RpSoundsJsonPart')
+RP_SOUNDS_JSON_PART = TypeVar('RP_SOUNDS_JSON_PART', bound='_RpSoundsJsonPart')
 RP_SOUNDS_JSON_PART_KEY = TypeVar('RP_SOUNDS_JSON_PART_KEY')
 # PROJECT
 class Project:
@@ -1452,7 +1452,7 @@ class RpSoundsJson(_UniqueMcFileJson[ResourcePack]):
         return _InteractiveEntitySoundEventQuery((self,))
 
 # Various parts of the sounds.json file
-class RpSoundsJsonPart(ABC):
+class _RpSoundsJsonPart(ABC):
     def __init__(self, sounds_json: RpSoundsJson, json: JSONWalker):
         self.sounds_json = sounds_json
         self.json = json
@@ -1478,11 +1478,11 @@ class RpSoundsJsonPart(ABC):
     @abstractproperty
     def volume(self) -> Optional[Tuple[float, float]]: ...
 
-class RpSoundsJsonPartWithSound(RpSoundsJsonPart):
+class _RpSoundsJsonPartWithSound(_RpSoundsJsonPart):
     @abstractproperty
     def sound(self) -> Optional[str]: ...
 
-class BlockSoundEvent(RpSoundsJsonPartWithSound):
+class BlockSoundEvent(_RpSoundsJsonPartWithSound):
     @property
     def sound(self) -> Optional[str]:
         walker = self.json / 'sound'
@@ -1496,21 +1496,21 @@ class BlockSoundEvent(RpSoundsJsonPartWithSound):
 
     @property
     def pitch(self) -> Optional[Tuple[float, float]]:
-        result = RpSoundsJsonPart._get_float_tuple(self.json / 'pitch')
+        result = _RpSoundsJsonPart._get_float_tuple(self.json / 'pitch')
         if result is None:
-            result = RpSoundsJsonPart._get_float_tuple(
+            result = _RpSoundsJsonPart._get_float_tuple(
                 self.json.parent.parent / 'pitch')
         return result
 
     @property
     def volume(self) -> Optional[Tuple[float, float]]:
-        result = RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+        result = _RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
         if result is None:
-            result = RpSoundsJsonPart._get_float_tuple(
+            result = _RpSoundsJsonPart._get_float_tuple(
                 self.json.parent.parent / 'volume')
         return result
 
-class EntitySoundEvent(RpSoundsJsonPartWithSound):
+class EntitySoundEvent(_RpSoundsJsonPartWithSound):
     @property
     def sound(self) -> Optional[str]:
         if isinstance(self.json, JSONWalkerStr):
@@ -1532,10 +1532,10 @@ class EntitySoundEvent(RpSoundsJsonPartWithSound):
 
     @property
     def pitch(self) -> Optional[Tuple[float, float]]:
-        result = RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+        result = _RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
         if result is not None:
             return result
-        result = RpSoundsJsonPart._get_float_tuple(
+        result = _RpSoundsJsonPart._get_float_tuple(
             self.json.parent.parent / 'volume')
         if result is not None:
             return result
@@ -1544,22 +1544,22 @@ class EntitySoundEvent(RpSoundsJsonPartWithSound):
             walker = (
                 self.json.parent.parent.parent.parent / 'defaults' /
                 'events' / event_key / 'volume')
-            result = RpSoundsJsonPart._get_float_tuple(walker)
+            result = _RpSoundsJsonPart._get_float_tuple(walker)
             if result is not None:
                 return result
             walker = (
                 self.json.parent.parent.parent.parent / 'defaults' / 'volume')
-            result = RpSoundsJsonPart._get_float_tuple(walker)
+            result = _RpSoundsJsonPart._get_float_tuple(walker)
             if result is not None:
                 return result
         return None
 
     @property
     def volume(self) -> Optional[Tuple[float, float]]:
-        result = RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+        result = _RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
         if result is not None:
             return result
-        result = RpSoundsJsonPart._get_float_tuple(
+        result = _RpSoundsJsonPart._get_float_tuple(
             self.json.parent.parent / 'volume')
         if result is not None:
             return result
@@ -1568,17 +1568,17 @@ class EntitySoundEvent(RpSoundsJsonPartWithSound):
             walker = (
                 self.json.parent.parent.parent.parent / 'defaults' /
                 'events' / event_key / 'volume')
-            result = RpSoundsJsonPart._get_float_tuple(walker)
+            result = _RpSoundsJsonPart._get_float_tuple(walker)
             if result is not None:
                 return result
             walker = (
                 self.json.parent.parent.parent.parent / 'defaults' / 'volume')
-            result = RpSoundsJsonPart._get_float_tuple(walker)
+            result = _RpSoundsJsonPart._get_float_tuple(walker)
             if result is not None:
                 return result
         return None
 
-class IndividualSoundEvent(RpSoundsJsonPartWithSound):
+class IndividualSoundEvent(_RpSoundsJsonPartWithSound):
     @property
     def sound(self) -> Optional[str]:
         walker = self.json / 'sound'
@@ -1588,13 +1588,13 @@ class IndividualSoundEvent(RpSoundsJsonPartWithSound):
 
     @property
     def pitch(self) -> Optional[Tuple[float, float]]:
-        return RpSoundsJsonPart._get_float_tuple(self.json / 'pitch')
+        return _RpSoundsJsonPart._get_float_tuple(self.json / 'pitch')
 
     @property
     def volume(self) -> Optional[Tuple[float, float]]:
-        return RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+        return _RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
 
-class InteractiveBlockSoundEvent(RpSoundsJsonPartWithSound):
+class InteractiveBlockSoundEvent(_RpSoundsJsonPartWithSound):
     @property
     def sound(self) -> Optional[str]:
         walker = self.json / 'sound'
@@ -1608,21 +1608,21 @@ class InteractiveBlockSoundEvent(RpSoundsJsonPartWithSound):
 
     @property
     def pitch(self) -> Optional[Tuple[float, float]]:
-        result = RpSoundsJsonPart._get_float_tuple(self.json / 'pitch')
+        result = _RpSoundsJsonPart._get_float_tuple(self.json / 'pitch')
         if result is None:
-            result = RpSoundsJsonPart._get_float_tuple(
+            result = _RpSoundsJsonPart._get_float_tuple(
                 self.json.parent.parent / 'pitch')
         return result
 
     @property
     def volume(self) -> Optional[Tuple[float, float]]:
-        result = RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
+        result = _RpSoundsJsonPart._get_float_tuple(self.json / 'volume')
         if result is None:
-            result = RpSoundsJsonPart._get_float_tuple(
+            result = _RpSoundsJsonPart._get_float_tuple(
                 self.json.parent.parent / 'volume')
         return result
 
-class InteractiveEntitySoundEvent(RpSoundsJsonPart):
+class InteractiveEntitySoundEvent(_RpSoundsJsonPart):
     @property
     def sounds(self) -> Dict[str, str]:
         '''
@@ -1638,7 +1638,7 @@ class InteractiveEntitySoundEvent(RpSoundsJsonPart):
 
     @property
     def pitch(self) -> Optional[Tuple[float, float]]:
-        result = RpSoundsJsonPart._get_float_tuple(
+        result = _RpSoundsJsonPart._get_float_tuple(
             self.json.parent.parent / 'volume')
         if result is not None:
             return result
@@ -1647,40 +1647,40 @@ class InteractiveEntitySoundEvent(RpSoundsJsonPart):
             walker = (
                 self.json.parent.parent.parent.parent / 'defaults' /
                 'events' / event_key / 'default' / 'volume')
-            result = RpSoundsJsonPart._get_float_tuple(walker)
+            result = _RpSoundsJsonPart._get_float_tuple(walker)
             if result is not None:
                 return result
             walker = (
                 self.json.parent.parent.parent.parent / 'defaults' / 'volume')
-            result = RpSoundsJsonPart._get_float_tuple(walker)
+            result = _RpSoundsJsonPart._get_float_tuple(walker)
             if result is not None:
                 return result
         return None
 
     @property
     def volume(self) -> Optional[Tuple[float, float]]:
-        result = RpSoundsJsonPart._get_float_tuple(
+        result = _RpSoundsJsonPart._get_float_tuple(
             self.json.parent.parent / 'volume')
         event_key = self.json.parent_key
         if isinstance(event_key, str):
             walker = (
                 self.json.parent.parent.parent.parent / 'defaults' /
                 'events' / event_key / 'default' / 'volume')
-            result = RpSoundsJsonPart._get_float_tuple(walker)
+            result = _RpSoundsJsonPart._get_float_tuple(walker)
             if result is not None:
                 return result
             walker = (
                 self.json.parent.parent.parent.parent / 'defaults' / 'volume')
-            result = RpSoundsJsonPart._get_float_tuple(walker)
+            result = _RpSoundsJsonPart._get_float_tuple(walker)
             if result is not None:
                 return result
         return None
 
 # sounds.json queries
-class _RpSoundsJsonPartQuery(
+class __RpSoundsJsonPartQuery(
         Generic[RP_SOUNDS_JSON_PART, RP_SOUNDS_JSON_PART_KEY]):
     '''
-    Used in :class:`Project` and :class:`RpSoundsJsonPart` to get info about
+    Used in :class:`Project` and :class:`_RpSoundsJsonPart` to get info about
     parts of sounds.json file(s).
     '''
     def __init__(self, sounds_json_collection: Sequence[RpSoundsJson]) -> None:
@@ -1692,7 +1692,7 @@ class _RpSoundsJsonPartQuery(
     def keys(self) -> Tuple[RP_SOUNDS_JSON_PART_KEY, ...]: ...
 
 class _BlockSoundEventQuery(
-        _RpSoundsJsonPartQuery[BlockSoundEvent, Tuple[str, str]]):
+        __RpSoundsJsonPartQuery[BlockSoundEvent, Tuple[str, str]]):
     def __getitem__(self, key: Tuple[str, str]) -> BlockSoundEvent:
         for collection in reversed(self.sounds_json_collection):
             if key[1] == 'default':
@@ -1719,7 +1719,7 @@ class _BlockSoundEventQuery(
         return tuple(set(result))
 
 class _EntitySoundEventQuery(
-        _RpSoundsJsonPartQuery[EntitySoundEvent, Tuple[str, str]]):
+        __RpSoundsJsonPartQuery[EntitySoundEvent, Tuple[str, str]]):
     def __getitem__(self, key: Tuple[str, str]) -> EntitySoundEvent:
         for collection in reversed(self.sounds_json_collection):
             walker = (
@@ -1744,7 +1744,7 @@ class _EntitySoundEventQuery(
         return tuple(set(result))
 
 class _IndividualSoundEventQuery(
-        _RpSoundsJsonPartQuery[IndividualSoundEvent, str]):
+        __RpSoundsJsonPartQuery[IndividualSoundEvent, str]):
     def __getitem__(self, key: str) -> IndividualSoundEvent:
         for collection in reversed(self.sounds_json_collection):
             walker = (
@@ -1766,7 +1766,7 @@ class _IndividualSoundEventQuery(
         return tuple(set(result))
 
 class _InteractiveBlockSoundEventQuery(
-        _RpSoundsJsonPartQuery[InteractiveBlockSoundEvent, Tuple[str, str]]):
+        __RpSoundsJsonPartQuery[InteractiveBlockSoundEvent, Tuple[str, str]]):
     def __getitem__(self, key: Tuple[str, str]) -> InteractiveBlockSoundEvent:
         for collection in reversed(self.sounds_json_collection):
             if key[1] == 'default':
@@ -1795,7 +1795,7 @@ class _InteractiveBlockSoundEventQuery(
         return tuple(set(result))
 
 class _InteractiveEntitySoundEventQuery(
-        _RpSoundsJsonPartQuery[InteractiveEntitySoundEvent, Tuple[str, str]]):
+        __RpSoundsJsonPartQuery[InteractiveEntitySoundEvent, Tuple[str, str]]):
     def __getitem__(self, key: Tuple[str, str]) -> InteractiveEntitySoundEvent:
         for collection in reversed(self.sounds_json_collection):
             walker = (
