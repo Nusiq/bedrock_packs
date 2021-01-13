@@ -5,8 +5,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod, abstractproperty
 
 from typing import (
-    ClassVar, Dict, List, NamedTuple, Optional, Reversible, Sequence, Tuple, Type, TypeVar, Generic,
-    Union)
+    ClassVar, Dict, List, Optional, Reversible, Sequence, Tuple, Type, TypeVar,
+    Generic, Union)
 from pathlib import Path
 
 from .json import (
@@ -659,6 +659,9 @@ class _MFCQuery(Generic[MCFILE]):
         return self.collections_type.get_item_from_combined_collections(
             self.collections, key)
 
+    def __iter__(self):  # Apparently getitem automatically implements __iter__
+        raise TypeError(f'{type(self).__name__} is not iterable.')
+
     @property
     def identifiers(self) -> Tuple[str, ...]:
         result: List[str] = []
@@ -985,7 +988,7 @@ class _McPackCollectionSingle(_McFileCollection[MCPACK, MCFILE_SINGLE]):
     def keys(self) -> Tuple[str, ...]:
         result: List[str] = []
         for obj in self.objects:
-            if not obj.identifier is None:
+            if obj.identifier is not None:
                 result.append(obj.identifier)
         return tuple(set(result))
 
@@ -1119,14 +1122,14 @@ class BpFunctions(_McPackCollectionSingle[BehaviorPack, BpFunction]):
 
 class RpSoundFiles(_McPackCollectionSingle[ResourcePack, RpSoundFile]):
     pack_path = 'sounds'
-    file_patterns = ('.ogg', '.wav', '.mp3', '.fsb',)
+    file_patterns = ('**/*.ogg', '**/*.wav', '**/*.mp3', '**/*.fsb',)
     def _make_collection_object(self, path: Path) -> RpSoundFile:
         return RpSoundFile(path, self)
 
 class RpTextureFiles(_McPackCollectionSingle[ResourcePack, RpTextureFile]):
     pack_path = 'textures'
 
-    file_patterns = ('.tga', '.png', '.jpg',)
+    file_patterns = ('**/*.tga', '**/*.png', '**/*.jpg',)
     def _make_collection_object(self, path: Path) -> RpTextureFile:
         return RpTextureFile(path, self)
 
@@ -1359,7 +1362,7 @@ class RpFlipbookTexturesJson(_JsonMcPackFileMulti[ResourcePack]):
         raise KeyError(key)
 
 class RpTerrainTextureJson(_JsonMcPackFileMulti[ResourcePack]):
-    pack_path: ClassVar[str] = 'textures/item_texture.json'
+    pack_path: ClassVar[str] = 'textures/terrain_texture.json'
 
     @property
     def identifiers(self) -> Tuple[str, ...]:
