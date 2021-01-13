@@ -166,6 +166,16 @@ class Project:
         return _MFCQuery(BpFunctions, [i.functions for i in self.bps])
 
     @property
+    def rp_sound_files(
+            self) -> _MFCQuery[RpSoundFile]:
+        return _MFCQuery(RpSoundFiles, [i.sound_files for i in self.rps])
+
+    @property
+    def rp_texture_files(
+            self) -> _MFCQuery[RpTextureFile]:
+        return _MFCQuery(RpTextureFiles, [i.texture_files for i in self.rps])
+
+    @property
     def bp_spawn_rules(
             self) -> _MFCQuery[BpSpawnRule]:
         return _MFCQuery(BpSpawnRules, [i.spawn_rules for i in self.bps])
@@ -197,9 +207,39 @@ class Project:
             RpRenderControllers, [i.render_controllers for i in self.rps])
 
     @property
-    def rp_sound_definitions(
+    def rp_sound_definitions_json(
             self) -> _JMPFMQuery[RpSoundDefinitionsJson]:
-        return _JMPFMQuery([i.sound_definitions for i in self.rps])
+        return _JMPFMQuery([i.sound_definitions_json for i in self.rps])
+
+    @property
+    def rp_blocks_json(
+            self) -> _JMPFMQuery[RpBlocksJson]:
+        return _JMPFMQuery([i.blocks_json for i in self.rps])
+
+    @property
+    def rp_music_definitions_json(
+            self) -> _JMPFMQuery[RpMusicDefinitionsJson]:
+        return _JMPFMQuery([i.music_definitions_json for i in self.rps])
+
+    @property
+    def rp_biomes_client_json(
+            self) -> _JMPFMQuery[RpBiomesClientJson]:
+        return _JMPFMQuery([i.biomes_client_json for i in self.rps])
+
+    @property
+    def rp_item_texture_json(
+            self) -> _JMPFMQuery[RpItemTextureJson]:
+        return _JMPFMQuery([i.item_texture_json for i in self.rps])
+
+    @property
+    def rp_flipbook_textures_json(
+            self) -> _JMPFMQuery[RpFlipbookTexturesJson]:
+        return _JMPFMQuery([i.flipbook_textures_json for i in self.rps])
+
+    @property
+    def rp_terrain_texture_json(
+            self) -> _JMPFMQuery[RpTerrainTextureJson]:
+        return _JMPFMQuery([i.terrain_texture_json for i in self.rps])
 
     @property
     def rp_sounds_json_block_sound_event(
@@ -349,8 +389,16 @@ class ResourcePack(_Pack):
         self._models: Optional[RpModels] = None
         self._particles: Optional[RpParticles] = None
         self._render_controllers: Optional[RpRenderControllers] = None
-        self._sound_definitions: Optional[RpSoundDefinitionsJson] = None
+        self._sound_definitions_json: Optional[RpSoundDefinitionsJson] = None
         self._sounds_json: Optional[RpSoundsJson] = None
+        self._blocks_json: Optional[RpBlocksJson] = None
+        self._music_definitions_json: Optional[RpMusicDefinitionsJson] = None
+        self._biomes_client_json: Optional[RpBiomesClientJson] = None
+        self._item_texture_json: Optional[RpItemTextureJson] = None
+        self._flipbook_textures_json: Optional[RpFlipbookTexturesJson] = None
+        self._terrain_texture_json: Optional[RpTerrainTextureJson] = None
+        self._sound_files: Optional[RpSoundFiles] = None
+        self._texture_files: Optional[RpTextureFiles] = None
 
     @property
     def entities(self) -> RpEntities:
@@ -395,16 +443,64 @@ class ResourcePack(_Pack):
         return self._render_controllers
 
     @property
-    def sound_definitions(self) -> RpSoundDefinitionsJson:
-        if self._sound_definitions is None:
-            self._sound_definitions = RpSoundDefinitionsJson(pack=self)
-        return self._sound_definitions
+    def sound_definitions_json(self) -> RpSoundDefinitionsJson:
+        if self._sound_definitions_json is None:
+            self._sound_definitions_json = RpSoundDefinitionsJson(pack=self)
+        return self._sound_definitions_json
 
     @property
     def sounds_json(self) -> RpSoundsJson:
         if self._sounds_json is None:
             self._sounds_json = RpSoundsJson(pack=self)
         return self._sounds_json
+
+    @property
+    def blocks_json(self) -> RpBlocksJson:
+        if self._blocks_json is None:
+            self._blocks_json = RpBlocksJson(pack=self)
+        return self._blocks_json
+
+    @property
+    def music_definitions_json(self) -> RpMusicDefinitionsJson:
+        if self._music_definitions_json is None:
+            self._music_definitions_json = RpMusicDefinitionsJson(pack=self)
+        return self._music_definitions_json
+
+    @property
+    def biomes_client_json(self) -> RpBiomesClientJson:
+        if self._biomes_client_json is None:
+            self._biomes_client_json = RpBiomesClientJson(pack=self)
+        return self._biomes_client_json
+
+    @property
+    def item_texture_json(self) -> RpItemTextureJson:
+        if self._item_texture_json is None:
+            self._item_texture_json = RpItemTextureJson(pack=self)
+        return self._item_texture_json
+
+    @property
+    def flipbook_textures_json(self) -> RpFlipbookTexturesJson:
+        if self._flipbook_textures_json is None:
+            self._flipbook_textures_json = RpFlipbookTexturesJson(pack=self)
+        return self._flipbook_textures_json
+
+    @property
+    def terrain_texture_json(self) -> RpTerrainTextureJson:
+        if self._terrain_texture_json is None:
+            self._terrain_texture_json = RpTerrainTextureJson(pack=self)
+        return self._terrain_texture_json
+
+    @property
+    def sound_files(self) -> RpSoundFiles:
+        if self._sound_files is None:
+            self._sound_files = RpSoundFiles(pack=self)
+        return self._sound_files
+
+    @property
+    def texture_files(self) -> RpTextureFiles:
+        if self._texture_files is None:
+            self._texture_files = RpTextureFiles(pack=self)
+        return self._texture_files
 
 # OBJECT COLLECTIONS (GENERIC)
 class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
@@ -737,6 +833,28 @@ class BpFunction(_McFileSingle['BpFunctions']):
             self.owning_collection.pack.path / 'functions'
         ).with_suffix('').as_posix()
 
+class RpSoundFile(_McFileSingle['RpSoundFiles']):
+    @property
+    def identifier(self) -> Optional[str]:
+        if (
+                self.owning_collection is None or
+                self.owning_collection.pack is None):
+            return None
+        return self.path.relative_to(
+            self.owning_collection.pack.path
+        ).with_suffix('').as_posix()
+
+class RpTextureFile(_McFileSingle['RpTextureFiles']):
+    @property
+    def identifier(self) -> Optional[str]:
+        if (
+                self.owning_collection is None or
+                self.owning_collection.pack is None):
+            return None
+        return self.path.relative_to(
+            self.owning_collection.pack.path
+        ).with_suffix('').as_posix()
+
 class BpSpawnRule(_JsonMcFileSingle['BpSpawnRules']):
     @property
     def identifier(self) -> Optional[str]:
@@ -999,6 +1117,19 @@ class BpFunctions(_McPackCollectionSingle[BehaviorPack, BpFunction]):
     def _make_collection_object(self, path: Path) -> BpFunction:
         return BpFunction(path, self)
 
+class RpSoundFiles(_McPackCollectionSingle[ResourcePack, RpSoundFile]):
+    pack_path = 'sounds'
+    file_patterns = ('.ogg', '.wav', '.mp3', '.fsb',)
+    def _make_collection_object(self, path: Path) -> RpSoundFile:
+        return RpSoundFile(path, self)
+
+class RpTextureFiles(_McPackCollectionSingle[ResourcePack, RpTextureFile]):
+    pack_path = 'textures'
+
+    file_patterns = ('.tga', '.png', '.jpg',)
+    def _make_collection_object(self, path: Path) -> RpTextureFile:
+        return RpTextureFile(path, self)
+
 class BpSpawnRules(_McPackCollectionSingle[BehaviorPack, BpSpawnRule]):
     pack_path = 'spawn_rules'
     file_patterns = ('**/*.json',)
@@ -1169,6 +1300,119 @@ class RpSoundDefinitionsJson(_JsonMcPackFileMulti[ResourcePack]):
                 if not isinstance(walker, JSONWalkerInvalidPath):
                     return walker
         raise KeyError(key)
+
+class RpBiomesClientJson(_JsonMcPackFileMulti[ResourcePack]):
+    pack_path: ClassVar[str] = 'biomes_client.json'
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        walker = self.json / 'biomes'
+        if isinstance(walker, JSONWalkerDict):
+            for key in walker.data.keys():
+                if isinstance(key, str):
+                    result.append(key)
+        return tuple(result)
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        result = self.json / 'biomes' / key
+        if isinstance(result, JSONWalkerInvalidPath):
+            raise KeyError(key)
+        return result
+
+class RpItemTextureJson(_JsonMcPackFileMulti[ResourcePack]):
+    pack_path: ClassVar[str] = 'textures/item_texture.json'
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        walker = self.json / 'texture_data'
+        if isinstance(walker, JSONWalkerDict):
+            for key in walker.data.keys():
+                if isinstance(key, str):
+                    result.append(key)
+        return tuple(result)
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        result = self.json / 'texture_data' / key
+        if isinstance(result, JSONWalkerInvalidPath):
+            raise KeyError(key)
+        return result
+
+class RpFlipbookTexturesJson(_JsonMcPackFileMulti[ResourcePack]):
+    pack_path: ClassVar[str] = 'textures/flipbook_textures.json'
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        walkers = self.json // int / 'flipbook_texture'
+        for walker in walkers:
+            if isinstance(walker, JSONWalkerStr):
+                result.append(walker.data)
+        return tuple(set(result))
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        walkers = self.json // int / 'flipbook_texture'
+        for walker in walkers:
+            if isinstance(walker, JSONWalkerStr) and walker.data == key:
+                return walker.parent
+        raise KeyError(key)
+
+class RpTerrainTextureJson(_JsonMcPackFileMulti[ResourcePack]):
+    pack_path: ClassVar[str] = 'textures/item_texture.json'
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        walker = self.json / 'texture_data'
+        if isinstance(walker, JSONWalkerDict):
+            for key in walker.data.keys():
+                if isinstance(key, str):
+                    result.append(key)
+        return tuple(result)
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        result = self.json / 'texture_data' / key
+        if isinstance(result, JSONWalkerInvalidPath):
+            raise KeyError(key)
+        return result
+
+class RpBlocksJson(_JsonMcPackFileMulti[ResourcePack]):
+    pack_path: ClassVar[str] = 'blocks.json'
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        if isinstance(self.json, JSONWalkerDict):
+            for key in self.json.data.keys():
+                if isinstance(key, str):
+                    result.append(key)
+        return tuple(result)
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        result = self.json / key
+        if isinstance(result, JSONWalkerInvalidPath):
+            raise KeyError(key)
+        return result
+
+class RpMusicDefinitionsJson(_JsonMcPackFileMulti[ResourcePack]):
+    pack_path: ClassVar[str] = 'sounds/music_definitions.json'
+
+    @property
+    def identifiers(self) -> Tuple[str, ...]:
+        result: List[str] = []
+        if isinstance(self.json, JSONWalkerDict):
+            for key in self.json.data.keys():
+                if isinstance(key, str):
+                    result.append(key)
+        return tuple(result)
+
+    def __getitem__(self, key: str) -> JSONWalker:
+        result = self.json / key
+        if isinstance(result, JSONWalkerInvalidPath):
+            raise KeyError(key)
+        return result
+
 
 # SOUNDS.JSON
 class RpSoundsJson(_JsonMcPackFile[ResourcePack]):
@@ -1423,8 +1667,7 @@ class InteractiveEntitySoundEvent(RpSoundsJsonPart):
                 return result
         return None
 
-
-# sounds.json queries (used by )
+# sounds.json queries
 class _RSJPQuery(Generic[RP_SOUNDS_JSON_PART, RP_SOUNDS_JSON_PART_KEY]):
     '''
     "R - Rp, S - Sounds, J - Json, P - Part, query" - used in :class:`Project`
