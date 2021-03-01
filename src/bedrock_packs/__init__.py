@@ -9,9 +9,7 @@ from typing import (
     Generic, Union)
 from pathlib import Path
 
-from .json import (
-    JSONCDecoder, JSONWalker, JSONWalkerDict, JSONWalkerFloat, JSONWalkerInt,
-    JSONWalkerInvalidPath, JSONWalkerList, JSONWalkerStr)
+from .json import JSONCDecoder, JSONWalker
 
 # Package version
 VERSION = (0, 1)
@@ -60,7 +58,7 @@ class Project:
 
     def uuid_bps(self) -> Dict[str, BehaviorPack]:
         '''
-        A view of :class:`BehaviorPack`s from this project. The packs
+        A view of :class:`BehaviorPack` from this project. The packs
         without UUID are skipped.
 
         :returns: a dictionary with packs uuids for keys and packs for values
@@ -73,7 +71,7 @@ class Project:
 
     def uuid_rps(self) -> Dict[str, ResourcePack]:
         '''
-        A view of :class:`ResourcePack`s from this project. The packs
+        A view of :class:`ResourcePack` from this project. The packs
         without UUID are skipped.
 
         :returns: a dictionary with packs uuids for keys and packs for values
@@ -86,7 +84,7 @@ class Project:
 
     def path_bps(self) -> Dict[Path, BehaviorPack]:
         '''
-        A view of :class:`BehaviorPack`s from this project.
+        A view of :class:`BehaviorPack` from this project.
 
         :returns: a dictionary with packs paths for keys and packs for values
         '''
@@ -97,7 +95,7 @@ class Project:
 
     def path_rps(self) -> Dict[Path, ResourcePack]:
         '''
-        A view of :class:`ResourcePack`s from this project.
+        A view of :class:`ResourcePack` from this project.
 
         :returns: a dictionary with packs paths for keys and packs for values
         '''
@@ -289,7 +287,7 @@ class Project:
 class _Pack(ABC):
     '''
     Behavior pack or resource pack. A collection of
-    :class:`_McFileCollection`s.
+    :class:`_McFileCollection`.
     '''
     def __init__(self, path: Path, project: Optional[Project]=None) -> None:
         self.project: Optional[Project] = project
@@ -313,7 +311,7 @@ class _Pack(ABC):
         '''the UUID from manifest.'''
         if self.manifest is not None:
             uuid_walker = (self.manifest / 'header' / 'uuid')
-            if isinstance(uuid_walker, JSONWalkerStr):
+            if isinstance(uuid_walker.data, str):
                 return uuid_walker.data
         return None
 
@@ -519,7 +517,7 @@ class ResourcePack(_Pack):
 # OBJECT COLLECTIONS (GENERIC)
 class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
     '''
-    Collection of :class:`_McFile`s.
+    Collection of :class:`_McFile`.
     '''
     pack_path: ClassVar[str]
     file_patterns: ClassVar[Tuple[str, ...]]
@@ -708,7 +706,7 @@ class _McFileJsonSingle(_McFileSingle[MCFILE_COLLECTION]):
             owning_collection: Optional[MCFILE_COLLECTION]=None
     ) -> None:
         super().__init__(path, owning_collection=owning_collection)
-        self._json: JSONWalker = JSONWalker.from_json(None)
+        self._json: JSONWalker = JSONWalker(None)
         try:
             with path.open('r') as f:
                 self._json = JSONWalker.load(f, cls=JSONCDecoder)
@@ -731,7 +729,7 @@ class _McFileJsonMulti(_McFileMulti[MCFILE_COLLECTION]):
             owning_collection: Optional[MCFILE_COLLECTION]=None
     ) -> None:
         super().__init__(path, owning_collection=owning_collection)
-        self._json: JSONWalker = JSONWalker.from_json(None)
+        self._json: JSONWalker = JSONWalker(None)
         try:
             with path.open('r') as f:
                 self._json = JSONWalker.load(f, cls=JSONCDecoder)
@@ -751,7 +749,7 @@ class BpEntity(_McFileJsonSingle['BpEntities']):
     def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:entity" / "description" / "identifier")
-        if isinstance(id_walker, JSONWalkerStr):
+        if isinstance(id_walker.data, str):
             return id_walker.data
         return None
 
@@ -761,7 +759,7 @@ class RpEntity(_McFileJsonSingle['RpEntities']):
         id_walker = (
             self.json / "minecraft:client_entity" / "description" /
             "identifier")
-        if isinstance(id_walker, JSONWalkerStr):
+        if isinstance(id_walker.data, str):
             return id_walker.data
         return None
 
@@ -769,14 +767,14 @@ class _AnimationController(_McFileJsonMulti[MCFILE_COLLECTION]):  # GENERIC
     @property
     def identifiers(self) -> Tuple[str, ...]:
         id_walker = (self.json / "animation_controllers")
-        if isinstance(id_walker, JSONWalkerDict):
+        if isinstance(id_walker.data, dict):
             return tuple(
                 [k for k in id_walker.data.keys() if isinstance(k, str)])
         return tuple()
 
     def __getitem__(self, key: str) -> JSONWalker:
         id_walker = (self.json / "animation_controllers")
-        if isinstance(id_walker, JSONWalkerDict):
+        if isinstance(id_walker.data, dict):
             if key in id_walker.data:
                 return id_walker / key
         raise KeyError(key)
@@ -787,14 +785,14 @@ class _Animation(_McFileJsonMulti[MCFILE_COLLECTION]):  # GENERIC
     @property
     def identifiers(self) -> Tuple[str, ...]:
         id_walker = (self.json / "animations")
-        if isinstance(id_walker, JSONWalkerDict):
+        if isinstance(id_walker.data, dict):
             return tuple(
                 [k for k in id_walker.data.keys() if isinstance(k, str)])
         return tuple()
 
     def __getitem__(self, key: str) -> JSONWalker:
         id_walker = (self.json / "animations")
-        if isinstance(id_walker, JSONWalkerDict):
+        if isinstance(id_walker.data, dict):
             if key in id_walker.data:
                 return id_walker / key
         raise KeyError(key)
@@ -806,7 +804,7 @@ class BpBlock(_McFileJsonSingle['BpBlocks']):
     def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:block" / "description" / "identifier")
-        if isinstance(id_walker, JSONWalkerStr):
+        if isinstance(id_walker.data, str):
             return id_walker.data
         return None
 
@@ -815,7 +813,7 @@ class BpItem(_McFileJsonSingle['BpItems']):
     def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:item" / "description" / "identifier")
-        if isinstance(id_walker, JSONWalkerStr):
+        if isinstance(id_walker.data, str):
             return id_walker.data
         return None
 
@@ -824,7 +822,7 @@ class RpItem(_McFileJsonSingle['RpItems']):
     def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:item" / "description" / "identifier")
-        if isinstance(id_walker, JSONWalkerStr):
+        if isinstance(id_walker.data, str):
             return id_walker.data
         return None
 
@@ -876,7 +874,7 @@ class BpSpawnRule(_McFileJsonSingle['BpSpawnRules']):
     def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "minecraft:spawn_rules" / "description" / "identifier")
-        if isinstance(id_walker, JSONWalkerStr):
+        if isinstance(id_walker.data, str):
             return id_walker.data
         return None
 
@@ -902,12 +900,12 @@ class RpModel(_McFileJsonMulti['RpModels']):
         format_version: Tuple[int, ...] = (1, 8, 0)
         try:
             id_walker = self.json / 'format_version'
-            if isinstance(id_walker, JSONWalkerStr):
+            if isinstance(id_walker.data, str):
                 format_version = tuple(
                     [int(i) for i in id_walker.data.split('.')])
         except:  # Guessing the format version instead
             id_walker = self.json / 'minecraft:geometry'
-            if isinstance(id_walker, JSONWalkerList):
+            if isinstance(id_walker.data, list):
                 format_version = (1, 16, 0)
         return format_version
 
@@ -915,7 +913,7 @@ class RpModel(_McFileJsonMulti['RpModels']):
     def identifiers(self) -> Tuple[str, ...]:
         result: List[str] = []
         if self.format_version <= (1, 10, 0):
-            if isinstance(self.json, JSONWalkerDict):
+            if isinstance(self.json.data, dict):
                 for k in self.json.data.keys():
                     if isinstance(k, str) and k.startswith('geometry.'):
                         result.append(k)
@@ -924,7 +922,7 @@ class RpModel(_McFileJsonMulti['RpModels']):
                 self.json / 'minecraft:geometry' // int / 'description' /
                 'identifier')
             for i in id_walker:
-                if isinstance(i, JSONWalkerStr):
+                if isinstance(i.data, str):
                     if i.data.startswith('geometry.'):
                         result.append(i.data)
         return tuple(result)
@@ -933,15 +931,15 @@ class RpModel(_McFileJsonMulti['RpModels']):
         if not key.startswith('.geometry'):
             raise AttributeError("Key must start with '.geometry'")
         if self.format_version <= (1, 10, 0):
-            if isinstance(self.json, JSONWalkerDict):
+            if isinstance(self.json.data, dict):
                 return self.json / key
         else:  # Probably something <= 1.16.0
             id_walker = (
                 self.json / 'minecraft:geometry' // int)
             for model in id_walker:
                 if not isinstance(
-                        model / 'description' / 'identifier' / key,
-                        JSONWalkerInvalidPath):
+                        (model / 'description' / 'identifier' / key).data,
+                        Exception):
                     return model
         raise KeyError(key)
 
@@ -950,7 +948,7 @@ class RpParticle(_McFileJsonSingle['RpParticles']):
     def identifier(self) -> Optional[str]:
         id_walker = (
             self.json / "particle_effect" / "description" / "identifier")
-        if isinstance(id_walker, JSONWalkerStr):
+        if isinstance(id_walker.data, str):
             return id_walker.data
         return None
 
@@ -958,14 +956,14 @@ class RpRenderController(_McFileJsonMulti['RpRenderControllers']):  # GENERIC
     @property
     def identifiers(self) -> Tuple[str, ...]:
         id_walker = (self.json / "render_controllers")
-        if isinstance(id_walker, JSONWalkerDict):
+        if isinstance(id_walker.data, dict):
             return tuple(
                 [k for k in id_walker.data.keys() if isinstance(k, str)])
         return tuple()
 
     def __getitem__(self, key: str) -> JSONWalker:
         id_walker = (self.json / "render_controllers")
-        if isinstance(id_walker, JSONWalkerDict):
+        if isinstance(id_walker.data, dict):
             if key in id_walker.data:
                 return id_walker / key
         raise KeyError(key)
@@ -980,7 +978,7 @@ class BpRecipe(_McFileJsonMulti['BpRecipes']):
             "identifier")
         result: List[str] = []
         for identifier_walker in id_walker.data:
-            if isinstance(identifier_walker, JSONWalkerStr):
+            if isinstance(identifier_walker.data, str):
                 result.append(identifier_walker.data)
         return tuple(result)
 
@@ -990,7 +988,7 @@ class BpRecipe(_McFileJsonMulti['BpRecipes']):
             '|(minecraft:recipe_shapeless)|(minecraft:recipe_brewing_mix)|'
             '(minecraft:recipe_brewing_container)' / "description"  /
             "identifier")
-        if isinstance(id_walker, JSONWalkerDict):
+        if isinstance(id_walker.data, dict):
             if key in id_walker.data:
                 return id_walker / key
         raise KeyError(key)
@@ -1223,7 +1221,7 @@ class _UniqueMcFileJson(_UniqueMcFile[MCPACK]):
             path: Optional[Path]=None,
             pack: Optional[MCPACK]=None) -> None:
         super().__init__(path=path, pack=pack)
-        self._json: JSONWalker = JSONWalker.from_json(None)
+        self._json: JSONWalker = JSONWalker(None)
         try:
             with self.path.open('r') as f:
                 self._json = JSONWalker.load(f, cls=JSONCDecoder)
@@ -1282,12 +1280,12 @@ class RpSoundDefinitionsJson(_UniqueMcFileJsonMulti[ResourcePack]):
         format_version: Tuple[int, ...] = tuple()
         try:
             id_walker = self.json / 'format_version'
-            if isinstance(id_walker, JSONWalkerStr):
+            if isinstance(id_walker.data, str):
                 format_version = tuple(
                     [int(i) for i in id_walker.data.split('.')])
         except:  # Guessing the format version instead
             id_walker = self.json / 'sound_definitions'
-            if isinstance(id_walker, JSONWalkerDict):
+            if isinstance(id_walker.data, dict):
                 format_version = (1, 14, 0)
         return format_version
 
@@ -1296,12 +1294,12 @@ class RpSoundDefinitionsJson(_UniqueMcFileJsonMulti[ResourcePack]):
         result: List[str] = []
         if self.format_version <= (1, 14, 0):
             id_walker = self.json / 'sound_definitions'
-            if isinstance(id_walker, JSONWalkerDict):
+            if isinstance(id_walker.data, dict):
                 for key in id_walker.data.keys():
                     if isinstance(key, str):
                         result.append(key)
         else:
-            if isinstance(self.json, JSONWalkerDict):
+            if isinstance(self.json.data, dict):
                 for key in self.json.data.keys():
                     if isinstance(key, str) and key != 'format_version':
                         result.append(key)
@@ -1311,11 +1309,11 @@ class RpSoundDefinitionsJson(_UniqueMcFileJsonMulti[ResourcePack]):
         if key != 'format_version':
             if self.format_version <= (1, 14, 0):
                 walker = self.json / 'sound_definitions' / key
-                if not isinstance(walker, JSONWalkerInvalidPath):
+                if not isinstance(walker.data, Exception):
                     return walker
             else:
                 walker = self.json / key
-                if not isinstance(walker, JSONWalkerInvalidPath):
+                if not isinstance(walker.data, Exception):
                     return walker
         raise KeyError(key)
 
@@ -1326,7 +1324,7 @@ class RpBiomesClientJson(_UniqueMcFileJsonMulti[ResourcePack]):
     def identifiers(self) -> Tuple[str, ...]:
         result: List[str] = []
         walker = self.json / 'biomes'
-        if isinstance(walker, JSONWalkerDict):
+        if isinstance(walker.data, dict):
             for key in walker.data.keys():
                 if isinstance(key, str):
                     result.append(key)
@@ -1334,7 +1332,7 @@ class RpBiomesClientJson(_UniqueMcFileJsonMulti[ResourcePack]):
 
     def __getitem__(self, key: str) -> JSONWalker:
         result = self.json / 'biomes' / key
-        if isinstance(result, JSONWalkerInvalidPath):
+        if isinstance(result.data, Exception):
             raise KeyError(key)
         return result
 
@@ -1345,7 +1343,7 @@ class RpItemTextureJson(_UniqueMcFileJsonMulti[ResourcePack]):
     def identifiers(self) -> Tuple[str, ...]:
         result: List[str] = []
         walker = self.json / 'texture_data'
-        if isinstance(walker, JSONWalkerDict):
+        if isinstance(walker.data, dict):
             for key in walker.data.keys():
                 if isinstance(key, str):
                     result.append(key)
@@ -1353,7 +1351,7 @@ class RpItemTextureJson(_UniqueMcFileJsonMulti[ResourcePack]):
 
     def __getitem__(self, key: str) -> JSONWalker:
         result = self.json / 'texture_data' / key
-        if isinstance(result, JSONWalkerInvalidPath):
+        if isinstance(result.data, Exception):
             raise KeyError(key)
         return result
 
@@ -1365,14 +1363,14 @@ class RpFlipbookTexturesJson(_UniqueMcFileJsonMulti[ResourcePack]):
         result: List[str] = []
         walkers = self.json // int / 'flipbook_texture'
         for walker in walkers:
-            if isinstance(walker, JSONWalkerStr):
+            if isinstance(walker.data, str):
                 result.append(walker.data)
         return tuple(set(result))
 
     def __getitem__(self, key: str) -> JSONWalker:
         walkers = self.json // int / 'flipbook_texture'
         for walker in walkers:
-            if isinstance(walker, JSONWalkerStr) and walker.data == key:
+            if isinstance(walker.data, str) and walker.data == key:
                 return walker.parent
         raise KeyError(key)
 
@@ -1383,7 +1381,7 @@ class RpTerrainTextureJson(_UniqueMcFileJsonMulti[ResourcePack]):
     def identifiers(self) -> Tuple[str, ...]:
         result: List[str] = []
         walker = self.json / 'texture_data'
-        if isinstance(walker, JSONWalkerDict):
+        if isinstance(walker.data, dict):
             for key in walker.data.keys():
                 if isinstance(key, str):
                     result.append(key)
@@ -1391,7 +1389,7 @@ class RpTerrainTextureJson(_UniqueMcFileJsonMulti[ResourcePack]):
 
     def __getitem__(self, key: str) -> JSONWalker:
         result = self.json / 'texture_data' / key
-        if isinstance(result, JSONWalkerInvalidPath):
+        if isinstance(result.data, Exception):
             raise KeyError(key)
         return result
 
@@ -1401,7 +1399,7 @@ class RpBlocksJson(_UniqueMcFileJsonMulti[ResourcePack]):
     @property
     def identifiers(self) -> Tuple[str, ...]:
         result: List[str] = []
-        if isinstance(self.json, JSONWalkerDict):
+        if isinstance(self.json.data, dict):
             for key in self.json.data.keys():
                 if isinstance(key, str):
                     result.append(key)
@@ -1409,7 +1407,7 @@ class RpBlocksJson(_UniqueMcFileJsonMulti[ResourcePack]):
 
     def __getitem__(self, key: str) -> JSONWalker:
         result = self.json / key
-        if isinstance(result, JSONWalkerInvalidPath):
+        if isinstance(result.data, Exception):
             raise KeyError(key)
         return result
 
@@ -1419,7 +1417,7 @@ class RpMusicDefinitionsJson(_UniqueMcFileJsonMulti[ResourcePack]):
     @property
     def identifiers(self) -> Tuple[str, ...]:
         result: List[str] = []
-        if isinstance(self.json, JSONWalkerDict):
+        if isinstance(self.json.data, dict):
             for key in self.json.data.keys():
                 if isinstance(key, str):
                     result.append(key)
@@ -1427,7 +1425,7 @@ class RpMusicDefinitionsJson(_UniqueMcFileJsonMulti[ResourcePack]):
 
     def __getitem__(self, key: str) -> JSONWalker:
         result = self.json / key
-        if isinstance(result, JSONWalkerInvalidPath):
+        if isinstance(result.data, Exception):
             raise KeyError(key)
         return result
 
@@ -1471,13 +1469,13 @@ class _RpSoundsJsonPart(ABC):
         '''
         Used to access pitch and volume from walker.
         '''
-        if isinstance(walker, JSONWalkerList):
+        if isinstance(walker.data, list):
             data = walker.data
             if (
                     len(data) == 2 and isinstance(data[0], (float, int)) and
                     isinstance(data[1], (float, int))):
                 return (data[0], data[1])
-        elif isinstance(walker, (JSONWalkerFloat, JSONWalkerInt)):
+        elif isinstance(walker.data, (float, int)):
             return (walker.data, walker.data)
         return None
 
@@ -1495,11 +1493,11 @@ class BlockSoundEvent(_RpSoundsJsonPartWithSound):
     @property
     def sound(self) -> Optional[str]:
         walker = self.json / 'sound'
-        if isinstance(walker, JSONWalkerStr):
+        if isinstance(walker.data, str):
             return walker.data
         # Try to get the value from defaults
         walker = self.json.parent / 'default'
-        if isinstance(walker, JSONWalkerStr):
+        if isinstance(walker.data, str):
             return walker.data
         return None
 
@@ -1522,20 +1520,20 @@ class BlockSoundEvent(_RpSoundsJsonPartWithSound):
 class EntitySoundEvent(_RpSoundsJsonPartWithSound):
     @property
     def sound(self) -> Optional[str]:
-        if isinstance(self.json, JSONWalkerStr):
+        if isinstance(self.json.data, str):
             return self.json.data
         walker = self.json / 'sound'
-        if isinstance(walker, JSONWalkerStr):
+        if isinstance(walker.data, str):
             return walker.data
         event_key = self.json.parent_key
         if isinstance(event_key, str):
             walker = (
                 self.json.parent.parent.parent.parent / 'defaults' / 'events' /
                 event_key)
-            if isinstance(walker, JSONWalkerStr):
+            if isinstance(walker.data, str):
                 return walker.data
             walker = walker / 'sound'
-            if isinstance(walker, JSONWalkerStr):
+            if isinstance(walker.data, str):
                 return walker.data
         return None
 
@@ -1591,7 +1589,7 @@ class IndividualSoundEvent(_RpSoundsJsonPartWithSound):
     @property
     def sound(self) -> Optional[str]:
         walker = self.json / 'sound'
-        if isinstance(walker, JSONWalkerStr):
+        if isinstance(walker.data, str):
             return walker.data
         return None
 
@@ -1607,11 +1605,11 @@ class InteractiveBlockSoundEvent(_RpSoundsJsonPartWithSound):
     @property
     def sound(self) -> Optional[str]:
         walker = self.json / 'sound'
-        if isinstance(walker, JSONWalkerStr):
+        if isinstance(walker.data, str):
             return walker.data
         # Try to get the value from defaults
         walker = self.json.parent / 'default'
-        if isinstance(walker, JSONWalkerStr):
+        if isinstance(walker.data, str):
             return walker.data
         return None
 
@@ -1639,7 +1637,7 @@ class InteractiveEntitySoundEvent(_RpSoundsJsonPart):
         and value is the sound name.
         '''
         result: Dict[str, str] = {}
-        if isinstance(self.json, JSONWalkerDict):
+        if isinstance(self.json.data, dict):
             for k, v in self.json.data.items():
                 if isinstance(k, str) and isinstance(v, str):
                     result[k] = v
@@ -1708,7 +1706,7 @@ class _BlockSoundEventQuery(
                 raise KeyError(key)
             walker = (
                 collection.json / 'block_sounds' / key[0] / 'events' / key[1])
-            if not isinstance(walker, JSONWalkerInvalidPath):
+            if not isinstance(walker.data, Exception):
                 return BlockSoundEvent(collection, walker)
         raise KeyError(key)
 
@@ -1734,7 +1732,7 @@ class _EntitySoundEventQuery(
             walker = (
                 collection.json / 'entity_sounds' / 'entities' / key[0] /
                 'events' / key[1])
-            if not isinstance(walker, JSONWalkerInvalidPath):
+            if not isinstance(walker.data, Exception):
                 return EntitySoundEvent(collection, walker)
         raise KeyError(key)
 
@@ -1758,7 +1756,7 @@ class _IndividualSoundEventQuery(
         for collection in reversed(self.sounds_json_collection):
             walker = (
                 collection.json / 'individual_event_sounds' / 'events' / key)
-            if not isinstance(walker, JSONWalkerInvalidPath):
+            if not isinstance(walker.data, Exception):
                 return IndividualSoundEvent(collection, walker)
         raise KeyError(key)
 
@@ -1783,7 +1781,7 @@ class _InteractiveBlockSoundEventQuery(
             walker = (
                 collection.json / 'interactive_sounds' / 'block_sounds' /
                 key[0] / 'events' / key[1])
-            if not isinstance(walker, JSONWalkerInvalidPath):
+            if not isinstance(walker.data, Exception):
                 return InteractiveBlockSoundEvent(collection, walker)
         raise KeyError(key)
 
@@ -1810,7 +1808,7 @@ class _InteractiveEntitySoundEventQuery(
             walker = (
                 collection.json / 'interactive_sounds' / 'entity_sounds' /
                 'entities' / key[0] / 'events' / key[1])
-            if not isinstance(walker, JSONWalkerInvalidPath):
+            if not isinstance(walker.data, Exception):
                 return InteractiveEntitySoundEvent(collection, walker)
         raise KeyError(key)
 
@@ -1827,4 +1825,3 @@ class _InteractiveEntitySoundEventQuery(
                     continue
                 result.append((k0, k1))
         return tuple(set(result))
-
