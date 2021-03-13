@@ -2,7 +2,7 @@
 Provides decoder for JSON with comments and helps you navigate
 objects loaded into Python from JSON files.
 
-This submodule is used by in :module:`bedrock_packs` to get any information
+This submodule is used by in :code:`bedrock_packs` to get any information
 from JSON files but it's also useful to easily navigate the content of JSON
 with writing as little code as possible.
 

@@ -48,20 +48,19 @@ class Project:
 
     @property
     def bps(self) -> Tuple[BehaviorPack, ...]:
-        '''tuple with behaviorpacks from this project'''
+        '''Tuple with behavior packs from this :class:`Project`'''
         return tuple(self._bps)
 
     @property
     def rps(self) -> Tuple[ResourcePack, ...]:
-        '''tuple with resourcepacks from this project'''
+        '''Tuple with resource packs from this :class:`Project`'''
         return tuple(self._rps)
 
     def uuid_bps(self) -> Dict[str, BehaviorPack]:
         '''
-        A view of :class:`BehaviorPack` from this project. The packs
-        without UUID are skipped.
-
-        :returns: a dictionary with packs uuids for keys and packs for values
+        Returns a dictionary that maps :class:`BehaviorPack` objects that
+        belong to this :class:`Project` to their UUIDs (the UUIDS are used
+        as dict keys). The packs without UUID are skipped.
         '''
         result: Dict[str, BehaviorPack] = {}
         for bp in self.bps:
@@ -71,10 +70,9 @@ class Project:
 
     def uuid_rps(self) -> Dict[str, ResourcePack]:
         '''
-        A view of :class:`ResourcePack` from this project. The packs
-        without UUID are skipped.
-
-        :returns: a dictionary with packs uuids for keys and packs for values
+        Returns a dictionary that maps :class:`ResourcePack` objects that
+        belong to this :class:`Project` to their UUIDs (the UUIDS are used
+        as dict keys). The packs without UUID are skipped.
         '''
         result: Dict[str, ResourcePack] = {}
         for rp in self.rps:
@@ -84,9 +82,9 @@ class Project:
 
     def path_bps(self) -> Dict[Path, BehaviorPack]:
         '''
-        A view of :class:`BehaviorPack` from this project.
-
-        :returns: a dictionary with packs paths for keys and packs for values
+        Returns a dictionary that maps :class:`BehaviorPack` objects that
+        belong to this :class:`Project` to their paths (the paths are used
+        as dict keys).
         '''
         result: Dict[Path, BehaviorPack] = {}
         for bp in self.bps:
@@ -95,9 +93,9 @@ class Project:
 
     def path_rps(self) -> Dict[Path, ResourcePack]:
         '''
-        A view of :class:`ResourcePack` from this project.
-
-        :returns: a dictionary with packs paths for keys and packs for values
+        Returns a dictionary that maps :class:`ResourcePack` objects that
+        belong to this :class:`Project` to their paths (the paths are used
+        as dict keys).
         '''
         result: Dict[Path, ResourcePack] = {}
         for rp in self.rps:
@@ -106,7 +104,7 @@ class Project:
 
     def add_bp(self, pack: BehaviorPack) -> None:
         '''
-        Adds behavior pack to this project
+        Adds behavior pack to this project.
 
         :param pack: the behavior pack
         '''
@@ -115,7 +113,7 @@ class Project:
 
     def add_rp(self, pack: ResourcePack) -> None:
         '''
-        Adds behavior pack to this project
+        Adds resource pack to this project
 
         :param pack: the resource pack
         '''
@@ -125,18 +123,30 @@ class Project:
     @property
     def bp_entities(
             self) -> _McFileCollectionQuery[BpEntity]:
+        '''
+        Returns a file collection of all behavior pack entities from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             BpEntities, [i.entities for i in self.bps])
 
     @property
     def rp_entities(
             self) -> _McFileCollectionQuery[RpEntity]:
+        '''
+        Returns a file collection of all resource pack entities from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             RpEntities, [i.entities for i in self.rps])
 
     @property
     def bp_animation_controllers(
             self) -> _McFileCollectionQuery[BpAnimationController]:
+        '''
+        Returns a file collection of all behavior pack animation controllers
+        from this :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             BpAnimationControllers,
             [i.animation_controllers for i in self.bps])
@@ -144,6 +154,10 @@ class Project:
     @property
     def rp_animation_controllers(
             self) -> _McFileCollectionQuery[RpAnimationController]:
+        '''
+        Returns a file collection of all resource pack animation controllers
+        from this :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             RpAnimationControllers,
             [i.animation_controllers for i in self.rps])
@@ -151,143 +165,246 @@ class Project:
     @property
     def bp_blocks(
             self) -> _McFileCollectionQuery[BpBlock]:
+        '''
+        Returns a file collection of all behavior pack blocks from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(BpBlocks, [i.blocks for i in self.bps])
 
     @property
     def bp_items(
             self) -> _McFileCollectionQuery[BpItem]:
+        '''
+        Returns a file collection of all behavior pack items from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(BpItems, [i.items for i in self.bps])
 
     @property
     def rp_items(
             self) -> _McFileCollectionQuery[RpItem]:
+        '''
+        Returns a file collection of all resource pack items from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(RpItems, [i.items for i in self.rps])
 
     @property
     def bp_loot_tables(
             self) -> _McFileCollectionQuery[BpLootTable]:
+        '''
+        Returns a file collection of all behavior pack loot tables from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             BpLootTables, [i.loot_tables for i in self.bps])
 
     @property
     def bp_functions(
             self) -> _McFileCollectionQuery[BpFunction]:
+        '''
+        Returns a file collection of all behavior pack functions from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             BpFunctions, [i.functions for i in self.bps])
 
     @property
     def rp_sound_files(
             self) -> _McFileCollectionQuery[RpSoundFile]:
+        '''
+        Returns a file collection of all resource pack sound files from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             RpSoundFiles, [i.sound_files for i in self.rps])
 
     @property
     def rp_texture_files(
             self) -> _McFileCollectionQuery[RpTextureFile]:
+        '''
+        Returns a file collection of all resource pack texture files from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             RpTextureFiles, [i.texture_files for i in self.rps])
 
     @property
     def bp_spawn_rules(
             self) -> _McFileCollectionQuery[BpSpawnRule]:
+        '''
+        Returns a file collection of all behavior pack spawn rules from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             BpSpawnRules, [i.spawn_rules for i in self.bps])
 
     @property
     def bp_trades(
             self) -> _McFileCollectionQuery[BpTrade]:
+        '''
+        Returns a file collection of all behavior pack trades from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(BpTrades, [i.trades for i in self.bps])
 
     @property
     def bp_recipes(
             self) -> _McFileCollectionQuery[BpRecipe]:
+        '''
+        Returns a file collection of all behavior pack recipes from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(BpRecipes, [i.recipes for i in self.bps])
 
     @property
     def rp_models(
             self) -> _McFileCollectionQuery[RpModel]:
+        '''
+        Returns a file collection of all resource pack models from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(RpModels, [i.models for i in self.rps])
 
     @property
     def rp_particles(
             self) -> _McFileCollectionQuery[RpParticle]:
+        '''
+        Returns a file collection of all resource pack particles from this
+        :class:`Project`.
+        '''
         return _McFileCollectionQuery(
             RpParticles, [i.particles for i in self.rps])
 
     @property
     def rp_render_controllers(
             self) -> _McFileCollectionQuery[RpRenderController]:
+        '''
+        Returns a file collection of all resource pack render controllers
+        from this :class:`Project`.
+        '''
         return  _McFileCollectionQuery(
             RpRenderControllers, [i.render_controllers for i in self.rps])
 
     @property
     def rp_sound_definitions_json(
             self) -> _UniqueMcFileJsonMultiQuery[RpSoundDefinitionsJson]:
+        '''
+        Returns a unique file collection of all resource pack
+        sound_definitions.json files from this :class:`Project`.
+        '''
         return _UniqueMcFileJsonMultiQuery(
             [i.sound_definitions_json for i in self.rps])
 
     @property
     def rp_blocks_json(
             self) -> _UniqueMcFileJsonMultiQuery[RpBlocksJson]:
+        '''
+        Returns a unique file collection of all resource pack blocks.json files
+        from this :class:`Project`.
+        '''
         return _UniqueMcFileJsonMultiQuery([i.blocks_json for i in self.rps])
 
     @property
     def rp_music_definitions_json(
             self) -> _UniqueMcFileJsonMultiQuery[RpMusicDefinitionsJson]:
+        '''
+        Returns a unique file collection of all resource pack
+        music_definitions.json files from this :class:`Project`.
+        '''
         return _UniqueMcFileJsonMultiQuery(
             [i.music_definitions_json for i in self.rps])
 
     @property
     def rp_biomes_client_json(
             self) -> _UniqueMcFileJsonMultiQuery[RpBiomesClientJson]:
+        '''
+        Returns a unique file collection of all resource pack
+        biomes_client.json files from this :class:`Project`.
+        '''
         return _UniqueMcFileJsonMultiQuery(
             [i.biomes_client_json for i in self.rps])
 
     @property
     def rp_item_texture_json(
             self) -> _UniqueMcFileJsonMultiQuery[RpItemTextureJson]:
+        '''
+        Returns a unique file collection of all resource pack
+        item_texture.json files from this :class:`Project`.
+        '''
         return _UniqueMcFileJsonMultiQuery(
             [i.item_texture_json for i in self.rps])
 
     @property
     def rp_flipbook_textures_json(
             self) -> _UniqueMcFileJsonMultiQuery[RpFlipbookTexturesJson]:
+        '''
+        Returns a unique file collection of all resource pack
+        flipbook_textures.json files from this :class:`Project`.
+        '''
         return _UniqueMcFileJsonMultiQuery(
             [i.flipbook_textures_json for i in self.rps])
 
     @property
     def rp_terrain_texture_json(
             self) -> _UniqueMcFileJsonMultiQuery[RpTerrainTextureJson]:
+        '''
+        Returns a unique file collection of all resource pack
+        terrain_texture.json files from this :class:`Project`.
+        '''
         return _UniqueMcFileJsonMultiQuery(
             [i.terrain_texture_json for i in self.rps])
 
     @property
     def rp_sounds_json_block_sound_event(
             self) -> _BlockSoundEventQuery:
+        '''
+        Returns a collection of all block sound events from all sounds.json
+        files from all resource packs that belong to this :class:`Project`.
+        '''
         return _BlockSoundEventQuery(
             [i.sounds_json for i in self.rps])
 
     @property
     def rp_sounds_json_entity_sound_event(
             self) -> _EntitySoundEventQuery:
+        '''
+        Returns a collection of all entity sound events from all sounds.json
+        files from all resource packs that belong to this :class:`Project`.
+        '''
         return _EntitySoundEventQuery(
             [i.sounds_json for i in self.rps])
 
     @property
     def rp_sounds_json_individual_sound_event(
             self) -> _IndividualSoundEventQuery:
+        '''
+        Returns a collection of all individual sound events from all
+        sounds.json files from all resource packs that belong to this
+        :class:`Project`.
+        '''
         return _IndividualSoundEventQuery(
             [i.sounds_json for i in self.rps])
 
     @property
     def rp_sounds_json_interactive_block_sound_event(
             self) -> _InteractiveBlockSoundEventQuery:
+        '''
+        Returns a collection of all interactive block sound events from all
+        sounds.json files from all resource packs that belong to this
+        :class:`Project`.
+        '''
         return _InteractiveBlockSoundEventQuery(
             [i.sounds_json for i in self.rps])
 
     @property
     def rp_sounds_json_interactive_entity_sound_event(
             self) -> _InteractiveEntitySoundEventQuery:
+        '''
+        Returns a collection of all interactive entity sound events from all
+        sounds.json files from all resource packs that belong to this
+        :class:`Project`.
+        '''
         return _InteractiveEntitySoundEventQuery(
             [i.sounds_json for i in self.rps])
 
@@ -902,8 +1019,6 @@ class RpModel(_McFileJsonMulti['RpModels']):
         '''
         Return the format version of the model or guess the version based
         on the file structure if it's missing.
-
-        :returns: format version of the model file
         '''
         format_version: Tuple[int, ...] = (1, 8, 0)
         try:
@@ -1017,9 +1132,9 @@ class _McPackCollectionSingle(_McFileCollection[MCPACK, MCFILE_SINGLE]):
         Creates and returns dictionaries with summary of the objects contained
         in this collection. Used by __getitem__ to find specific objects.
 
-        :returns: Two dictionaries - first dict uses paths for keys and
-            identifiers for values, second dict uses identifiers for keys and
-            objects from this collection for values.
+        First dict maps identifiers (values) to paths (keys),
+        second dict maps objects from this collection (values) to
+        identifiers (keys).
         '''
         path_ids: Dict[Path, List[str]] = {}
         id_items: Dict[str, List[MCFILE_SINGLE]] = {}
@@ -1049,12 +1164,12 @@ class _McPackCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
     def _quick_access_list_views(self) -> Tuple[
             Dict[Path, List[str]], Dict[str, List[MCFILE_MULTI]]]:
         '''
-        Creates and returns dictionaries with summary of the objects contained
-        in this collection. Used by __getitem__ to find specific objects.
+        Creates and returns two dictionaries with summary of the objects
+        contained in this collection. Used by __getitem__ to find specific
+        objects.
 
-        :returns: Two dictionaries - first dict uses paths for keys and
-            identifiers for values, second dict uses identifiers for keys and
-            objects from this collection for values.
+        First dict maps identifiers (values) to paths (keys),
+        second mapsobjects from this collection (values) to identifiers (keys).
         '''
         path_ids: Dict[Path, List[str]] = {}
         id_items: Dict[str, List[MCFILE_MULTI]] = {}
@@ -1281,8 +1396,6 @@ class RpSoundDefinitionsJson(_UniqueMcFileJsonMulti[ResourcePack]):
         '''
         Return the format version of the sounds.json file or guess the version
         based on the file structure if it's missing.
-
-        :returns: format version of the sounds.json file file
         '''
         # Legacy format (no format_version)
         format_version: Tuple[int, ...] = tuple()
