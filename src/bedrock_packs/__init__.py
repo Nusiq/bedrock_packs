@@ -9,7 +9,7 @@ from typing import (
     Generic, Union)
 from pathlib import Path
 
-from .json import JSONCDecoder, JSONWalker
+from .json import JSONCDecoder, JsonWalker
 
 # Package version
 VERSION = (0, 1)
@@ -105,12 +105,20 @@ class Project:
         return result
 
     def add_bp(self, pack: BehaviorPack) -> None:
-        '''Adds behavior pack to this project'''
+        '''
+        Adds behavior pack to this project
+
+        :param pack: the behavior pack
+        '''
         self._bps.append(pack)
         pack.project = self
 
     def add_rp(self, pack: ResourcePack) -> None:
-        '''Adds behavior pack to this project'''
+        '''
+        Adds behavior pack to this project
+
+        :param pack: the resource pack
+        '''
         self._rps.append(pack)
         pack.project = self
 
@@ -292,16 +300,16 @@ class _Pack(ABC):
     def __init__(self, path: Path, project: Optional[Project]=None) -> None:
         self.project: Optional[Project] = project
         self.path: Path = path
-        self._manifest: Optional[JSONWalker] = None
+        self._manifest: Optional[JsonWalker] = None
 
     @property
-    def manifest(self) -> Optional[JSONWalker]:
-        ''':class:`JSONWalker` for manifest file'''
+    def manifest(self) -> Optional[JsonWalker]:
+        ''':class:`JsonWalker` for manifest file'''
         if self._manifest is None:
             manifest_path = self.path / 'manifest.json'
             try:
                 with manifest_path.open('r') as f:
-                    self._manifest = JSONWalker.load(f)
+                    self._manifest = JsonWalker.load(f)
             except:
                 return None
         return self._manifest
@@ -706,15 +714,15 @@ class _McFileJsonSingle(_McFileSingle[MCFILE_COLLECTION]):
             owning_collection: Optional[MCFILE_COLLECTION]=None
     ) -> None:
         super().__init__(path, owning_collection=owning_collection)
-        self._json: JSONWalker = JSONWalker(None)
+        self._json: JsonWalker = JsonWalker(None)
         try:
             with path.open('r') as f:
-                self._json = JSONWalker.load(f, cls=JSONCDecoder)
+                self._json = JsonWalker.load(f, cls=JSONCDecoder)
         except:
             pass  # self._json remains None walker
 
     @property
-    def json(self) -> JSONWalker:
+    def json(self) -> JsonWalker:
         return self._json
 
 class _McFileMulti(_McFile[MCFILE_COLLECTION]):
@@ -729,19 +737,19 @@ class _McFileJsonMulti(_McFileMulti[MCFILE_COLLECTION]):
             owning_collection: Optional[MCFILE_COLLECTION]=None
     ) -> None:
         super().__init__(path, owning_collection=owning_collection)
-        self._json: JSONWalker = JSONWalker(None)
+        self._json: JsonWalker = JsonWalker(None)
         try:
             with path.open('r') as f:
-                self._json = JSONWalker.load(f, cls=JSONCDecoder)
+                self._json = JsonWalker.load(f, cls=JSONCDecoder)
         except:
             pass  # self._json remains None walker
 
     @property
-    def json(self) -> JSONWalker:
+    def json(self) -> JsonWalker:
         return self._json
 
     @abstractmethod
-    def __getitem__(self, key: str) -> JSONWalker: ...
+    def __getitem__(self, key: str) -> JsonWalker: ...
 
 # OBJECTS (IMPLEMENTATION)
 class BpEntity(_McFileJsonSingle['BpEntities']):
@@ -772,7 +780,7 @@ class _AnimationController(_McFileJsonMulti[MCFILE_COLLECTION]):  # GENERIC
                 [k for k in id_walker.data.keys() if isinstance(k, str)])
         return tuple()
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         id_walker = (self.json / "animation_controllers")
         if isinstance(id_walker.data, dict):
             if key in id_walker.data:
@@ -790,7 +798,7 @@ class _Animation(_McFileJsonMulti[MCFILE_COLLECTION]):  # GENERIC
                 [k for k in id_walker.data.keys() if isinstance(k, str)])
         return tuple()
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         id_walker = (self.json / "animations")
         if isinstance(id_walker.data, dict):
             if key in id_walker.data:
@@ -927,7 +935,7 @@ class RpModel(_McFileJsonMulti['RpModels']):
                         result.append(i.data)
         return tuple(result)
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         if not key.startswith('.geometry'):
             raise AttributeError("Key must start with '.geometry'")
         if self.format_version <= (1, 10, 0):
@@ -961,7 +969,7 @@ class RpRenderController(_McFileJsonMulti['RpRenderControllers']):  # GENERIC
                 [k for k in id_walker.data.keys() if isinstance(k, str)])
         return tuple()
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         id_walker = (self.json / "render_controllers")
         if isinstance(id_walker.data, dict):
             if key in id_walker.data:
@@ -982,7 +990,7 @@ class BpRecipe(_McFileJsonMulti['BpRecipes']):
                 result.append(identifier_walker.data)
         return tuple(result)
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         id_walker = (
             self.json // '(minecraft:recipe_shaped)|(minecraft:recipe_furnace)'
             '|(minecraft:recipe_shapeless)|(minecraft:recipe_brewing_mix)|'
@@ -1221,15 +1229,15 @@ class _UniqueMcFileJson(_UniqueMcFile[MCPACK]):
             path: Optional[Path]=None,
             pack: Optional[MCPACK]=None) -> None:
         super().__init__(path=path, pack=pack)
-        self._json: JSONWalker = JSONWalker(None)
+        self._json: JsonWalker = JsonWalker(None)
         try:
             with self.path.open('r') as f:
-                self._json = JSONWalker.load(f, cls=JSONCDecoder)
+                self._json = JsonWalker.load(f, cls=JSONCDecoder)
         except:
             pass  # self._json remains None walker
 
     @property
-    def json(self) -> JSONWalker:
+    def json(self) -> JsonWalker:
         return self._json
 
 class _UniqueMcFileJsonMulti(_UniqueMcFileJson[MCPACK]):
@@ -1237,7 +1245,7 @@ class _UniqueMcFileJsonMulti(_UniqueMcFileJson[MCPACK]):
     def identifiers(self) -> Tuple[str, ...]: ...
 
     @abstractmethod
-    def __getitem__(self, key: str) -> JSONWalker: ...
+    def __getitem__(self, key: str) -> JsonWalker: ...
 
 # Query
 class _UniqueMcFileJsonMultiQuery(Generic[UNIQUE_MC_FILE_JSON_MULTI]):
@@ -1248,7 +1256,7 @@ class _UniqueMcFileJsonMultiQuery(Generic[UNIQUE_MC_FILE_JSON_MULTI]):
     def __init__(self, pack_files: Sequence[UNIQUE_MC_FILE_JSON_MULTI]):
         self.pack_files = pack_files
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         for pack_file in reversed(self.pack_files):
             try:
                 aaa=  pack_file[key]
@@ -1305,7 +1313,7 @@ class RpSoundDefinitionsJson(_UniqueMcFileJsonMulti[ResourcePack]):
                         result.append(key)
         return tuple(result)
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         if key != 'format_version':
             if self.format_version <= (1, 14, 0):
                 walker = self.json / 'sound_definitions' / key
@@ -1330,7 +1338,7 @@ class RpBiomesClientJson(_UniqueMcFileJsonMulti[ResourcePack]):
                     result.append(key)
         return tuple(result)
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         result = self.json / 'biomes' / key
         if isinstance(result.data, Exception):
             raise KeyError(key)
@@ -1349,7 +1357,7 @@ class RpItemTextureJson(_UniqueMcFileJsonMulti[ResourcePack]):
                     result.append(key)
         return tuple(result)
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         result = self.json / 'texture_data' / key
         if isinstance(result.data, Exception):
             raise KeyError(key)
@@ -1367,7 +1375,7 @@ class RpFlipbookTexturesJson(_UniqueMcFileJsonMulti[ResourcePack]):
                 result.append(walker.data)
         return tuple(set(result))
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         walkers = self.json // int / 'flipbook_texture'
         for walker in walkers:
             if isinstance(walker.data, str) and walker.data == key:
@@ -1387,7 +1395,7 @@ class RpTerrainTextureJson(_UniqueMcFileJsonMulti[ResourcePack]):
                     result.append(key)
         return tuple(result)
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         result = self.json / 'texture_data' / key
         if isinstance(result.data, Exception):
             raise KeyError(key)
@@ -1405,7 +1413,7 @@ class RpBlocksJson(_UniqueMcFileJsonMulti[ResourcePack]):
                     result.append(key)
         return tuple(result)
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         result = self.json / key
         if isinstance(result.data, Exception):
             raise KeyError(key)
@@ -1423,7 +1431,7 @@ class RpMusicDefinitionsJson(_UniqueMcFileJsonMulti[ResourcePack]):
                     result.append(key)
         return tuple(result)
 
-    def __getitem__(self, key: str) -> JSONWalker:
+    def __getitem__(self, key: str) -> JsonWalker:
         result = self.json / key
         if isinstance(result.data, Exception):
             raise KeyError(key)
@@ -1460,7 +1468,7 @@ class RpSoundsJson(_UniqueMcFileJson[ResourcePack]):
 
 # Various parts of the sounds.json file
 class _RpSoundsJsonPart(ABC):
-    def __init__(self, sounds_json: RpSoundsJson, json: JSONWalker):
+    def __init__(self, sounds_json: RpSoundsJson, json: JsonWalker):
         self.sounds_json = sounds_json
         self.json = json
 
