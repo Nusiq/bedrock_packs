@@ -642,7 +642,7 @@ class ResourcePack(_Pack):
 # OBJECT COLLECTIONS (GENERIC)
 class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
     '''
-    Collection of :class:`_McFile`.
+    Collection of files that contain objects of a certain type (collection of :class:`_McFile`).
     '''
     pack_path: ClassVar[str]
     file_patterns: ClassVar[Tuple[str, ...]]
@@ -781,8 +781,9 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
 # Query
 class _McFileCollectionQuery(Generic[MCFILE]):
     '''
+    Groups multiple file collections (sometimes from multiple packs).
     Used in :class:`Project` to provide methods for finding McFiles in
-    McFileCollections that belong to that project.
+    :class:`McFileCollections` that belong to that project.
     '''
     def __init__(
             self,
@@ -820,12 +821,18 @@ class _McFile(Generic[MCFILE_COLLECTION], ABC):
         return self._owning_collection
 
 class _McFileSingle(_McFile[MCFILE_COLLECTION]):
-    '''McFile with single Minecraft object'''
+    '''
+    A file that can contain only one object of certain type from a pack.
+    :class:`McFile` with single Minecraft object
+    '''
     @abstractproperty
     def identifier(self) -> Optional[str]: ...
 
 class _McFileJsonSingle(_McFileSingle[MCFILE_COLLECTION]):
-    '''McFile that has JSON in it, with single Minecraft object'''
+    '''
+    A JSON file that can contain only one object of certain type from a pack.
+    :class:`McFile` that has JSON in it, with single Minecraft object.
+    '''
     def __init__(
             self, path: Path,
             owning_collection: Optional[MCFILE_COLLECTION]=None
@@ -843,12 +850,18 @@ class _McFileJsonSingle(_McFileSingle[MCFILE_COLLECTION]):
         return self._json
 
 class _McFileMulti(_McFile[MCFILE_COLLECTION]):
-    '''McFile with multiple Minecraft objects'''
+    '''
+    A file that can contain multiple objects of certain type from a pack.
+    :class:`McFile` with multiple Minecraft objects.
+    '''
     @abstractproperty
     def identifiers(self) -> Tuple[str, ...]: ...
 
 class _McFileJsonMulti(_McFileMulti[MCFILE_COLLECTION]):
-    '''McFile that has JSON in it, with multiple Minecraft objects'''
+    '''
+    A JSON file that can contain multiple objects of certain type from a pack.
+    :class:`McFile` that has JSON in it, with multiple Minecraft objects.
+    '''
     def __init__(
             self, path: Path,
             owning_collection: Optional[MCFILE_COLLECTION]=None
@@ -1118,7 +1131,10 @@ class BpRecipe(_McFileJsonMulti['BpRecipes']):
 
 # OBJECT COLLECTIONS (IMPLEMENTATIONS)
 class _McPackCollectionSingle(_McFileCollection[MCPACK, MCFILE_SINGLE]):
-    '''A collection of :class:`_McFileSingle` objects.'''
+    '''
+    Collection of files where each file represent exactly one object of certain type
+    (a collection of :class:`_McFileSingle` objects).
+    '''
     def keys(self) -> Tuple[str, ...]:
         result: List[str] = []
         for obj in self.objects:
@@ -1154,7 +1170,10 @@ class _McPackCollectionSingle(_McFileCollection[MCPACK, MCFILE_SINGLE]):
         return (path_ids, id_items)
 
 class _McPackCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
-    '''A collection of :class:`_McFileMulti` objects.'''
+    '''
+    Collection of files where each file can represent multiple objects of certain type
+    (a collection of :class:`_McFileMulti` objects).
+    '''
     def keys(self) -> Tuple[str, ...]:
         result: List[str] = []
         for obj in self.objects:
@@ -1308,6 +1327,10 @@ class BpRecipes(_McPackCollectionMulti[BehaviorPack, BpRecipe]):
 
 # SPECIAL PACK FILES - ONE FILE PER PACK (GENERICS)
 class _UniqueMcFile(Generic[MCPACK], ABC):
+    '''
+    A file which is unique for the pack. E.g. You can have only one blocks.json file in
+    a resource pack.
+    '''
     pack_path: ClassVar[str]
 
     def __init__(
@@ -1365,6 +1388,7 @@ class _UniqueMcFileJsonMulti(_UniqueMcFileJson[MCPACK]):
 # Query
 class _UniqueMcFileJsonMultiQuery(Generic[UNIQUE_MC_FILE_JSON_MULTI]):
     '''
+    Groups multiple unique files (often from multiple packs).
     Used in :class:`Project` to provide methods for finding McSpecialPackFiles
     that belong to the project.
     '''
@@ -1581,6 +1605,10 @@ class RpSoundsJson(_UniqueMcFileJson[ResourcePack]):
 
 # Various parts of the sounds.json file
 class _RpSoundsJsonPart(ABC):
+    '''
+    A part of sounds.json file. The sounds.json file is a special case
+    because it holds 5 different types of the objects.
+    '''
     def __init__(self, sounds_json: RpSoundsJson, json: JsonWalker):
         self.sounds_json = sounds_json
         self.json = json
@@ -1805,11 +1833,12 @@ class InteractiveEntitySoundEvent(_RpSoundsJsonPart):
         return None
 
 # sounds.json queries
-class __RpSoundsJsonPartQuery(
+class _RpSoundsJsonPartQuery(
         Generic[RP_SOUNDS_JSON_PART, RP_SOUNDS_JSON_PART_KEY]):
     '''
-    Used in :class:`Project` and :class:`_RpSoundsJsonPart` to get info about
-    parts of sounds.json file(s).
+    Groups multiple parts of certain type from the sounds.json (often from
+    multiple packs). Used in :class:`Project` and :class:`_RpSoundsJsonPart`
+    to get info about parts of sounds.json file(s).
     '''
     def __init__(self, sounds_json_collection: Sequence[RpSoundsJson]) -> None:
         self.sounds_json_collection = sounds_json_collection
@@ -1820,7 +1849,7 @@ class __RpSoundsJsonPartQuery(
     def keys(self) -> Tuple[RP_SOUNDS_JSON_PART_KEY, ...]: ...
 
 class _BlockSoundEventQuery(
-        __RpSoundsJsonPartQuery[BlockSoundEvent, Tuple[str, str]]):
+        _RpSoundsJsonPartQuery[BlockSoundEvent, Tuple[str, str]]):
     def __getitem__(self, key: Tuple[str, str]) -> BlockSoundEvent:
         for collection in reversed(self.sounds_json_collection):
             if key[1] == 'default':
@@ -1847,7 +1876,7 @@ class _BlockSoundEventQuery(
         return tuple(set(result))
 
 class _EntitySoundEventQuery(
-        __RpSoundsJsonPartQuery[EntitySoundEvent, Tuple[str, str]]):
+        _RpSoundsJsonPartQuery[EntitySoundEvent, Tuple[str, str]]):
     def __getitem__(self, key: Tuple[str, str]) -> EntitySoundEvent:
         for collection in reversed(self.sounds_json_collection):
             walker = (
@@ -1872,7 +1901,7 @@ class _EntitySoundEventQuery(
         return tuple(set(result))
 
 class _IndividualSoundEventQuery(
-        __RpSoundsJsonPartQuery[IndividualSoundEvent, str]):
+        _RpSoundsJsonPartQuery[IndividualSoundEvent, str]):
     def __getitem__(self, key: str) -> IndividualSoundEvent:
         for collection in reversed(self.sounds_json_collection):
             walker = (
@@ -1894,7 +1923,7 @@ class _IndividualSoundEventQuery(
         return tuple(set(result))
 
 class _InteractiveBlockSoundEventQuery(
-        __RpSoundsJsonPartQuery[InteractiveBlockSoundEvent, Tuple[str, str]]):
+        _RpSoundsJsonPartQuery[InteractiveBlockSoundEvent, Tuple[str, str]]):
     def __getitem__(self, key: Tuple[str, str]) -> InteractiveBlockSoundEvent:
         for collection in reversed(self.sounds_json_collection):
             if key[1] == 'default':
@@ -1923,7 +1952,7 @@ class _InteractiveBlockSoundEventQuery(
         return tuple(set(result))
 
 class _InteractiveEntitySoundEventQuery(
-        __RpSoundsJsonPartQuery[InteractiveEntitySoundEvent, Tuple[str, str]]):
+        _RpSoundsJsonPartQuery[InteractiveEntitySoundEvent, Tuple[str, str]]):
     def __getitem__(self, key: Tuple[str, str]) -> InteractiveEntitySoundEvent:
         for collection in reversed(self.sounds_json_collection):
             walker = (
