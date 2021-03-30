@@ -1,11 +1,12 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Parts of the sounds.json file" href="../sounds_json_parts/" /><link rel="prev" title="File Collections" href="../file_collections/" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Parts of the sounds.json file" href="../sounds_json_parts/" /><link rel="prev" title="File Collections" href="../file_collections/" />
 
-    <meta name="generator" content="sphinx-3.2.1, furo 2021.02.28.beta28"/>
+    <meta name="generator" content="sphinx-3.5.3, furo 2021.03.20.beta30"/>
         <title>Unique Files - Bedrock Packs 0.1 documentation</title>
-      <link rel="stylesheet" href="../../_static/styles/furo.css?digest=be5985a4059b5c2cd56ed0804790452beca62674">
+      <link rel="stylesheet" href="../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../_static/pygments_dark.css">
     
@@ -107,6 +108,7 @@
   <input type="hidden" name="area" value="default">
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../class_hierarchy/">  Class hierarchy</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../project_and_packs/">  Project and Pack</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
@@ -144,37 +146,29 @@
 <div class="toctree-wrapper compound">
 </div>
 <dl class="py class">
-<dt id="bedrock_packs.RpBiomesClientJson">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpBiomesClientJson</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pack</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpBiomesClientJson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></p>
+<dt id="bedrock_packs._UniqueMcFile">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_UniqueMcFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._UniqueMcFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCPACK</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>A file which is unique for the pack. E.g. You can have only one blocks.json file in
+a resource pack.</p>
 </dd></dl>
 <dl class="py class">
-<dt id="bedrock_packs.RpBlocksJson">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpBlocksJson</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pack</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpBlocksJson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></p>
+<dt id="bedrock_packs._UniqueMcFileJson">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_UniqueMcFileJson</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._UniqueMcFileJson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFile" title="bedrock_packs._UniqueMcFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFile</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCPACK</span></code>]</p>
 </dd></dl>
 <dl class="py class">
-<dt id="bedrock_packs.RpFlipbookTexturesJson">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpFlipbookTexturesJson</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pack</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpFlipbookTexturesJson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.RpItemTextureJson">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpItemTextureJson</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pack</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpItemTextureJson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.RpMusicDefinitionsJson">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpMusicDefinitionsJson</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pack</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpMusicDefinitionsJson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></p>
+<dt id="bedrock_packs._UniqueMcFileJsonMulti">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_UniqueMcFileJsonMulti</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._UniqueMcFileJsonMulti" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFileJson" title="bedrock_packs._UniqueMcFileJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJson</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCPACK</span></code>]</p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.RpSoundDefinitionsJson">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpSoundDefinitionsJson</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pack</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpSoundDefinitionsJson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpSoundDefinitionsJson</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpSoundDefinitionsJson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFileJsonMulti" title="bedrock_packs._UniqueMcFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></a>[<a class="reference internal" href="../project_and_packs/#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.ResourcePack</span></code></a>]</p>
 <dl class="py method">
 <dt id="bedrock_packs.RpSoundDefinitionsJson.format_version">
-<em class="property">property </em><code class="sig-name descname">format_version</code><a class="headerlink" href="#bedrock_packs.RpSoundDefinitionsJson.format_version" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">format_version</span></code><a class="headerlink" href="#bedrock_packs.RpSoundDefinitionsJson.format_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the format version of the sounds.json file or guess the version
 based on the file structure if it’s missing.</p>
 <dl class="field-list simple">
@@ -185,14 +179,47 @@ based on the file structure if it’s missing.</p>
 </dd></dl>
 </dd></dl>
 <dl class="py class">
-<dt id="bedrock_packs.RpSoundsJson">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpSoundsJson</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pack</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpSoundsJson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJson</span></code></p>
+<dt id="bedrock_packs.RpBiomesClientJson">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpBiomesClientJson</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpBiomesClientJson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFileJsonMulti" title="bedrock_packs._UniqueMcFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></a>[<a class="reference internal" href="../project_and_packs/#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.ResourcePack</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpItemTextureJson">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpItemTextureJson</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpItemTextureJson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFileJsonMulti" title="bedrock_packs._UniqueMcFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></a>[<a class="reference internal" href="../project_and_packs/#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.ResourcePack</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpFlipbookTexturesJson">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpFlipbookTexturesJson</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpFlipbookTexturesJson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFileJsonMulti" title="bedrock_packs._UniqueMcFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></a>[<a class="reference internal" href="../project_and_packs/#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.ResourcePack</span></code></a>]</p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.RpTerrainTextureJson">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpTerrainTextureJson</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pack</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpTerrainTextureJson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpTerrainTextureJson</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpTerrainTextureJson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFileJsonMulti" title="bedrock_packs._UniqueMcFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></a>[<a class="reference internal" href="../project_and_packs/#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.ResourcePack</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpBlocksJson">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpBlocksJson</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpBlocksJson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFileJsonMulti" title="bedrock_packs._UniqueMcFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></a>[<a class="reference internal" href="../project_and_packs/#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.ResourcePack</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpMusicDefinitionsJson">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpMusicDefinitionsJson</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpMusicDefinitionsJson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFileJsonMulti" title="bedrock_packs._UniqueMcFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJsonMulti</span></code></a>[<a class="reference internal" href="../project_and_packs/#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.ResourcePack</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpSoundsJson">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpSoundsJson</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpSoundsJson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._UniqueMcFileJson" title="bedrock_packs._UniqueMcFileJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._UniqueMcFileJson</span></code></a>[<a class="reference internal" href="../project_and_packs/#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.ResourcePack</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._UniqueMcFileJsonMultiQuery">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pack_files</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._UniqueMcFileJsonMultiQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.UNIQUE_MC_FILE_JSON_MULTI</span></code>]</p>
+<p>Groups multiple unique files (often from multiple packs).
+Used in <a class="reference internal" href="../project_and_packs/#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> to provide methods for finding McSpecialPackFiles
+that belong to the project.</p>
 </dd></dl>
 </div>
 
@@ -249,6 +276,5 @@ based on the file structure if it’s missing.</p>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script src="../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

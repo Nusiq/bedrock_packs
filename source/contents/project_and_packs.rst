@@ -9,6 +9,8 @@ Project and Pack
 .. py:currentmodule:: bedrock_packs
 .. autoclass:: Project
     :members:
+.. autoclass:: _Pack
+    :members:
 .. autoclass:: BehaviorPack
     :members:
 .. autoclass:: ResourcePack

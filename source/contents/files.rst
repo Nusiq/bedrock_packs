@@ -5,41 +5,55 @@ Files
     :maxdepth: 2
 
 .. py:currentmodule:: bedrock_packs
-.. autoclass:: BpAnimation
+.. autoclass:: _McFile
     :members:
-.. autoclass:: BpAnimationController
+.. autoclass:: _McFileSingle
     :members:
-.. autoclass:: BpBlock
+.. autoclass:: _McFileJsonSingle
     :members:
 .. autoclass:: BpEntity
     :members:
-.. autoclass:: BpFunction
+.. autoclass:: RpEntity
+    :members:
+.. autoclass:: BpBlock
     :members:
 .. autoclass:: BpItem
     :members:
-.. autoclass:: BpLootTable
+.. autoclass:: RpItem
     :members:
-.. autoclass:: BpRecipe
+.. autoclass:: BpLootTable
     :members:
 .. autoclass:: BpSpawnRule
     :members:
 .. autoclass:: BpTrade
     :members:
-.. autoclass:: RpAnimation
-    :members:
-.. autoclass:: RpAnimationController
-    :members:
-.. autoclass:: RpEntity
-    :members:
-.. autoclass:: RpItem
-    :members:
-.. autoclass:: RpModel
-    :members:
 .. autoclass:: RpParticle
     :members:
-.. autoclass:: RpRenderController
+.. autoclass:: BpFunction
     :members:
 .. autoclass:: RpSoundFile
     :members:
 .. autoclass:: RpTextureFile
+    :members:
+.. autoclass:: _McFileMulti
+    :members:
+.. autoclass:: _McFileJsonMulti
+    :members:
+.. autoclass:: _AnimationController
+    :members:
+.. autoclass:: BpAnimationController
+    :members:
+.. autoclass:: RpAnimationController
+    :members:
+.. autoclass:: _Animation
+    :members:
+.. autoclass:: BpAnimation
+    :members:
+.. autoclass:: RpAnimation
+    :members:
+.. autoclass:: RpModel
+    :members:
+.. autoclass:: RpRenderController
+    :members:
+.. autoclass:: BpRecipe
     :members:

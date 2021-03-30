@@ -1,0 +1,85 @@
+Class hierarchy
+===============
+
+This section shows the inheritance hierarchy of all classes from bedrock_packs.
+
+.. py:currentmodule:: bedrock_packs
+
+- :class:`Project`
+- :class:`_Pack`
+    - :class:`BehaviorPack`
+    - :class:`ResourcePack`
+- :class:`_McFileCollection`
+    - :class:`_McPackCollectionSingle`
+        - :class:`BpEntities`
+        - :class:`RpEntities`
+        - :class:`BpBlocks`
+        - :class:`BpItems`
+        - :class:`RpItems`
+        - :class:`BpLootTables`
+        - :class:`BpFunctions`
+        - :class:`RpSoundFiles`
+        - :class:`RpTextureFiles`
+        - :class:`BpSpawnRules`
+        - :class:`BpTrades`
+        - :class:`RpParticles`
+    - :class:`_McPackCollectionMulti`
+        - :class:`BpAnimationControllers`
+        - :class:`RpAnimationControllers`
+        - :class:`BpAnimations`
+        - :class:`RpAnimations`
+        - :class:`RpModels`
+        - :class:`RpRenderControllers`
+        - :class:`BpRecipes`
+- :class:`_McFileCollectionQuery`
+- :class:`_McFile`
+    - :class:`_McFileSingle`
+        - :class:`_McFileJsonSingle`
+            - :class:`BpEntity`
+            - :class:`RpEntity`
+            - :class:`BpBlock`
+            - :class:`BpItem`
+            - :class:`RpItem`
+            - :class:`BpLootTable`
+            - :class:`BpSpawnRule`
+            - :class:`BpTrade`
+            - :class:`RpParticle`
+        - :class:`BpFunction`
+        - :class:`RpSoundFile`
+        - :class:`RpTextureFile`
+    - :class:`_McFileMulti`
+        - :class:`_McFileJsonMulti`
+            - :class:`_AnimationController`
+                - :class:`BpAnimationController`
+                - :class:`RpAnimationController`
+            - :class:`_Animation`
+                - :class:`BpAnimation`
+                - :class:`RpAnimation`
+            - :class:`RpModel`
+            - :class:`RpRenderController`
+            - :class:`BpRecipe`
+- :class:`_UniqueMcFile`
+    - :class:`_UniqueMcFileJson`
+        - :class:`_UniqueMcFileJsonMulti`
+            - :class:`RpSoundDefinitionsJson`
+            - :class:`RpBiomesClientJson`
+            - :class:`RpItemTextureJson`
+            - :class:`RpFlipbookTexturesJson`
+            - :class:`RpTerrainTextureJson`
+            - :class:`RpBlocksJson`
+            - :class:`RpMusicDefinitionsJson`
+        - :class:`RpSoundsJson`
+- :class:`_UniqueMcFileJsonMultiQuery`
+- :class:`_RpSoundsJsonPart`
+    - :class:`_RpSoundsJsonPartWithSound`
+        - :class:`BlockSoundEvent`
+        - :class:`EntitySoundEvent`
+        - :class:`IndividualSoundEvent`
+        - :class:`InteractiveBlockSoundEvent`
+    - :class:`InteractiveEntitySoundEvent`
+- :class:`_RpSoundsJsonPartQuery`
+    - :class:`_BlockSoundEventQuery`
+    - :class:`_EntitySoundEventQuery`
+    - :class:`_IndividualSoundEventQuery`
+    - :class:`_InteractiveBlockSoundEventQuery`
+    - :class:`_InteractiveEntitySoundEventQuery`

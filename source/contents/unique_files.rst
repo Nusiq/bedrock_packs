@@ -5,19 +5,26 @@ Unique Files
     :maxdepth: 2
 
 .. py:currentmodule:: bedrock_packs
-.. autoclass:: RpBiomesClientJson
+.. autoclass:: _UniqueMcFile
     :members:
-.. autoclass:: RpBlocksJson
+.. autoclass:: _UniqueMcFileJson
     :members:
-.. autoclass:: RpFlipbookTexturesJson
-    :members:
-.. autoclass:: RpItemTextureJson
-    :members:
-.. autoclass:: RpMusicDefinitionsJson
+.. autoclass:: _UniqueMcFileJsonMulti
     :members:
 .. autoclass:: RpSoundDefinitionsJson
     :members:
-.. autoclass:: RpSoundsJson
+.. autoclass:: RpBiomesClientJson
+    :members:
+.. autoclass:: RpItemTextureJson
+    :members:
+.. autoclass:: RpFlipbookTexturesJson
     :members:
 .. autoclass:: RpTerrainTextureJson
     :members:
+.. autoclass:: RpBlocksJson
+    :members:
+.. autoclass:: RpMusicDefinitionsJson
+    :members:
+.. autoclass:: RpSoundsJson
+    :members:
+.. autoclass:: _UniqueMcFileJsonMultiQuery

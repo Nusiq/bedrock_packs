@@ -1,11 +1,12 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Files" href="../files/" /><link rel="prev" title="Welcome to bedrock_packs documentation!" href="../../" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Files" href="../files/" /><link rel="prev" title="Class hierarchy" href="../class_hierarchy/" />
 
-    <meta name="generator" content="sphinx-3.2.1, furo 2021.02.28.beta28"/>
+    <meta name="generator" content="sphinx-3.5.3, furo 2021.03.20.beta30"/>
         <title>Project and Pack - Bedrock Packs 0.1 documentation</title>
-      <link rel="stylesheet" href="../../_static/styles/furo.css?digest=be5985a4059b5c2cd56ed0804790452beca62674">
+      <link rel="stylesheet" href="../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../_static/pygments_dark.css">
     
@@ -107,6 +108,7 @@
   <input type="hidden" name="area" value="default">
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../class_hierarchy/">  Class hierarchy</a></li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">  Project and Pack</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
@@ -145,137 +147,137 @@
 </div>
 <dl class="py class">
 <dt id="bedrock_packs.Project">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">Project</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">Project</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A collection of behavior packs and resource packs.</p>
 <dl class="py method">
 <dt id="bedrock_packs.Project.add_bp">
-<code class="sig-name descname">add_bp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pack</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.add_bp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">add_bp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pack</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.add_bp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds behavior pack to this project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>pack</strong> (<a class="reference internal" href="#bedrock_packs.BehaviorPack" title="bedrock_packs.BehaviorPack"><code class="xref py py-class docutils literal notranslate"><span class="pre">BehaviorPack</span></code></a>) – the behavior pack</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.add_rp">
-<code class="sig-name descname">add_rp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pack</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.add_rp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">add_rp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pack</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.add_rp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds resource pack to this project</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>pack</strong> (<a class="reference internal" href="#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcePack</span></code></a>) – the resource pack</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bp_animation_controllers">
-<em class="property">property </em><code class="sig-name descname">bp_animation_controllers</code><a class="headerlink" href="#bedrock_packs.Project.bp_animation_controllers" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bp_animation_controllers</span></code><a class="headerlink" href="#bedrock_packs.Project.bp_animation_controllers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all behavior pack animation controllers
 from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.BpAnimationController" title="bedrock_packs.BpAnimationController"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpAnimationController</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.BpAnimationController" title="bedrock_packs.BpAnimationController"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpAnimationController</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bp_blocks">
-<em class="property">property </em><code class="sig-name descname">bp_blocks</code><a class="headerlink" href="#bedrock_packs.Project.bp_blocks" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bp_blocks</span></code><a class="headerlink" href="#bedrock_packs.Project.bp_blocks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all behavior pack blocks from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.BpBlock" title="bedrock_packs.BpBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpBlock</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.BpBlock" title="bedrock_packs.BpBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpBlock</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bp_entities">
-<em class="property">property </em><code class="sig-name descname">bp_entities</code><a class="headerlink" href="#bedrock_packs.Project.bp_entities" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bp_entities</span></code><a class="headerlink" href="#bedrock_packs.Project.bp_entities" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all behavior pack entities from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.BpEntity" title="bedrock_packs.BpEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpEntity</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.BpEntity" title="bedrock_packs.BpEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpEntity</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bp_functions">
-<em class="property">property </em><code class="sig-name descname">bp_functions</code><a class="headerlink" href="#bedrock_packs.Project.bp_functions" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bp_functions</span></code><a class="headerlink" href="#bedrock_packs.Project.bp_functions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all behavior pack functions from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.BpFunction" title="bedrock_packs.BpFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpFunction</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.BpFunction" title="bedrock_packs.BpFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpFunction</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bp_items">
-<em class="property">property </em><code class="sig-name descname">bp_items</code><a class="headerlink" href="#bedrock_packs.Project.bp_items" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bp_items</span></code><a class="headerlink" href="#bedrock_packs.Project.bp_items" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all behavior pack items from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.BpItem" title="bedrock_packs.BpItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpItem</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.BpItem" title="bedrock_packs.BpItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpItem</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bp_loot_tables">
-<em class="property">property </em><code class="sig-name descname">bp_loot_tables</code><a class="headerlink" href="#bedrock_packs.Project.bp_loot_tables" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bp_loot_tables</span></code><a class="headerlink" href="#bedrock_packs.Project.bp_loot_tables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all behavior pack loot tables from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.BpLootTable" title="bedrock_packs.BpLootTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpLootTable</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.BpLootTable" title="bedrock_packs.BpLootTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpLootTable</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bp_recipes">
-<em class="property">property </em><code class="sig-name descname">bp_recipes</code><a class="headerlink" href="#bedrock_packs.Project.bp_recipes" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bp_recipes</span></code><a class="headerlink" href="#bedrock_packs.Project.bp_recipes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all behavior pack recipes from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.BpRecipe" title="bedrock_packs.BpRecipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpRecipe</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.BpRecipe" title="bedrock_packs.BpRecipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpRecipe</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bp_spawn_rules">
-<em class="property">property </em><code class="sig-name descname">bp_spawn_rules</code><a class="headerlink" href="#bedrock_packs.Project.bp_spawn_rules" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bp_spawn_rules</span></code><a class="headerlink" href="#bedrock_packs.Project.bp_spawn_rules" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all behavior pack spawn rules from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.BpSpawnRule" title="bedrock_packs.BpSpawnRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpSpawnRule</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.BpSpawnRule" title="bedrock_packs.BpSpawnRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpSpawnRule</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bp_trades">
-<em class="property">property </em><code class="sig-name descname">bp_trades</code><a class="headerlink" href="#bedrock_packs.Project.bp_trades" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bp_trades</span></code><a class="headerlink" href="#bedrock_packs.Project.bp_trades" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all behavior pack trades from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.BpTrade" title="bedrock_packs.BpTrade"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpTrade</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.BpTrade" title="bedrock_packs.BpTrade"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpTrade</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.bps">
-<em class="property">property </em><code class="sig-name descname">bps</code><a class="headerlink" href="#bedrock_packs.Project.bps" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bps</span></code><a class="headerlink" href="#bedrock_packs.Project.bps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tuple with behavior packs from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -285,7 +287,7 @@ from this <a class="reference internal" href="#bedrock_packs.Project" title="bed
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.path_bps">
-<code class="sig-name descname">path_bps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.path_bps" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">path_bps</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.path_bps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a dictionary that maps <a class="reference internal" href="#bedrock_packs.BehaviorPack" title="bedrock_packs.BehaviorPack"><code class="xref py py-class docutils literal notranslate"><span class="pre">BehaviorPack</span></code></a> objects that
 belong to this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> to their paths (the paths are used
 as dict keys).</p>
@@ -297,7 +299,7 @@ as dict keys).</p>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.path_rps">
-<code class="sig-name descname">path_rps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.path_rps" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">path_rps</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.path_rps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a dictionary that maps <a class="reference internal" href="#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcePack</span></code></a> objects that
 belong to this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> to their paths (the paths are used
 as dict keys).</p>
@@ -309,230 +311,230 @@ as dict keys).</p>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_animation_controllers">
-<em class="property">property </em><code class="sig-name descname">rp_animation_controllers</code><a class="headerlink" href="#bedrock_packs.Project.rp_animation_controllers" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_animation_controllers</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_animation_controllers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all resource pack animation controllers
 from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.RpAnimationController" title="bedrock_packs.RpAnimationController"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpAnimationController</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.RpAnimationController" title="bedrock_packs.RpAnimationController"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpAnimationController</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_biomes_client_json">
-<em class="property">property </em><code class="sig-name descname">rp_biomes_client_json</code><a class="headerlink" href="#bedrock_packs.Project.rp_biomes_client_json" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_biomes_client_json</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_biomes_client_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a unique file collection of all resource pack
 biomes_client.json files from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpBiomesClientJson" title="bedrock_packs.RpBiomesClientJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpBiomesClientJson</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs._UniqueMcFileJsonMultiQuery" title="bedrock_packs._UniqueMcFileJsonMultiQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code></a>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpBiomesClientJson" title="bedrock_packs.RpBiomesClientJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpBiomesClientJson</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_blocks_json">
-<em class="property">property </em><code class="sig-name descname">rp_blocks_json</code><a class="headerlink" href="#bedrock_packs.Project.rp_blocks_json" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_blocks_json</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_blocks_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a unique file collection of all resource pack blocks.json files
 from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpBlocksJson" title="bedrock_packs.RpBlocksJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpBlocksJson</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs._UniqueMcFileJsonMultiQuery" title="bedrock_packs._UniqueMcFileJsonMultiQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code></a>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpBlocksJson" title="bedrock_packs.RpBlocksJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpBlocksJson</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_entities">
-<em class="property">property </em><code class="sig-name descname">rp_entities</code><a class="headerlink" href="#bedrock_packs.Project.rp_entities" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_entities</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_entities" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all resource pack entities from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.RpEntity" title="bedrock_packs.RpEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpEntity</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.RpEntity" title="bedrock_packs.RpEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpEntity</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_flipbook_textures_json">
-<em class="property">property </em><code class="sig-name descname">rp_flipbook_textures_json</code><a class="headerlink" href="#bedrock_packs.Project.rp_flipbook_textures_json" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_flipbook_textures_json</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_flipbook_textures_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a unique file collection of all resource pack
 flipbook_textures.json files from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpFlipbookTexturesJson" title="bedrock_packs.RpFlipbookTexturesJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpFlipbookTexturesJson</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs._UniqueMcFileJsonMultiQuery" title="bedrock_packs._UniqueMcFileJsonMultiQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code></a>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpFlipbookTexturesJson" title="bedrock_packs.RpFlipbookTexturesJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpFlipbookTexturesJson</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_item_texture_json">
-<em class="property">property </em><code class="sig-name descname">rp_item_texture_json</code><a class="headerlink" href="#bedrock_packs.Project.rp_item_texture_json" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_item_texture_json</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_item_texture_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a unique file collection of all resource pack
 item_texture.json files from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpItemTextureJson" title="bedrock_packs.RpItemTextureJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpItemTextureJson</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs._UniqueMcFileJsonMultiQuery" title="bedrock_packs._UniqueMcFileJsonMultiQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code></a>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpItemTextureJson" title="bedrock_packs.RpItemTextureJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpItemTextureJson</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_items">
-<em class="property">property </em><code class="sig-name descname">rp_items</code><a class="headerlink" href="#bedrock_packs.Project.rp_items" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_items</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_items" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all resource pack items from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.RpItem" title="bedrock_packs.RpItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpItem</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.RpItem" title="bedrock_packs.RpItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpItem</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_models">
-<em class="property">property </em><code class="sig-name descname">rp_models</code><a class="headerlink" href="#bedrock_packs.Project.rp_models" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_models</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_models" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all resource pack models from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.RpModel" title="bedrock_packs.RpModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpModel</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.RpModel" title="bedrock_packs.RpModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpModel</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_music_definitions_json">
-<em class="property">property </em><code class="sig-name descname">rp_music_definitions_json</code><a class="headerlink" href="#bedrock_packs.Project.rp_music_definitions_json" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_music_definitions_json</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_music_definitions_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a unique file collection of all resource pack
 music_definitions.json files from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpMusicDefinitionsJson" title="bedrock_packs.RpMusicDefinitionsJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpMusicDefinitionsJson</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs._UniqueMcFileJsonMultiQuery" title="bedrock_packs._UniqueMcFileJsonMultiQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code></a>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpMusicDefinitionsJson" title="bedrock_packs.RpMusicDefinitionsJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpMusicDefinitionsJson</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_particles">
-<em class="property">property </em><code class="sig-name descname">rp_particles</code><a class="headerlink" href="#bedrock_packs.Project.rp_particles" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_particles</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_particles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all resource pack particles from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.RpParticle" title="bedrock_packs.RpParticle"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpParticle</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.RpParticle" title="bedrock_packs.RpParticle"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpParticle</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_render_controllers">
-<em class="property">property </em><code class="sig-name descname">rp_render_controllers</code><a class="headerlink" href="#bedrock_packs.Project.rp_render_controllers" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_render_controllers</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_render_controllers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all resource pack render controllers
 from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.RpRenderController" title="bedrock_packs.RpRenderController"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpRenderController</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.RpRenderController" title="bedrock_packs.RpRenderController"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpRenderController</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_sound_definitions_json">
-<em class="property">property </em><code class="sig-name descname">rp_sound_definitions_json</code><a class="headerlink" href="#bedrock_packs.Project.rp_sound_definitions_json" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_sound_definitions_json</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_sound_definitions_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a unique file collection of all resource pack
 sound_definitions.json files from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpSoundDefinitionsJson" title="bedrock_packs.RpSoundDefinitionsJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpSoundDefinitionsJson</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs._UniqueMcFileJsonMultiQuery" title="bedrock_packs._UniqueMcFileJsonMultiQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code></a>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpSoundDefinitionsJson" title="bedrock_packs.RpSoundDefinitionsJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpSoundDefinitionsJson</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_sound_files">
-<em class="property">property </em><code class="sig-name descname">rp_sound_files</code><a class="headerlink" href="#bedrock_packs.Project.rp_sound_files" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_sound_files</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_sound_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all resource pack sound files from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.RpSoundFile" title="bedrock_packs.RpSoundFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpSoundFile</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.RpSoundFile" title="bedrock_packs.RpSoundFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpSoundFile</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_sounds_json_block_sound_event">
-<em class="property">property </em><code class="sig-name descname">rp_sounds_json_block_sound_event</code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_block_sound_event" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_sounds_json_block_sound_event</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_block_sound_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of all block sound events from all sounds.json
 files from all resource packs that belong to this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_BlockSoundEventQuery</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../sounds_json_parts/#bedrock_packs._BlockSoundEventQuery" title="bedrock_packs._BlockSoundEventQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_BlockSoundEventQuery</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_sounds_json_entity_sound_event">
-<em class="property">property </em><code class="sig-name descname">rp_sounds_json_entity_sound_event</code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_entity_sound_event" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_sounds_json_entity_sound_event</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_entity_sound_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of all entity sound events from all sounds.json
 files from all resource packs that belong to this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_EntitySoundEventQuery</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../sounds_json_parts/#bedrock_packs._EntitySoundEventQuery" title="bedrock_packs._EntitySoundEventQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_EntitySoundEventQuery</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_sounds_json_individual_sound_event">
-<em class="property">property </em><code class="sig-name descname">rp_sounds_json_individual_sound_event</code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_individual_sound_event" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_sounds_json_individual_sound_event</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_individual_sound_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of all individual sound events from all
 sounds.json files from all resource packs that belong to this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_IndividualSoundEventQuery</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../sounds_json_parts/#bedrock_packs._IndividualSoundEventQuery" title="bedrock_packs._IndividualSoundEventQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_IndividualSoundEventQuery</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_sounds_json_interactive_block_sound_event">
-<em class="property">property </em><code class="sig-name descname">rp_sounds_json_interactive_block_sound_event</code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_interactive_block_sound_event" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_sounds_json_interactive_block_sound_event</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_interactive_block_sound_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of all interactive block sound events from all
 sounds.json files from all resource packs that belong to this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_InteractiveBlockSoundEventQuery</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../sounds_json_parts/#bedrock_packs._InteractiveBlockSoundEventQuery" title="bedrock_packs._InteractiveBlockSoundEventQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_InteractiveBlockSoundEventQuery</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_sounds_json_interactive_entity_sound_event">
-<em class="property">property </em><code class="sig-name descname">rp_sounds_json_interactive_entity_sound_event</code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_interactive_entity_sound_event" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_sounds_json_interactive_entity_sound_event</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_sounds_json_interactive_entity_sound_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of all interactive entity sound events from all
 sounds.json files from all resource packs that belong to this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_InteractiveEntitySoundEventQuery</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../sounds_json_parts/#bedrock_packs._InteractiveEntitySoundEventQuery" title="bedrock_packs._InteractiveEntitySoundEventQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_InteractiveEntitySoundEventQuery</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_terrain_texture_json">
-<em class="property">property </em><code class="sig-name descname">rp_terrain_texture_json</code><a class="headerlink" href="#bedrock_packs.Project.rp_terrain_texture_json" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_terrain_texture_json</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_terrain_texture_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a unique file collection of all resource pack
 terrain_texture.json files from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpTerrainTextureJson" title="bedrock_packs.RpTerrainTextureJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpTerrainTextureJson</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs._UniqueMcFileJsonMultiQuery" title="bedrock_packs._UniqueMcFileJsonMultiQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_UniqueMcFileJsonMultiQuery</span></code></a>[<a class="reference internal" href="../unique_files/#bedrock_packs.RpTerrainTextureJson" title="bedrock_packs.RpTerrainTextureJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpTerrainTextureJson</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rp_texture_files">
-<em class="property">property </em><code class="sig-name descname">rp_texture_files</code><a class="headerlink" href="#bedrock_packs.Project.rp_texture_files" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rp_texture_files</span></code><a class="headerlink" href="#bedrock_packs.Project.rp_texture_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file collection of all resource pack texture files from this
 <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code>[<a class="reference internal" href="../files/#bedrock_packs.RpTextureFile" title="bedrock_packs.RpTextureFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpTextureFile</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollectionQuery" title="bedrock_packs._McFileCollectionQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollectionQuery</span></code></a>[<a class="reference internal" href="../files/#bedrock_packs.RpTextureFile" title="bedrock_packs.RpTextureFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpTextureFile</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.rps">
-<em class="property">property </em><code class="sig-name descname">rps</code><a class="headerlink" href="#bedrock_packs.Project.rps" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">rps</span></code><a class="headerlink" href="#bedrock_packs.Project.rps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tuple with resource packs from this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -542,7 +544,7 @@ terrain_texture.json files from this <a class="reference internal" href="#bedroc
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.uuid_bps">
-<code class="sig-name descname">uuid_bps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.uuid_bps" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">uuid_bps</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.uuid_bps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a dictionary that maps <a class="reference internal" href="#bedrock_packs.BehaviorPack" title="bedrock_packs.BehaviorPack"><code class="xref py py-class docutils literal notranslate"><span class="pre">BehaviorPack</span></code></a> objects that
 belong to this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> to their UUIDs (the UUIDS are used
 as dict keys). The packs without UUID are skipped.</p>
@@ -554,7 +556,7 @@ as dict keys). The packs without UUID are skipped.</p>
 </dd></dl>
 <dl class="py method">
 <dt id="bedrock_packs.Project.uuid_rps">
-<code class="sig-name descname">uuid_rps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.uuid_rps" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">uuid_rps</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.Project.uuid_rps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a dictionary that maps <a class="reference internal" href="#bedrock_packs.ResourcePack" title="bedrock_packs.ResourcePack"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcePack</span></code></a> objects that
 belong to this <a class="reference internal" href="#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> to their UUIDs (the UUIDS are used
 as dict keys). The packs without UUID are skipped.</p>
@@ -566,15 +568,42 @@ as dict keys). The packs without UUID are skipped.</p>
 </dd></dl>
 </dd></dl>
 <dl class="py class">
+<dt id="bedrock_packs._Pack">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_Pack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._Pack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Behavior pack or resource pack. A collection of
+<a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollection" title="bedrock_packs._McFileCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollection</span></code></a>.</p>
+<dl class="py method">
+<dt id="bedrock_packs._Pack.manifest">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">manifest</span></code><a class="headerlink" href="#bedrock_packs._Pack.manifest" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> for manifest file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="../json_module/#bedrock_packs.json.JsonWalker" title="bedrock_packs.json.JsonWalker"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs._Pack.uuid">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">uuid</span></code><a class="headerlink" href="#bedrock_packs._Pack.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>the UUID from manifest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
 <dt id="bedrock_packs.BehaviorPack">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BehaviorPack</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">project</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BehaviorPack" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Pack</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BehaviorPack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BehaviorPack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._Pack" title="bedrock_packs._Pack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Pack</span></code></a></p>
 <p>A part of a project or standalone behavior pack.</p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.ResourcePack">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">ResourcePack</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">project</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.ResourcePack" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Pack</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">ResourcePack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.ResourcePack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._Pack" title="bedrock_packs._Pack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Pack</span></code></a></p>
 <p>A part of a project or standalone resource pack.</p>
 </dd></dl>
 </div>
@@ -592,14 +621,14 @@ as dict keys). The packs without UUID are skipped.</p>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../../">
+          <a class="prev-page" href="../class_hierarchy/">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Home</div>
+                <div class="title">Class hierarchy</div>
                 
               </div>
             </a>
@@ -632,6 +661,5 @@ as dict keys). The packs without UUID are skipped.</p>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script src="../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

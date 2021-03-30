@@ -5,41 +5,49 @@ File Collections
     :maxdepth: 2
 
 .. py:currentmodule:: bedrock_packs
-.. autoclass:: BpAnimationControllers
+.. autoclass:: _McFileCollection
     :members:
-.. autoclass:: BpAnimations
-    :members:
-.. autoclass:: BpBlocks
+.. autoclass:: _McPackCollectionSingle
     :members:
 .. autoclass:: BpEntities
     :members:
-.. autoclass:: BpFunctions
+.. autoclass:: RpEntities
+    :members:
+.. autoclass:: BpBlocks
     :members:
 .. autoclass:: BpItems
     :members:
+.. autoclass:: RpItems
+    :members:
 .. autoclass:: BpLootTables
     :members:
-.. autoclass:: BpRecipes
+.. autoclass:: BpFunctions
+    :members:
+.. autoclass:: RpSoundFiles
+    :members:
+.. autoclass:: RpTextureFiles
     :members:
 .. autoclass:: BpSpawnRules
     :members:
 .. autoclass:: BpTrades
     :members:
+.. autoclass:: RpParticles
+    :members:
+.. autoclass:: _McPackCollectionMulti
+    :members:
+.. autoclass:: BpAnimationControllers
+    :members:
 .. autoclass:: RpAnimationControllers
+    :members:
+.. autoclass:: BpAnimations
     :members:
 .. autoclass:: RpAnimations
     :members:
-.. autoclass:: RpEntities
-    :members:
-.. autoclass:: RpItems
-    :members:
 .. autoclass:: RpModels
-    :members:
-.. autoclass:: RpParticles
     :members:
 .. autoclass:: RpRenderControllers
     :members:
-.. autoclass:: RpSoundFiles
+.. autoclass:: BpRecipes
     :members:
-.. autoclass:: RpTextureFiles
+.. autoclass:: _McFileCollectionQuery
     :members:

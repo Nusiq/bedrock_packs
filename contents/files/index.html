@@ -1,11 +1,12 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="File Collections" href="../file_collections/" /><link rel="prev" title="Project and Pack" href="../project_and_packs/" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="File Collections" href="../file_collections/" /><link rel="prev" title="Project and Pack" href="../project_and_packs/" />
 
-    <meta name="generator" content="sphinx-3.2.1, furo 2021.02.28.beta28"/>
+    <meta name="generator" content="sphinx-3.5.3, furo 2021.03.20.beta30"/>
         <title>Files - Bedrock Packs 0.1 documentation</title>
-      <link rel="stylesheet" href="../../_static/styles/furo.css?digest=be5985a4059b5c2cd56ed0804790452beca62674">
+      <link rel="stylesheet" href="../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../_static/pygments_dark.css">
     
@@ -107,6 +108,7 @@
   <input type="hidden" name="area" value="default">
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../class_hierarchy/">  Class hierarchy</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../project_and_packs/">  Project and Pack</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
@@ -144,82 +146,135 @@
 <div class="toctree-wrapper compound">
 </div>
 <dl class="py class">
-<dt id="bedrock_packs.BpAnimation">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpAnimation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpAnimation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Animation</span></code></p>
+<dt id="bedrock_packs._McFile">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_McFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._McFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCFILE_COLLECTION</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 </dd></dl>
 <dl class="py class">
-<dt id="bedrock_packs.BpAnimationController">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpAnimationController</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpAnimationController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._AnimationController</span></code></p>
+<dt id="bedrock_packs._McFileSingle">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_McFileSingle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._McFileSingle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFile" title="bedrock_packs._McFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFile</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCFILE_COLLECTION</span></code>]</p>
+<p>A file that can contain only one object of certain type from a pack.
+<code class="xref py py-class docutils literal notranslate"><span class="pre">McFile</span></code> with single Minecraft object</p>
 </dd></dl>
 <dl class="py class">
-<dt id="bedrock_packs.BpBlock">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpBlock</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpBlock" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></p>
+<dt id="bedrock_packs._McFileJsonSingle">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_McFileJsonSingle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._McFileJsonSingle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileSingle" title="bedrock_packs._McFileSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileSingle</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCFILE_COLLECTION</span></code>]</p>
+<p>A JSON file that can contain only one object of certain type from a pack.
+<code class="xref py py-class docutils literal notranslate"><span class="pre">McFile</span></code> that has JSON in it, with single Minecraft object.</p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.BpEntity">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpEntity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpEntity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.BpFunction">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpFunction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpFunction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileSingle</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.BpItem">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.BpLootTable">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpLootTable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpLootTable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.BpRecipe">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpRecipe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpRecipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonMulti</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.BpSpawnRule">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpSpawnRule</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpSpawnRule" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.BpTrade">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BpTrade</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpTrade" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.RpAnimation">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpAnimation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpAnimation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Animation</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.RpAnimationController">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpAnimationController</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpAnimationController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._AnimationController</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpEntity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonSingle" title="bedrock_packs._McFileJsonSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpEntities" title="bedrock_packs.BpEntities"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpEntities</span></code></a>]</p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.RpEntity">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpEntity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpEntity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpEntity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonSingle" title="bedrock_packs._McFileJsonSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.RpEntities" title="bedrock_packs.RpEntities"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpEntities</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.BpBlock">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpBlock</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonSingle" title="bedrock_packs._McFileJsonSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpBlocks" title="bedrock_packs.BpBlocks"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpBlocks</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.BpItem">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpItem</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonSingle" title="bedrock_packs._McFileJsonSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpItems" title="bedrock_packs.BpItems"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpItems</span></code></a>]</p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.RpItem">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpItem</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonSingle" title="bedrock_packs._McFileJsonSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.RpItems" title="bedrock_packs.RpItems"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpItems</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.BpLootTable">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpLootTable</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpLootTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonSingle" title="bedrock_packs._McFileJsonSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpLootTables" title="bedrock_packs.BpLootTables"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpLootTables</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.BpSpawnRule">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpSpawnRule</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpSpawnRule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonSingle" title="bedrock_packs._McFileJsonSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpSpawnRules" title="bedrock_packs.BpSpawnRules"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpSpawnRules</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.BpTrade">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpTrade</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpTrade" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonSingle" title="bedrock_packs._McFileJsonSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpTrades" title="bedrock_packs.BpTrades"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpTrades</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpParticle">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpParticle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpParticle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonSingle" title="bedrock_packs._McFileJsonSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.RpParticles" title="bedrock_packs.RpParticles"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpParticles</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.BpFunction">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpFunction</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileSingle" title="bedrock_packs._McFileSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpFunctions" title="bedrock_packs.BpFunctions"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpFunctions</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpSoundFile">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpSoundFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpSoundFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileSingle" title="bedrock_packs._McFileSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.RpSoundFiles" title="bedrock_packs.RpSoundFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpSoundFiles</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpTextureFile">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpTextureFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpTextureFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileSingle" title="bedrock_packs._McFileSingle"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileSingle</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.RpTextureFiles" title="bedrock_packs.RpTextureFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpTextureFiles</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._McFileMulti">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_McFileMulti</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._McFileMulti" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFile" title="bedrock_packs._McFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFile</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCFILE_COLLECTION</span></code>]</p>
+<p>A file that can contain multiple objects of certain type from a pack.
+<code class="xref py py-class docutils literal notranslate"><span class="pre">McFile</span></code> with multiple Minecraft objects.</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._McFileJsonMulti">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_McFileJsonMulti</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._McFileJsonMulti" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileMulti" title="bedrock_packs._McFileMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileMulti</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCFILE_COLLECTION</span></code>]</p>
+<p>A JSON file that can contain multiple objects of certain type from a pack.
+<code class="xref py py-class docutils literal notranslate"><span class="pre">McFile</span></code> that has JSON in it, with multiple Minecraft objects.</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._AnimationController">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_AnimationController</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._AnimationController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonMulti" title="bedrock_packs._McFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonMulti</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCFILE_COLLECTION</span></code>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.BpAnimationController">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpAnimationController</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpAnimationController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._AnimationController" title="bedrock_packs._AnimationController"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._AnimationController</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpAnimationControllers" title="bedrock_packs.BpAnimationControllers"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpAnimationControllers</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpAnimationController">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpAnimationController</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpAnimationController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._AnimationController" title="bedrock_packs._AnimationController"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._AnimationController</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.RpAnimationControllers" title="bedrock_packs.RpAnimationControllers"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpAnimationControllers</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._Animation">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_Animation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._Animation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonMulti" title="bedrock_packs._McFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonMulti</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.MCFILE_COLLECTION</span></code>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.BpAnimation">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpAnimation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpAnimation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._Animation" title="bedrock_packs._Animation"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Animation</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpAnimations" title="bedrock_packs.BpAnimations"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpAnimations</span></code></a>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.RpAnimation">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpAnimation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpAnimation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._Animation" title="bedrock_packs._Animation"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Animation</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.RpAnimations" title="bedrock_packs.RpAnimations"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpAnimations</span></code></a>]</p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.RpModel">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonMulti</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpModel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonMulti" title="bedrock_packs._McFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonMulti</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.RpModels" title="bedrock_packs.RpModels"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpModels</span></code></a>]</p>
 <dl class="py method">
 <dt id="bedrock_packs.RpModel.format_version">
-<em class="property">property </em><code class="sig-name descname">format_version</code><a class="headerlink" href="#bedrock_packs.RpModel.format_version" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">format_version</span></code><a class="headerlink" href="#bedrock_packs.RpModel.format_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the format version of the model or guess the version based
 on the file structure if it’s missing.</p>
 <dl class="field-list simple">
@@ -230,24 +285,14 @@ on the file structure if it’s missing.</p>
 </dd></dl>
 </dd></dl>
 <dl class="py class">
-<dt id="bedrock_packs.RpParticle">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpParticle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpParticle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonSingle</span></code></p>
-</dd></dl>
-<dl class="py class">
 <dt id="bedrock_packs.RpRenderController">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpRenderController</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpRenderController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonMulti</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">RpRenderController</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpRenderController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonMulti" title="bedrock_packs._McFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonMulti</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.RpRenderControllers" title="bedrock_packs.RpRenderControllers"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpRenderControllers</span></code></a>]</p>
 </dd></dl>
 <dl class="py class">
-<dt id="bedrock_packs.RpSoundFile">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpSoundFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpSoundFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileSingle</span></code></p>
-</dd></dl>
-<dl class="py class">
-<dt id="bedrock_packs.RpTextureFile">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">RpTextureFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">owning_collection</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.RpTextureFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileSingle</span></code></p>
+<dt id="bedrock_packs.BpRecipe">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BpRecipe</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owning_collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BpRecipe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._McFileJsonMulti" title="bedrock_packs._McFileJsonMulti"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._McFileJsonMulti</span></code></a>[<a class="reference internal" href="../file_collections/#bedrock_packs.BpRecipes" title="bedrock_packs.BpRecipes"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpRecipes</span></code></a>]</p>
 </dd></dl>
 </div>
 
@@ -304,6 +349,5 @@ on the file structure if it’s missing.</p>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script src="../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

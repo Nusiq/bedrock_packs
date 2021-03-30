@@ -1,11 +1,12 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="bedrock_packs.json module" href="../json_module/" /><link rel="prev" title="Unique Files" href="../unique_files/" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="bedrock_packs.json module" href="../json_module/" /><link rel="prev" title="Unique Files" href="../unique_files/" />
 
-    <meta name="generator" content="sphinx-3.2.1, furo 2021.02.28.beta28"/>
+    <meta name="generator" content="sphinx-3.5.3, furo 2021.03.20.beta30"/>
         <title>Parts of the sounds.json file - Bedrock Packs 0.1 documentation</title>
-      <link rel="stylesheet" href="../../_static/styles/furo.css?digest=be5985a4059b5c2cd56ed0804790452beca62674">
+      <link rel="stylesheet" href="../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../_static/pygments_dark.css">
     
@@ -107,6 +108,7 @@
   <input type="hidden" name="area" value="default">
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../class_hierarchy/">  Class hierarchy</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../project_and_packs/">  Project and Pack</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
@@ -144,32 +146,44 @@
 <div class="toctree-wrapper compound">
 </div>
 <dl class="py class">
+<dt id="bedrock_packs._RpSoundsJsonPart">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_RpSoundsJsonPart</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._RpSoundsJsonPart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>A part of sounds.json file. The sounds.json file is a special case
+because it holds 5 different types of the objects.</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._RpSoundsJsonPartWithSound">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_RpSoundsJsonPartWithSound</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._RpSoundsJsonPartWithSound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPart" title="bedrock_packs._RpSoundsJsonPart"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPart</span></code></a></p>
+</dd></dl>
+<dl class="py class">
 <dt id="bedrock_packs.BlockSoundEvent">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">BlockSoundEvent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sounds_json</span></em>, <em class="sig-param"><span class="n">json</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BlockSoundEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartWithSound</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BlockSoundEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BlockSoundEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPartWithSound" title="bedrock_packs._RpSoundsJsonPartWithSound"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartWithSound</span></code></a></p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.EntitySoundEvent">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">EntitySoundEvent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sounds_json</span></em>, <em class="sig-param"><span class="n">json</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.EntitySoundEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartWithSound</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">EntitySoundEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.EntitySoundEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPartWithSound" title="bedrock_packs._RpSoundsJsonPartWithSound"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartWithSound</span></code></a></p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.IndividualSoundEvent">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">IndividualSoundEvent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sounds_json</span></em>, <em class="sig-param"><span class="n">json</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.IndividualSoundEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartWithSound</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">IndividualSoundEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.IndividualSoundEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPartWithSound" title="bedrock_packs._RpSoundsJsonPartWithSound"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartWithSound</span></code></a></p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.InteractiveBlockSoundEvent">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">InteractiveBlockSoundEvent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sounds_json</span></em>, <em class="sig-param"><span class="n">json</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.InteractiveBlockSoundEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartWithSound</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">InteractiveBlockSoundEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.InteractiveBlockSoundEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPartWithSound" title="bedrock_packs._RpSoundsJsonPartWithSound"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartWithSound</span></code></a></p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.InteractiveEntitySoundEvent">
-<em class="property">class </em><code class="sig-prename descclassname">bedrock_packs.</code><code class="sig-name descname">InteractiveEntitySoundEvent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sounds_json</span></em>, <em class="sig-param"><span class="n">json</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.InteractiveEntitySoundEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPart</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">InteractiveEntitySoundEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.InteractiveEntitySoundEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPart" title="bedrock_packs._RpSoundsJsonPart"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPart</span></code></a></p>
 <dl class="py method">
 <dt id="bedrock_packs.InteractiveEntitySoundEvent.sounds">
-<em class="property">property </em><code class="sig-name descname">sounds</code><a class="headerlink" href="#bedrock_packs.InteractiveEntitySoundEvent.sounds" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sounds</span></code><a class="headerlink" href="#bedrock_packs.InteractiveEntitySoundEvent.sounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dictionary with sounds used by this event where key is a block name
 and value is the sound name.</p>
 <dl class="field-list simple">
@@ -178,6 +192,39 @@ and value is the sound name.</p>
 </dd>
 </dl>
 </dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._RpSoundsJsonPartQuery">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_RpSoundsJsonPartQuery</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json_collection</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._RpSoundsJsonPartQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.RP_SOUNDS_JSON_PART</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">bedrock_packs.RP_SOUNDS_JSON_PART_KEY</span></code>]</p>
+<p>Groups multiple parts of certain type from the sounds.json (often from
+multiple packs). Used in <a class="reference internal" href="../project_and_packs/#bedrock_packs.Project" title="bedrock_packs.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> and <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPart" title="bedrock_packs._RpSoundsJsonPart"><code class="xref py py-class docutils literal notranslate"><span class="pre">_RpSoundsJsonPart</span></code></a>
+to get info about parts of sounds.json file(s).</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._BlockSoundEventQuery">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_BlockSoundEventQuery</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json_collection</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._BlockSoundEventQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPartQuery" title="bedrock_packs._RpSoundsJsonPartQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartQuery</span></code></a>[<a class="reference internal" href="#bedrock_packs.BlockSoundEvent" title="bedrock_packs.BlockSoundEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.BlockSoundEvent</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._EntitySoundEventQuery">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_EntitySoundEventQuery</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json_collection</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._EntitySoundEventQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPartQuery" title="bedrock_packs._RpSoundsJsonPartQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartQuery</span></code></a>[<a class="reference internal" href="#bedrock_packs.EntitySoundEvent" title="bedrock_packs.EntitySoundEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.EntitySoundEvent</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._IndividualSoundEventQuery">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_IndividualSoundEventQuery</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json_collection</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._IndividualSoundEventQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPartQuery" title="bedrock_packs._RpSoundsJsonPartQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartQuery</span></code></a>[<a class="reference internal" href="#bedrock_packs.IndividualSoundEvent" title="bedrock_packs.IndividualSoundEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.IndividualSoundEvent</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._InteractiveBlockSoundEventQuery">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_InteractiveBlockSoundEventQuery</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json_collection</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._InteractiveBlockSoundEventQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPartQuery" title="bedrock_packs._RpSoundsJsonPartQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartQuery</span></code></a>[<a class="reference internal" href="#bedrock_packs.InteractiveBlockSoundEvent" title="bedrock_packs.InteractiveBlockSoundEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.InteractiveBlockSoundEvent</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</p>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs._InteractiveEntitySoundEventQuery">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_InteractiveEntitySoundEventQuery</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json_collection</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._InteractiveEntitySoundEventQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPartQuery" title="bedrock_packs._RpSoundsJsonPartQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPartQuery</span></code></a>[<a class="reference internal" href="#bedrock_packs.InteractiveEntitySoundEvent" title="bedrock_packs.InteractiveEntitySoundEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs.InteractiveEntitySoundEvent</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</p>
 </dd></dl>
 </div>
 
@@ -234,6 +281,5 @@ and value is the sound name.</p>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script src="../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>
