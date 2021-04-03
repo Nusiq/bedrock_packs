@@ -28,3 +28,4 @@ Unique Files
 .. autoclass:: RpSoundsJson
     :members:
 .. autoclass:: _UniqueMcFileJsonMultiQuery
+    :members:

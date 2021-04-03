@@ -10,7 +10,7 @@ This section shows the inheritance hierarchy of all classes from bedrock_packs.
     - :class:`BehaviorPack`
     - :class:`ResourcePack`
 - :class:`_McFileCollection`
-    - :class:`_McPackCollectionSingle`
+    - :class:`_McFileCollectionSingle`
         - :class:`BpEntities`
         - :class:`RpEntities`
         - :class:`BpBlocks`
@@ -23,7 +23,7 @@ This section shows the inheritance hierarchy of all classes from bedrock_packs.
         - :class:`BpSpawnRules`
         - :class:`BpTrades`
         - :class:`RpParticles`
-    - :class:`_McPackCollectionMulti`
+    - :class:`_McFileCollectionMulti`
         - :class:`BpAnimationControllers`
         - :class:`RpAnimationControllers`
         - :class:`BpAnimations`
@@ -69,17 +69,25 @@ This section shows the inheritance hierarchy of all classes from bedrock_packs.
             - :class:`RpBlocksJson`
             - :class:`RpMusicDefinitionsJson`
         - :class:`RpSoundsJson`
-- :class:`_UniqueMcFileJsonMultiQuery`
+- :class:`_UniqueMcFileJsonMultiQuery` 
 - :class:`_RpSoundsJsonPart`
-    - :class:`_RpSoundsJsonPartWithSound`
-        - :class:`BlockSoundEvent`
-        - :class:`EntitySoundEvent`
-        - :class:`IndividualSoundEvent`
-        - :class:`InteractiveBlockSoundEvent`
-    - :class:`InteractiveEntitySoundEvent`
-- :class:`_RpSoundsJsonPartQuery`
-    - :class:`_BlockSoundEventQuery`
-    - :class:`_EntitySoundEventQuery`
-    - :class:`_IndividualSoundEventQuery`
-    - :class:`_InteractiveBlockSoundEventQuery`
-    - :class:`_InteractiveEntitySoundEventQuery`
+    - :class:`SjBlockSounds`
+    - :class:`SjEntitySounds`
+    - :class:`SjIndividualEventSounds`
+    - :class:`SjInteractiveBlockSounds`
+    - :class:`SjInteractiveEntitySounds`
+- :class:`_PermanentJsonWalkerContainer`
+    - :class:`SjBlockSoundsBlock`
+    - :class:`SjBlockSoundsBlockEvent`
+    - :class:`SjEntitySoundsDefaults`
+    - :class:`SjEntitySoundsDefaultsEvent`
+    - :class:`SjEntitySoundsEntity`
+    - :class:`SjEntitySoundsEntityEvent`
+    - :class:`SjIndividualEventSoundsEvent`
+    - :class:`SjInteractiveBlockSoundsBlock`
+    - :class:`SjInteractiveBlockSoundsBlockEvent`
+    - :class:`SjInteractiveEntitySoundsDefaults`
+    - :class:`SjInteractiveEntitySoundsDefaultsEvent`
+    - :class:`SjInteractiveEntitySoundsEntity`
+    - :class:`SjInteractiveEntitySoundsEntityEvent`
+    - :class:`SjInteractiveEntitySoundsEntityEventBlock`

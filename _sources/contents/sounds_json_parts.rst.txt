@@ -7,27 +7,43 @@ Parts of the sounds.json file
 .. py:currentmodule:: bedrock_packs
 .. autoclass:: _RpSoundsJsonPart
     :members:
-.. autoclass:: _RpSoundsJsonPartWithSound
+.. autoclass:: _PermanentJsonWalkerContainer
     :members:
-.. autoclass:: BlockSoundEvent
+.. autoclass:: SjBlockSounds
     :members:
-.. autoclass:: EntitySoundEvent
+.. autoclass:: SjBlockSoundsBlock
     :members:
-.. autoclass:: IndividualSoundEvent
+.. autoclass:: SjBlockSoundsBlockEvent
     :members:
-.. autoclass:: InteractiveBlockSoundEvent
+.. autoclass:: SjEntitySounds
     :members:
-.. autoclass:: InteractiveEntitySoundEvent
+.. autoclass:: SjEntitySoundsDefaults
     :members:
-.. autoclass:: _RpSoundsJsonPartQuery
+.. autoclass:: SjEntitySoundsDefaultsEvent
     :members:
-.. autoclass:: _BlockSoundEventQuery
+.. autoclass:: SjEntitySoundsEntity
     :members:
-.. autoclass:: _EntitySoundEventQuery
+.. autoclass:: SjEntitySoundsEntityEvent
     :members:
-.. autoclass:: _IndividualSoundEventQuery
+.. autoclass:: SjIndividualEventSounds
     :members:
-.. autoclass:: _InteractiveBlockSoundEventQuery
+.. autoclass:: SjIndividualEventSoundsEvent
     :members:
-.. autoclass:: _InteractiveEntitySoundEventQuery
+.. autoclass:: SjInteractiveBlockSounds
+    :members:
+.. autoclass:: SjInteractiveBlockSoundsBlock
+    :members:
+.. autoclass:: SjInteractiveBlockSoundsBlockEvent
+    :members:
+.. autoclass:: SjInteractiveEntitySounds
+    :members:
+.. autoclass:: SjInteractiveEntitySoundsDefaults
+    :members:
+.. autoclass:: SjInteractiveEntitySoundsDefaultsEvent
+    :members:
+.. autoclass:: SjInteractiveEntitySoundsEntity
+    :members:
+.. autoclass:: SjInteractiveEntitySoundsEntityEvent
+    :members:
+.. autoclass:: SjInteractiveEntitySoundsEntityEventBlock
     :members:

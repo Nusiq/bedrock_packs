@@ -3,7 +3,7 @@
     - :class:`BehaviorPack`
     - :class:`ResourcePack`
 - :class:`_McFileCollection`
-    - :class:`_McPackCollectionSingle`
+    - :class:`_McFileCollectionSingle`
         - :class:`BpEntities`
         - :class:`RpEntities`
         - :class:`BpBlocks`
@@ -16,7 +16,7 @@
         - :class:`BpSpawnRules`
         - :class:`BpTrades`
         - :class:`RpParticles`
-    - :class:`_McPackCollectionMulti`
+    - :class:`_McFileCollectionMulti`
         - :class:`BpAnimationControllers`
         - :class:`RpAnimationControllers`
         - :class:`BpAnimations`

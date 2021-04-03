@@ -7,7 +7,7 @@ File Collections
 .. py:currentmodule:: bedrock_packs
 .. autoclass:: _McFileCollection
     :members:
-.. autoclass:: _McPackCollectionSingle
+.. autoclass:: _McFileCollectionSingle
     :members:
 .. autoclass:: BpEntities
     :members:
@@ -33,7 +33,7 @@ File Collections
     :members:
 .. autoclass:: RpParticles
     :members:
-.. autoclass:: _McPackCollectionMulti
+.. autoclass:: _McFileCollectionMulti
     :members:
 .. autoclass:: BpAnimationControllers
     :members:
