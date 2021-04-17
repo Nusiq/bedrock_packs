@@ -10,7 +10,8 @@ Contents
     :maxdepth: 2
 
       Class hierarchy <contents/class_hierarchy>
-      Project and Pack <contents/project_and_packs>
+      Project <contents/project>
+      Pack <contents/pack>
       File collections <contents/file_collections>
       Files <contents/files>
       Unique Files <contents/unique_files>

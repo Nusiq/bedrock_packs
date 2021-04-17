@@ -109,22 +109,25 @@
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../class_hierarchy/">  Class hierarchy</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../project_and_packs/">  Project and Pack</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../project/">  Project</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../file_collections/">  File collections</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pack/">  Pack</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../files/">  Files</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../file_collections/">  File collections</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../unique_files/">  Unique Files</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label for="toctree-checkbox-4"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../files/">  Files</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label for="toctree-checkbox-4"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">  Parts of the sounds.json file</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label for="toctree-checkbox-5"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../unique_files/">  Unique Files</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label for="toctree-checkbox-5"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../json_module/">  bedrock_packs.json module</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label for="toctree-checkbox-6"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">  Parts of the sounds.json file</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label for="toctree-checkbox-6"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../json_module/">  bedrock_packs.json module</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label for="toctree-checkbox-7"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -149,109 +152,1116 @@
 <dt id="bedrock_packs._RpSoundsJsonPart">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_RpSoundsJsonPart</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._RpSoundsJsonPart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<p>A part of sounds.json file. The sounds.json file is a special case
-because it holds 5 different types of the objects.</p>
+<p>A part of sounds.json file. An abstract base class for 5 different types
+of the objects contained in sounds.json.</p>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs._PermanentJsonWalkerContainer">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_PermanentJsonWalkerContainer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._PermanentJsonWalkerContainer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Holds reference to JsonWalker which can’t be changed.</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Holds reference to JsonWalker which can’t be changed. An abstract base
+class for classes that represent some unmuteable part of JSON file.</p>
+<dl class="py method">
+<dt id="bedrock_packs._PermanentJsonWalkerContainer.json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">json</span></code><a class="headerlink" href="#bedrock_packs._PermanentJsonWalkerContainer.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of this JSON file.</p>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjBlockSounds">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjBlockSounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjBlockSounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPart" title="bedrock_packs._RpSoundsJsonPart"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPart</span></code></a></p>
+<p>The block_sounds part of the sounds.json file.</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSounds.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjBlockSounds.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access block_sounds data for specific block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – block identifier (one of the items from the keys() list)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.SjBlockSoundsBlock" title="bedrock_packs.SjBlockSoundsBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjBlockSoundsBlock</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSounds.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjBlockSounds.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loops over all of the existing blocks in this block_sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjBlockSoundsBlock" title="bedrock_packs.SjBlockSoundsBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjBlockSoundsBlock</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSounds.json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">json</span></code><a class="headerlink" href="#bedrock_packs.SjBlockSounds.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of sounds.json-&gt;block_sounds.</p>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSounds.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjBlockSounds.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of identifiers that can be used to access data of specific
+block data defined in this sounds.json file in block_sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjBlockSoundsBlock">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjBlockSoundsBlock</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_sounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlock" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;block_sounds-&gt;[block].</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlock.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlock.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access a sound event from this block using its identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the identifier of a block sound event</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.SjBlockSoundsBlockEvent" title="bedrock_packs.SjBlockSoundsBlockEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjBlockSoundsBlockEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlock.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlock.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loop through all of the sound events of this block.</p>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlock.block_sounds">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">block_sounds</span></code><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlock.block_sounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#bedrock_packs.SjBlockSounds" title="bedrock_packs.SjBlockSounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjBlockSounds</span></code></a> that contains this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjBlockSounds" title="bedrock_packs.SjBlockSounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjBlockSounds</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlock.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlock.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of the identifiers used to access the sound events of this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlock.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlock.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default pitch value used by the sound events of this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlock.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlock.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default sound name used by the events of this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlock.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlock.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default volume value used by the sound events of this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjBlockSoundsBlockEvent">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjBlockSoundsBlockEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_sounds_block</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlockEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;block_sounds-&gt;[block]-&gt;events-&gt;[event].</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlockEvent.block_sounds_block">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">block_sounds_block</span></code><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlockEvent.block_sounds_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#bedrock_packs.SjBlockSoundsBlock" title="bedrock_packs.SjBlockSoundsBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjBlockSoundsBlock</span></code></a> that contains this event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjBlockSoundsBlock" title="bedrock_packs.SjBlockSoundsBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjBlockSoundsBlock</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlockEvent.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlockEvent.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pitch value of this event. If the event doesn’t define the pitch
+itself than the default sound value of the block is returned instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlockEvent.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlockEvent.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sound name of this event. If the event doesn’t define the sound
+itself than the default sound value of the block is returned instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjBlockSoundsBlockEvent.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjBlockSoundsBlockEvent.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The volume value of this event. If the event doesn’t define the volume
+itself than the default sound value of the block is returned instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjEntitySounds">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjEntitySounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPart" title="bedrock_packs._RpSoundsJsonPart"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPart</span></code></a></p>
+<p>The entity_sounds part of the sounds.json file.</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySounds.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySounds.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access entity_sounds data for specific entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – entity identifier (one of the items from the keys() list)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.SjEntitySoundsEntity" title="bedrock_packs.SjEntitySoundsEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySoundsEntity</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySounds.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySounds.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loops over all of the existing entities in this entity_sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjEntitySoundsEntity" title="bedrock_packs.SjEntitySoundsEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySoundsEntity</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySounds.defaults">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">defaults</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySounds.defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default values for entity_sounds from
+sounds.json-&gt;entity_sounds-&gt;defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjEntitySoundsDefaults" title="bedrock_packs.SjEntitySoundsDefaults"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySoundsDefaults</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySounds.json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">json</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySounds.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of sounds.json-&gt;entity_sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../json_module/#bedrock_packs.json.JsonWalker" title="bedrock_packs.json.JsonWalker"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySounds.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySounds.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of identifiers that can be used to access data of specific
+entities defined in this sounds.json file in entity_sounds-&gt;entities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjEntitySoundsDefaults">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjEntitySoundsDefaults</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_sounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaults" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;entity_sounds-&gt;defaults.</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaults.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaults.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns specific sound event of this object based on the key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjEntitySoundsDefaultsEvent" title="bedrock_packs.SjEntitySoundsDefaultsEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySoundsDefaultsEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaults.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaults.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator which yields the sound events that belong
+to this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjEntitySoundsDefaultsEvent" title="bedrock_packs.SjEntitySoundsDefaultsEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySoundsDefaultsEvent</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaults.entity_sounds">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entity_sounds</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaults.entity_sounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <a class="reference internal" href="#bedrock_packs.SjEntitySounds" title="bedrock_packs.SjEntitySounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySounds</span></code></a> that contains this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjEntitySounds" title="bedrock_packs.SjEntitySounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySounds</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaults.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaults.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the identifiers that can be used to access the
+events defined in this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaults.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaults.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default pitch value of the sound events of this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaults.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaults.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default volume value of the sound events of this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjEntitySoundsDefaultsEvent">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjEntitySoundsDefaultsEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_sounds_defaults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaultsEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;entity_sounds-&gt;defaults-&gt;events-&gt;[event].</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaultsEvent.entity_sounds_defaults">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entity_sounds_defaults</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaultsEvent.entity_sounds_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the entity sounds defaults object that contains this sound
+event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjEntitySoundsDefaults" title="bedrock_packs.SjEntitySoundsDefaults"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySoundsDefaults</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaultsEvent.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaultsEvent.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pitch value of this sound event. If it’s not defined by the sound
+event itself than the default value is returned instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaultsEvent.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaultsEvent.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the sound used by this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsDefaultsEvent.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsDefaultsEvent.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The volume value of this sound event. If it’s not defined by the sound
+event itself than the default value is returned instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjEntitySoundsEntity">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjEntitySoundsEntity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_sounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;entity_sounds-&gt;entities-&gt;[entity]</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntity.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntity.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses key to return specific sound event of this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjEntitySoundsEntityEvent" title="bedrock_packs.SjEntitySoundsEntityEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySoundsEntityEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntity.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntity.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator which yields the sound events defined by this
+entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjEntitySoundsEntityEvent" title="bedrock_packs.SjEntitySoundsEntityEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySoundsEntityEvent</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntity.entity_sounds">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entity_sounds</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntity.entity_sounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entity sounds object that contains this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjEntitySounds" title="bedrock_packs.SjEntitySounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySounds</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntity.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntity.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of the identifiers of the sound events defined by this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntity.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntity.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default pitch value of a sound event of this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntity.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntity.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default volume value of a sound event of this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjEntitySoundsEntityEvent">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjEntitySoundsEntityEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_sounds_entity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntityEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;entity_sounds-&gt;entities-&gt;[entity]-&gt;events-&gt;[event]</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntityEvent.entity_sounds_entity">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entity_sounds_entity</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntityEvent.entity_sounds_entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entity that contains this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjEntitySoundsEntity" title="bedrock_packs.SjEntitySoundsEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjEntitySoundsEntity</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntityEvent.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntityEvent.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pitch value of of this event. If the event doesn’t define the
+value itself than the default value from the entity is returned
+instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntityEvent.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntityEvent.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the sound used by this event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjEntitySoundsEntityEvent.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjEntitySoundsEntityEvent.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The volume value of of this event. If the event doesn’t define the
+value itself than the default value from the entity is returned
+instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjIndividualEventSounds">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjIndividualEventSounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjIndividualEventSounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPart" title="bedrock_packs._RpSoundsJsonPart"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPart</span></code></a></p>
+<p>The individual_event_sounds part of the sounds.json file.</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjIndividualEventSounds.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjIndividualEventSounds.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access sound data of specific individual event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – individual event identifier (one of the items from the
+keys() list)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.SjIndividualEventSoundsEvent" title="bedrock_packs.SjIndividualEventSoundsEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjIndividualEventSoundsEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjIndividualEventSounds.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjIndividualEventSounds.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loops over all of the existing individual event sounds in this
+sounds.json.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjIndividualEventSoundsEvent" title="bedrock_packs.SjIndividualEventSoundsEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjIndividualEventSoundsEvent</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjIndividualEventSounds.json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">json</span></code><a class="headerlink" href="#bedrock_packs.SjIndividualEventSounds.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;individual_event_sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../json_module/#bedrock_packs.json.JsonWalker" title="bedrock_packs.json.JsonWalker"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjIndividualEventSounds.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjIndividualEventSounds.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of identifiers that can be used to access data of specific
+individual event sounds of this sounds.json file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjIndividualEventSoundsEvent">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjIndividualEventSoundsEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_event_sounds_event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjIndividualEventSoundsEvent" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjIndividualEventSoundsEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_event_sounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjIndividualEventSoundsEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;individual_event_sounds-&gt;events-&gt;[event]</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjIndividualEventSoundsEvent.individual_event_sounds">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">individual_event_sounds</span></code><a class="headerlink" href="#bedrock_packs.SjIndividualEventSoundsEvent.individual_event_sounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The individual event sounds object that contains this event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjIndividualEventSounds" title="bedrock_packs.SjIndividualEventSounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjIndividualEventSounds</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjIndividualEventSoundsEvent.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjIndividualEventSoundsEvent.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pitch value of this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjIndividualEventSoundsEvent.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjIndividualEventSoundsEvent.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the sound used by this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjIndividualEventSoundsEvent.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjIndividualEventSoundsEvent.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The volume value of this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjInteractiveBlockSounds">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjInteractiveBlockSounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPart" title="bedrock_packs._RpSoundsJsonPart"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPart</span></code></a></p>
+<p>The interactive_sounds-&gt;block_sounds part of the sounds.json file.</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSounds.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSounds.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access interactive block sounds data for specific block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – block identifier (one of the items from the keys() list)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveBlockSoundsBlock" title="bedrock_packs.SjInteractiveBlockSoundsBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveBlockSoundsBlock</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSounds.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSounds.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loops over all of the existing blocks in this interactive block sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjInteractiveBlockSoundsBlock" title="bedrock_packs.SjInteractiveBlockSoundsBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveBlockSoundsBlock</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSounds.json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">json</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSounds.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;interactive_sounds-&gt;block_sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../json_module/#bedrock_packs.json.JsonWalker" title="bedrock_packs.json.JsonWalker"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSounds.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSounds.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of identifiers that can be used to access data of specific
+interactive block data defined in this sounds.json file in
+interactive_sounds-&gt;block_sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjInteractiveBlockSoundsBlock">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjInteractiveBlockSoundsBlock</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive_block_sounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlock" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;interactive_sounds-&gt;block_sounds-&gt;[block]</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlock.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlock.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns sound event of this block based on the key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveBlockSoundsBlockEvent" title="bedrock_packs.SjInteractiveBlockSoundsBlockEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveBlockSoundsBlockEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlock.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlock.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator which yields the sound events of this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjInteractiveBlockSoundsBlockEvent" title="bedrock_packs.SjInteractiveBlockSoundsBlockEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveBlockSoundsBlockEvent</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlock.interactive_block_sounds">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">interactive_block_sounds</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlock.interactive_block_sounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interactive block sounds object that contains this block sound.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveBlockSounds" title="bedrock_packs.SjInteractiveBlockSounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveBlockSounds</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlock.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlock.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of the names of the sound events defined by this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlock.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlock.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default pitch value the sound events of this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlock.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlock.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default name of the sound used by the sound events of this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlock.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlock.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default volume value the sound events of this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjInteractiveBlockSoundsBlockEvent">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjInteractiveBlockSoundsBlockEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive_block_sounds_block</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlockEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;interactive_sounds-&gt;block_sounds-&gt;[block]-&gt;events-&gt;[event]</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlockEvent.interactive_block_sounds_block">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">interactive_block_sounds_block</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlockEvent.interactive_block_sounds_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>The block that owns this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveBlockSoundsBlock" title="bedrock_packs.SjInteractiveBlockSoundsBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveBlockSoundsBlock</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlockEvent.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlockEvent.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pitch value of this event. If the event doesn’t define the value
+itself then the default pitch value of the block is returned instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlockEvent.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlockEvent.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveBlockSoundsBlockEvent.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveBlockSoundsBlockEvent.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The volume value of this event. If the event doesn’t define the value
+itself then the default volume value of the block is returned instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjInteractiveEntitySounds">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjInteractiveEntitySounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sounds_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._RpSoundsJsonPart" title="bedrock_packs._RpSoundsJsonPart"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._RpSoundsJsonPart</span></code></a></p>
+<p>The interactive_sounds-&gt;entity_sounds part of the sounds.json file.</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySounds.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySounds.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access entity_sounds data for specific entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – interactive entity identifier
+(one of the items from the keys() list)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsEntity" title="bedrock_packs.SjInteractiveEntitySoundsEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsEntity</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySounds.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySounds.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loops over all of the existing entities in this entity_sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsEntity" title="bedrock_packs.SjInteractiveEntitySoundsEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsEntity</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySounds.defaults">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">defaults</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySounds.defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default values for entity_sounds from
+sounds.json-&gt;interactive_sounds-&gt;entity_sounds-&gt;defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsDefaults" title="bedrock_packs.SjInteractiveEntitySoundsDefaults"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsDefaults</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySounds.json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">json</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySounds.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;interactive_sounds-&gt;entity_sounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../json_module/#bedrock_packs.json.JsonWalker" title="bedrock_packs.json.JsonWalker"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySounds.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySounds.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of identifiers that can be used to access data of specific
+entities defined in this sounds.json file in
+interactive_sounds-&gt;entity_sounds-&gt;entities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjInteractiveEntitySoundsDefaults">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjInteractiveEntitySoundsDefaults</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_sounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaults" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;interactive_sounds-&gt;entity_sounds-&gt;defaults</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaults.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaults.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns specific sound event defined by this object based on the key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the identifier of the sound event</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent" title="bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsDefaultsEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaults.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaults.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator which yields the sound events defined by this
+object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent" title="bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsDefaultsEvent</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaults.entity_sounds">
+<code class="sig-name descname"><span class="pre">entity_sounds</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaults.entity_sounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entity sounds that contain this list of defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySounds" title="bedrock_packs.SjInteractiveEntitySounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySounds</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaults.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaults.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of the identifiers of the events defined by this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaults.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaults.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default pitch value of sound events defined by this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaults.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaults.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default volume value of sound events defined by this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjInteractiveEntitySoundsDefaultsEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_sounds_defaults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;interactive_sounds-&gt;entity_sounds-&gt;defaults-&gt;events-&gt;[event]</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent.entity_sounds_defaults">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entity_sounds_defaults</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent.entity_sounds_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interactive-entity-sounds-defaults object that contains this event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsDefaults" title="bedrock_packs.SjInteractiveEntitySoundsDefaults"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsDefaults</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pitch of this sound event. If the event doesn’t define the value
+itself then the default value from the owning defaults object is
+returned instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the sound used by this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsDefaultsEvent.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The volume of this sound event. If the event doesn’t define the value
+itself then the default value from the owning defaults object is
+returned instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjInteractiveEntitySoundsEntity">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjInteractiveEntitySoundsEntity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_sounds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;interactive_sounds-&gt;entity_sounds-&gt;entities-&gt;[entity]</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntity.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntity.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns specific sound event defined by this entity based on the key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the identifier of an sound event</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEvent" title="bedrock_packs.SjInteractiveEntitySoundsEntityEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsEntityEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntity.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntity.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator which yields the the sounds events defined by this
+entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEvent" title="bedrock_packs.SjInteractiveEntitySoundsEntityEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsEntityEvent</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntity.entity_sounds">
+<code class="sig-name descname"><span class="pre">entity_sounds</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntity.entity_sounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interactive-entity-sounds object that contains this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySounds" title="bedrock_packs.SjInteractiveEntitySounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySounds</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntity.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntity.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of the identifiers of the sound events defined by this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntity.pitch">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pitch</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntity.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default pitch value used by the sound events of this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntity.volume">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">volume</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntity.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default volume value used by the sound events of this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjInteractiveEntitySoundsEntityEvent">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjInteractiveEntitySoundsEntityEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_sounds_entity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;interactive_sounds-&gt;entity_sounds-&gt;entities-&gt;[entity]-&gt;
+events-&gt;[event]</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntityEvent.__getitem__">
+<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEvent.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns specific block with special sound defined for this sound event
+based on the key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the name of the block</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock" title="bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsEntityEventBlock</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntityEvent.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEvent.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator which yields the blocks with specific sounds
+defined in this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock" title="bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsEntityEventBlock</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntityEvent.entity_sounds_entity">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entity_sounds_entity</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEvent.entity_sounds_entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entity that contains this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsEntity" title="bedrock_packs.SjInteractiveEntitySoundsEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsEntity</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntityEvent.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEvent.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of the identifiers of the blocks with custom sounds in this
+sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntityEvent.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEvent.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default name of block sound of this sound event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">SjInteractiveEntitySoundsEntityEventBlock</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_sounds_entity_event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bedrock_packs._PermanentJsonWalkerContainer" title="bedrock_packs._PermanentJsonWalkerContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._PermanentJsonWalkerContainer</span></code></a></p>
+<p>A class with <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> with the content of
+sounds.json-&gt;interactive_sounds-&gt;entity_sounds-&gt;entities-&gt;[entity]-&gt;
+events-&gt;[event]-&gt;[block]</p>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock.entity_sounds_entity_event">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entity_sounds_entity_event</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock.entity_sounds_entity_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sound event that owns this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEvent" title="bedrock_packs.SjInteractiveEntitySoundsEntityEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SjInteractiveEntitySoundsEntityEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock.sound">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound</span></code><a class="headerlink" href="#bedrock_packs.SjInteractiveEntitySoundsEntityEventBlock.sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the sound used by the sound event for this block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 </div>
 

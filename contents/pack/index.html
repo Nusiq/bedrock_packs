@@ -1,0 +1,516 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="File Collections" href="../file_collections/" /><link rel="prev" title="Project" href="../project/" />
+
+    <meta name="generator" content="sphinx-3.5.3, furo 2021.03.20.beta30"/>
+        <title>Pack - Bedrock Packs 0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
+    <link rel="stylesheet" href="../../_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../_static/pygments_dark.css">
+    
+
+
+<style>
+  :root {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+</style><link rel="stylesheet" href="../../_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+  <body dir="">
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../"><div class="brand">Bedrock Packs 0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../">
+  
+  
+  <span class="sidebar-brand-text">Bedrock Packs 0.1 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search/">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../class_hierarchy/">  Class hierarchy</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../project/">  Project</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">  Pack</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../file_collections/">  File collections</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../files/">  Files</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label for="toctree-checkbox-4"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../unique_files/">  Unique Files</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label for="toctree-checkbox-5"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sounds_json_parts/">  Parts of the sounds.json file</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label for="toctree-checkbox-6"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../json_module/">  bedrock_packs.json module</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label for="toctree-checkbox-7"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <div class="section" id="pack">
+<h1>Pack<a class="headerlink" href="#pack" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<dl class="py class">
+<dt id="bedrock_packs._Pack">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">_Pack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._Pack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Behavior pack or resource pack. A collection of
+<a class="reference internal" href="../file_collections/#bedrock_packs._McFileCollection" title="bedrock_packs._McFileCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">_McFileCollection</span></code></a>.</p>
+<dl class="py method">
+<dt id="bedrock_packs._Pack.manifest">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">manifest</span></code><a class="headerlink" href="#bedrock_packs._Pack.manifest" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code> for manifest file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="../json_module/#bedrock_packs.json.JsonWalker" title="bedrock_packs.json.JsonWalker"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs._Pack.uuid">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">uuid</span></code><a class="headerlink" href="#bedrock_packs._Pack.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>the UUID from manifest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.BehaviorPack">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">BehaviorPack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.BehaviorPack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._Pack" title="bedrock_packs._Pack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Pack</span></code></a></p>
+<p>A collection of all files collections related to Minecraft behavior pack.</p>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.animation_controllers">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">animation_controllers</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.animation_controllers" title="Permalink to this definition">¶</a></dt>
+<dd><p>The animation controllers from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpAnimationControllers" title="bedrock_packs.BpAnimationControllers"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpAnimationControllers</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.animations">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">animations</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.animations" title="Permalink to this definition">¶</a></dt>
+<dd><p>The animations from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpAnimations" title="bedrock_packs.BpAnimations"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpAnimations</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.blocks">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">blocks</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>The blocks from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpBlocks" title="bedrock_packs.BpBlocks"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpBlocks</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.entities">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entities</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.entities" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entities from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpEntities" title="bedrock_packs.BpEntities"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpEntities</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.functions">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">functions</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>The functions from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpFunctions" title="bedrock_packs.BpFunctions"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpFunctions</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.items">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">items</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>The items from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpItems" title="bedrock_packs.BpItems"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpItems</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.loot_tables">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">loot_tables</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.loot_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>The loot tables from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpLootTables" title="bedrock_packs.BpLootTables"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpLootTables</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.recipes">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">recipes</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.recipes" title="Permalink to this definition">¶</a></dt>
+<dd><p>The recipes from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpRecipes" title="bedrock_packs.BpRecipes"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpRecipes</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.spawn_rules">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">spawn_rules</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.spawn_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>The spawn rules from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpSpawnRules" title="bedrock_packs.BpSpawnRules"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpSpawnRules</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.BehaviorPack.trades">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">trades</span></code><a class="headerlink" href="#bedrock_packs.BehaviorPack.trades" title="Permalink to this definition">¶</a></dt>
+<dd><p>The trades from this behavior pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.BpTrades" title="bedrock_packs.BpTrades"><code class="xref py py-class docutils literal notranslate"><span class="pre">BpTrades</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt id="bedrock_packs.ResourcePack">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">bedrock_packs.</span></code><code class="sig-name descname"><span class="pre">ResourcePack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.ResourcePack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bedrock_packs._Pack" title="bedrock_packs._Pack"><code class="xref py py-class docutils literal notranslate"><span class="pre">bedrock_packs._Pack</span></code></a></p>
+<p>A collection of all files collections related to Minecraft resource pack.</p>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.animation_controllers">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">animation_controllers</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.animation_controllers" title="Permalink to this definition">¶</a></dt>
+<dd><p>The animation controllers of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.RpAnimationControllers" title="bedrock_packs.RpAnimationControllers"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpAnimationControllers</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.animations">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">animations</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.animations" title="Permalink to this definition">¶</a></dt>
+<dd><p>The animations of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.RpAnimations" title="bedrock_packs.RpAnimations"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpAnimations</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.biomes_client_json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">biomes_client_json</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.biomes_client_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>The biomes_client.json of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs.RpBiomesClientJson" title="bedrock_packs.RpBiomesClientJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpBiomesClientJson</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.blocks_json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">blocks_json</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.blocks_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>The blocks.json of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs.RpBlocksJson" title="bedrock_packs.RpBlocksJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpBlocksJson</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.entities">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entities</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.entities" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entities of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.RpEntities" title="bedrock_packs.RpEntities"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpEntities</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.flipbook_textures_json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">flipbook_textures_json</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.flipbook_textures_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>The flipbook_textures.json of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs.RpFlipbookTexturesJson" title="bedrock_packs.RpFlipbookTexturesJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpFlipbookTexturesJson</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.item_texture_json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">item_texture_json</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.item_texture_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>The item_texture.json of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs.RpItemTextureJson" title="bedrock_packs.RpItemTextureJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpItemTextureJson</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.items">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">items</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>The items of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.RpItems" title="bedrock_packs.RpItems"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpItems</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.models">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">models</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.models" title="Permalink to this definition">¶</a></dt>
+<dd><p>The models of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.RpModels" title="bedrock_packs.RpModels"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpModels</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.music_definitions_json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">music_definitions_json</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.music_definitions_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>The music_definitions.json of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs.RpMusicDefinitionsJson" title="bedrock_packs.RpMusicDefinitionsJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpMusicDefinitionsJson</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.particles">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">particles</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.particles" title="Permalink to this definition">¶</a></dt>
+<dd><p>The particles of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.RpParticles" title="bedrock_packs.RpParticles"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpParticles</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.render_controllers">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">render_controllers</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.render_controllers" title="Permalink to this definition">¶</a></dt>
+<dd><p>The render controllers of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.RpRenderControllers" title="bedrock_packs.RpRenderControllers"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpRenderControllers</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.sound_definitions_json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound_definitions_json</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.sound_definitions_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sound_definitions.json of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs.RpSoundDefinitionsJson" title="bedrock_packs.RpSoundDefinitionsJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpSoundDefinitionsJson</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.sound_files">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sound_files</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.sound_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sound files of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.RpSoundFiles" title="bedrock_packs.RpSoundFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpSoundFiles</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.sounds_json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">sounds_json</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.sounds_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sounds.json of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs.RpSoundsJson" title="bedrock_packs.RpSoundsJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpSoundsJson</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.terrain_texture_json">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">terrain_texture_json</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.terrain_texture_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>The terrain_texture.json of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../unique_files/#bedrock_packs.RpTerrainTextureJson" title="bedrock_packs.RpTerrainTextureJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpTerrainTextureJson</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.ResourcePack.texture_files">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">texture_files</span></code><a class="headerlink" href="#bedrock_packs.ResourcePack.texture_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>The texture files of this resource pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../file_collections/#bedrock_packs.RpTextureFiles" title="bedrock_packs.RpTextureFiles"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpTextureFiles</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</div>
+
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../file_collections/">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">File Collections</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../project/">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Project</div>
+                
+              </div>
+            </a>
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Artur D
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            |
+            <a class="muted-link" href="../../_sources/contents/pack.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </main>
+</div>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
+</html>

@@ -7,8 +7,10 @@ File Collections
 .. py:currentmodule:: bedrock_packs
 .. autoclass:: _McFileCollection
     :members:
+    :special-members: __getitem__
 .. autoclass:: _McFileCollectionSingle
     :members:
+    :exclude-members: keys
 .. autoclass:: BpEntities
     :members:
 .. autoclass:: RpEntities
@@ -35,6 +37,7 @@ File Collections
     :members:
 .. autoclass:: _McFileCollectionMulti
     :members:
+    :exclude-members: keys
 .. autoclass:: BpAnimationControllers
     :members:
 .. autoclass:: RpAnimationControllers
@@ -51,3 +54,4 @@ File Collections
     :members:
 .. autoclass:: _McFileCollectionQuery
     :members:
+    :special-members: __getitem__, __iter__
