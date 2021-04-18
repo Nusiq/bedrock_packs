@@ -48,9 +48,22 @@ Here are some code examples:
     # 4
     # 11
     # 44
+
+    # Creating JSON paths using create_path method
+    data = JsonWalker({})
+
+    new_path = data /'a' / 'b'
+    new_path.create_path("Hello")
+    # data:
+    # {"a": {"b": "Hello"}}
+
+    new_path = data / 'c' / 3
+    new_path.create_path("Test", empty_list_item_factory=lambda: "abc")
+    # data:
+    # {"a": {"b": "Hello"}, "c": ["abc", "abc", "abc", "Test"]}
 '''
 from __future__ import annotations
-from typing import Dict, Generic, IO, Iterator, List, NewType, Tuple, Type, TypeVar, Union, Optional
+from typing import Callable, Dict, Generic, IO, Iterator, List, NewType, Tuple, Type, TypeVar, Union, Optional
 import re
 import json
 from json import scanner, JSONDecodeError  # type: ignore
@@ -478,11 +491,118 @@ class JsonWalker:
         '''
         The part of the JSON file related to this :class:`JsonWalker`.
         '''
-        if self.parent is not None:
+        if self._parent is not None:
             self.parent.data[  # type: ignore
                 self.parent_key  # type: ignore
             ] = value
         self._data = value
+
+    def create_path(
+        self, data: JSON, *,
+        exists_ok=True,
+        can_break_data_structure=True,
+        can_create_empty_list_items=True,
+        empty_list_item_factory: Optional[Callable[[], JSON]]=None):
+        '''
+        Creates path to the part of Json file pointed by this JsonWalker.
+        
+        :param data: the data to put at the end of the path.
+        :param exists_ok: if False, the ValueError will be risen if the path
+            to this item already exists.
+        :param can_break_data_structure: if True than the function will be able
+            to replace certain existing paths with dicts or lists. Example - 
+            if path "a"/"b"/"c" points at integer, creating path
+            "a"/"b"/"c"/"d" will replace this integer with a dict in order to
+            make "d" a valid key. Setting this to false will cause a KeyError
+            in this situation.
+        :param can_create_empty_list_items: enables filling up the lists in
+            JSON with values produced by the empty_list_item_factory in order
+            to match the item index specified in the path. Example - if you
+            specify a path to create "a"/5/"c" but the list at "a" path only
+            has 2 items, then the function will create additional item so
+            the 5th index can be valid.
+        :param empty_list_item_factory: a function used to create items for
+            lists in order to make indices specified in the path valid (see
+            can_create_empty_list_items function parameter). If this value
+            is left as None than the lists will be filled with null values.
+        '''
+        if self.exists:
+            if exists_ok:
+                return
+            else:
+                raise ValueError("Path already exists")
+        if empty_list_item_factory == None:
+            def empty_list_item_factory():
+                return None
+        curr_item = self.root
+        path = self.path
+        for key in path:
+            if isinstance(key, str):  # key is a string data must be a dict
+                if not isinstance(curr_item.data, dict):
+                    if not can_break_data_structure:
+                        raise KeyError(key)
+                    else:
+                        curr_item.data = {}
+                if key not in curr_item.data:
+                    can_break_data_structure = True  # Creating new data
+                curr_item = curr_item / key
+            elif isinstance(key, int):  # key is an int data must be a list
+                if key < 0:
+                    raise KeyError(key)
+                if not isinstance(curr_item.data, list):
+                    if not can_break_data_structure:
+                        raise KeyError(key)
+                    else:
+                        curr_item.data = []
+                if len(curr_item.data)-1 < key:
+                    if not can_create_empty_list_items:
+                        raise KeyError(key)
+                    else:
+                        curr_item.data += [
+                            empty_list_item_factory()
+                            for _ in range(1+key-len(curr_item.data))
+                        ]
+                        can_break_data_structure = True  # Creating new data
+                curr_item = curr_item / key
+            else:
+                raise KeyError(key)
+            self._parent = curr_item.parent
+            self._parent_key = curr_item.parent_key
+            self.data = data
+
+    @property
+    def exists(self) -> bool:
+        '''
+        Returns true if path to this item already exists.
+        '''
+        keys: List[JSON_KEY] = []
+        root = self
+        try:
+            while True:
+                keys.append(root.parent_key)
+                root = root.parent
+        except KeyError:
+            pass
+        keys = tuple(reversed(keys))
+        try:
+            for key in keys:
+                root = root[key]
+        except:
+            return False
+        return True
+
+    @property
+    def root(self) -> JsonWalker:
+        '''
+        The root object of this JSON file.
+        '''
+        root = self
+        try:
+            while True:
+                root = root.parent
+        except KeyError:
+            pass
+        return root
 
     @property
     def path(self) -> Tuple[JSON_KEY, ...]:
@@ -491,7 +611,6 @@ class JsonWalker:
         the JSON file (loaded recursively from JSON parents).
         '''
         result: List[JSON_KEY] = []
-        result.reverse()
         parent = self
         try:
             while True:
