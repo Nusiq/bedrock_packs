@@ -189,6 +189,19 @@ parts of the JSON at the same time.</p>
 <span class="c1"># 4</span>
 <span class="c1"># 11</span>
 <span class="c1"># 44</span>
+
+<span class="c1"># Creating JSON paths using create_path method</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">JsonWalker</span><span class="p">({})</span>
+
+<span class="n">new_path</span> <span class="o">=</span> <span class="n">data</span> <span class="o">/</span><span class="s1">'a'</span> <span class="o">/</span> <span class="s1">'b'</span>
+<span class="n">new_path</span><span class="o">.</span><span class="n">create_path</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">)</span>
+<span class="c1"># data:</span>
+<span class="c1"># {"a": {"b": "Hello"}}</span>
+
+<span class="n">new_path</span> <span class="o">=</span> <span class="n">data</span> <span class="o">/</span> <span class="s1">'c'</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">new_path</span><span class="o">.</span><span class="n">create_path</span><span class="p">(</span><span class="s2">"Test"</span><span class="p">,</span> <span class="n">empty_list_item_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="s2">"abc"</span><span class="p">)</span>
+<span class="c1"># data:</span>
+<span class="c1"># {"a": {"b": "Hello"}, "c": ["abc", "abc", "abc", "Test"]}</span>
 </pre></div>
 </div>
 <div class="toctree-wrapper compound">
@@ -231,6 +244,46 @@ invalid. The exception is not risen, it becomes the data of returned
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference internal" href="#bedrock_packs.json.JsonWalker" title="bedrock_packs.json.JsonWalker"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.json.JsonWalker.create_path">
+<code class="sig-name descname"><span class="pre">create_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists_ok</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_break_data_structure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_create_empty_list_items</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_list_item_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs.json.JsonWalker.create_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates path to the part of Json file pointed by this JsonWalker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>]) – the data to put at the end of the path.</p></li>
+<li><p><strong>exists_ok</strong> – if False, the ValueError will be risen if the path
+to this item already exists.</p></li>
+<li><p><strong>can_break_data_structure</strong> – if True than the function will be able
+to replace certain existing paths with dicts or lists. Example - 
+if path “a”/”b”/”c” points at integer, creating path
+“a”/”b”/”c”/”d” will replace this integer with a dict in order to
+make “d” a valid key. Setting this to false will cause a KeyError
+in this situation.</p></li>
+<li><p><strong>can_create_empty_list_items</strong> – enables filling up the lists in
+JSON with values produced by the empty_list_item_factory in order
+to match the item index specified in the path. Example - if you
+specify a path to create “a”/5/”c” but the list at “a” path only
+has 2 items, then the function will create additional item so
+the 5th index can be valid.</p></li>
+<li><p><strong>empty_list_item_factory</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[], <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>]]]) – a function used to create items for
+lists in order to make indices specified in the path valid (see
+can_create_empty_list_items function parameter). If this value
+is left as None than the lists will be filled with null values.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.json.JsonWalker.exists">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">exists</span></code><a class="headerlink" href="#bedrock_packs.json.JsonWalker.exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if path to this item already exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -300,6 +353,16 @@ the JSON file (loaded recursively from JSON parents).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], …]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="bedrock_packs.json.JsonWalker.root">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">root</span></code><a class="headerlink" href="#bedrock_packs.json.JsonWalker.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root object of this JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bedrock_packs.json.JsonWalker" title="bedrock_packs.json.JsonWalker"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonWalker</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
