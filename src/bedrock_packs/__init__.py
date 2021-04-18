@@ -837,7 +837,7 @@ class _McFileCollectionQuery(Generic[MCFILE]):
         return self.collections_type._get_item_from_combined_collections(
             self.collections, key)
 
-    def __iter__(self) -> Iterator[MCFILE]:  # Apparently getitem automatically implements __iter__
+    def __iter__(self) -> Iterator[MCFILE]:
         '''
         Returns an iterator which yields McFiles for each key from keys()
         method. If multiple McFiles use the same key only the first one is
@@ -1800,9 +1800,9 @@ class SjBlockSoundsBlock(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->block_sounds->[block].
     '''
-    def __init__(self, json: JsonWalker, block_sounds: SjBlockSounds) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjBlockSounds) -> None:
         super().__init__(json)
-        self._block_sounds: SjBlockSounds = block_sounds
+        self._owning_collection: SjBlockSounds = owning_collection
 
     def keys(self) -> Tuple[str]:
         '''
@@ -1831,11 +1831,11 @@ class SjBlockSoundsBlock(_PermanentJsonWalkerContainer):
             yield self[k]
 
     @property
-    def block_sounds(self) -> SjBlockSounds:
+    def owning_collection(self) -> SjBlockSounds:
         '''
         The :class:`SjBlockSounds` that contains this block.
         '''
-        return self._block_sounds
+        return self._owning_collection
 
     @property
     def sound(self) -> str:
@@ -1872,16 +1872,16 @@ class SjBlockSoundsBlockEvent(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->block_sounds->[block]->events->[event].
     '''
-    def __init__(self, json: JsonWalker, block_sounds_block: SjBlockSoundsBlock) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjBlockSoundsBlock) -> None:
         super().__init__(json)
-        self._block_sounds_block: SjBlockSoundsBlock = block_sounds_block
+        self._owning_collection: SjBlockSoundsBlock = owning_collection
 
     @property
-    def block_sounds_block(self) -> SjBlockSoundsBlock:
+    def owning_collection(self) -> SjBlockSoundsBlock:
         '''
         The :class:`SjBlockSoundsBlock` that contains this event.
         '''
-        return self._block_sounds_block
+        return self._owning_collection
 
     @property
     def sound(self) -> str:
@@ -1891,7 +1891,7 @@ class SjBlockSoundsBlockEvent(_PermanentJsonWalkerContainer):
         '''
         sound = (self.json / "sound").data
         if not isinstance(sound, str):
-            return self.block_sounds_block.sound
+            return self.owning_collection.sound
         return sound
 
     @property
@@ -1902,7 +1902,7 @@ class SjBlockSoundsBlockEvent(_PermanentJsonWalkerContainer):
         '''
         pitch = _get_float_tuple_range(self.json / "pitch")
         if pitch is None:
-            return self.block_sounds_block.pitch
+            return self.owning_collection.pitch
         return pitch
 
     @property
@@ -1913,7 +1913,7 @@ class SjBlockSoundsBlockEvent(_PermanentJsonWalkerContainer):
         '''
         volume = _get_float_tuple_range(self.json / "volume")
         if volume is None:
-            return self.block_sounds_block.volume
+            return self.owning_collection.volume
         return volume
 
 # Sounds.JSON -> Entity Sounds
@@ -1968,16 +1968,16 @@ class SjEntitySoundsDefaults(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->entity_sounds->defaults.
     '''
-    def __init__(self, json: JsonWalker, entity_sounds: SjEntitySounds) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjEntitySounds) -> None:
         super().__init__(json)
-        self._entity_sounds = entity_sounds
+        self._owning_collection = owning_collection
 
     @property
-    def entity_sounds(self) -> SjEntitySounds:
+    def owning_collection(self) -> SjEntitySounds:
         '''
         Returns the :class:`SjEntitySounds` that contains this object.
         '''
-        return self._entity_sounds
+        return self._owning_collection
 
     def keys(self) -> Tuple[str]:
         '''
@@ -2030,17 +2030,17 @@ class SjEntitySoundsDefaultsEvent(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->entity_sounds->defaults->events->[event].
     '''
-    def __init__(self, json: JsonWalker, entity_sounds_defaults: SjEntitySoundsDefaults) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjEntitySoundsDefaults) -> None:
         super().__init__(json)
-        self._entity_sounds_defaults = entity_sounds_defaults
+        self._owning_collection = owning_collection
 
     @property
-    def entity_sounds_defaults(self) -> SjEntitySoundsDefaults:
+    def owning_collection(self) -> SjEntitySoundsDefaults:
         '''
         Returns the entity sounds defaults object that contains this sound
         event.
         '''
-        return self._entity_sounds_defaults
+        return self._owning_collection
 
     @property
     def pitch(self) -> Tuple[float, float]:
@@ -2049,11 +2049,11 @@ class SjEntitySoundsDefaultsEvent(_PermanentJsonWalkerContainer):
         event itself than the default value is returned instead.
         '''
         if isinstance(self.json.data, str):
-            return self.entity_sounds_defaults.pitch
+            return self.owning_collection.pitch
         elif isinstance(self.json.data, dict):
             pitch = _get_float_tuple_range(self.json / 'pitch')
             if pitch is None:
-                return self.entity_sounds_defaults.pitch
+                return self.owning_collection.pitch
             return pitch
 
     @property
@@ -2063,11 +2063,11 @@ class SjEntitySoundsDefaultsEvent(_PermanentJsonWalkerContainer):
         event itself than the default value is returned instead.
         '''
         if isinstance(self.json.data, str):
-            return self.entity_sounds_defaults.volume
+            return self.owning_collection.volume
         elif isinstance(self.json.data, dict):
             volume = _get_float_tuple_range(self.json / 'volume')
             if volume is None:
-                return self.entity_sounds_defaults.volume
+                return self.owning_collection.volume
             return volume
 
     @property
@@ -2088,16 +2088,16 @@ class SjEntitySoundsEntity(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->entity_sounds->entities->[entity]
     '''
-    def __init__(self, json: JsonWalker, entity_sounds: SjEntitySounds) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjEntitySounds) -> None:
         super().__init__(json)
-        self._entity_sounds = entity_sounds
+        self._owning_collection = owning_collection
 
     @property
-    def entity_sounds(self) -> SjEntitySounds:
+    def owning_collection(self) -> SjEntitySounds:
         '''
         The entity sounds object that contains this entity.
         '''
-        return self._entity_sounds
+        return self._owning_collection
 
     @property
     def pitch(self) -> Tuple[float, float]:
@@ -2149,16 +2149,16 @@ class SjEntitySoundsEntityEvent(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->entity_sounds->entities->[entity]->events->[event]
     '''
-    def __init__(self, json: JsonWalker, entity_sounds_entity: SjEntitySoundsEntity) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjEntitySoundsEntity) -> None:
         super().__init__(json)
-        self._entity_sounds_entity = entity_sounds_entity
+        self._owning_collection = owning_collection
 
     @property
-    def entity_sounds_entity(self) -> SjEntitySoundsEntity:
+    def owning_collection(self) -> SjEntitySoundsEntity:
         '''
         The entity that contains this sound event.
         '''
-        return self._entity_sounds_entity
+        return self._owning_collection
 
     @property
     def pitch(self) -> Tuple[float, float]:
@@ -2168,11 +2168,11 @@ class SjEntitySoundsEntityEvent(_PermanentJsonWalkerContainer):
         instead.
         '''
         if isinstance(self.json.data, str):
-            return self.entity_sounds_entity.pitch
+            return self.owning_collection.pitch
         elif isinstance(self.json.data, dict):
             pitch = _get_float_tuple_range(self.json / 'pitch')
             if pitch is None:
-                return self.entity_sounds_entity.pitch
+                return self.owning_collection.pitch
             return pitch
 
     @property
@@ -2183,11 +2183,11 @@ class SjEntitySoundsEntityEvent(_PermanentJsonWalkerContainer):
         instead.
         '''
         if isinstance(self.json.data, str):
-            return self.entity_sounds_entity.volume
+            return self.owning_collection.volume
         elif isinstance(self.json.data, dict):
             volume = _get_float_tuple_range(self.json / 'volume')
             if volume is None:
-                return self.entity_sounds_entity.volume
+                return self.owning_collection.volume
             return volume
 
     @property
@@ -2250,16 +2250,16 @@ class SjIndividualEventSoundsEvent(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->individual_event_sounds->events->[event]
     '''
-    def __init__(self, json: JsonWalker, individual_event_sounds: SjIndividualEventSounds) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjIndividualEventSounds) -> None:
         super().__init__(json)
-        self._individual_event_sounds = individual_event_sounds
+        self._owning_collection = owning_collection
     
     @property
-    def individual_event_sounds(self) -> SjIndividualEventSounds:
+    def owning_collection(self) -> SjIndividualEventSounds:
         '''
         The individual event sounds object that contains this event.
         '''
-        return self._individual_event_sounds
+        return self._owning_collection
 
     @property
     def pitch(self) -> Tuple[float, float]:
@@ -2336,16 +2336,16 @@ class SjInteractiveBlockSoundsBlock(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->interactive_sounds->block_sounds->[block]
     '''
-    def __init__(self, json: JsonWalker, interactive_block_sounds: SjInteractiveBlockSounds) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjInteractiveBlockSounds) -> None:
         super().__init__(json)
-        self._interactive_block_sounds = interactive_block_sounds
+        self._owning_collection = owning_collection
 
     @property
-    def interactive_block_sounds(self) -> SjInteractiveBlockSounds:
+    def owning_collection(self) -> SjInteractiveBlockSounds:
         '''
         The interactive block sounds object that contains this block sound.
         '''
-        return self._interactive_block_sounds
+        return self._owning_collection
 
     @property
     def pitch(self) -> Tuple[float, float]:
@@ -2406,16 +2406,16 @@ class SjInteractiveBlockSoundsBlockEvent(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->interactive_sounds->block_sounds->[block]->events->[event]
     '''
-    def __init__(self, json: JsonWalker, interactive_block_sounds_block: SjInteractiveBlockSoundsBlock) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjInteractiveBlockSoundsBlock) -> None:
         super().__init__(json)
-        self._interactive_block_sounds_block = interactive_block_sounds_block
+        self._owning_collection = owning_collection
 
     @property
-    def interactive_block_sounds_block(self) -> SjInteractiveBlockSoundsBlock:
+    def owning_collection(self) -> SjInteractiveBlockSoundsBlock:
         '''
         The block that owns this sound event.
         '''
-        return self._interactive_block_sounds_block
+        return self._owning_collection
 
     @property
     def pitch(self) -> Tuple[float, float]:
@@ -2425,7 +2425,7 @@ class SjInteractiveBlockSoundsBlockEvent(_PermanentJsonWalkerContainer):
         '''
         pitch = _get_float_tuple_range(self.json / 'pitch')
         if pitch is None:
-            return self.interactive_block_sounds_block.pitch
+            return self.owning_collection.pitch
         return pitch
 
     @property
@@ -2436,7 +2436,7 @@ class SjInteractiveBlockSoundsBlockEvent(_PermanentJsonWalkerContainer):
         '''
         volume = _get_float_tuple_range(self.json / 'volume')
         if volume is None:
-            return self.interactive_block_sounds_block.volume
+            return self.owning_collection.volume
         return volume
 
     @property
@@ -2446,7 +2446,7 @@ class SjInteractiveBlockSoundsBlockEvent(_PermanentJsonWalkerContainer):
         '''
         sound = (self.json / 'sound').data
         if not isinstance(sound, str):
-            return self.interactive_block_sounds_block.sound
+            return self.owning_collection.sound
         return sound
 
 # Sounds.JSON -> Interactive Entity Sounds
@@ -2504,15 +2504,15 @@ class SjInteractiveEntitySoundsDefaults(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->interactive_sounds->entity_sounds->defaults
     '''
-    def __init__(self, json: JsonWalker, entity_sounds: SjInteractiveEntitySounds) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjInteractiveEntitySounds) -> None:
         super().__init__(json)
-        self._entity_sounds = entity_sounds
+        self._owning_collection = owning_collection
 
-    def entity_sounds(self) -> SjInteractiveEntitySounds:
+    def owning_collection(self) -> SjInteractiveEntitySounds:
         '''
         The entity sounds that contain this list of defaults.
         '''
-        return self._entity_sounds
+        return self._owning_collection
 
     def keys(self) -> Tuple[str]:
         '''
@@ -2566,16 +2566,16 @@ class SjInteractiveEntitySoundsDefaultsEvent(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->interactive_sounds->entity_sounds->defaults->events->[event]
     '''
-    def __init__(self, json: JsonWalker, entity_sounds_defaults: SjInteractiveEntitySoundsDefaults) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjInteractiveEntitySoundsDefaults) -> None:
         super().__init__(json)
-        self._entity_sounds_defaults = entity_sounds_defaults
+        self._owning_collection = owning_collection
 
     @property
-    def entity_sounds_defaults(self) -> SjInteractiveEntitySoundsDefaults:
+    def owning_collection(self) -> SjInteractiveEntitySoundsDefaults:
         '''
         The interactive-entity-sounds-defaults object that contains this event.
         '''
-        return self._entity_sounds_defaults
+        return self._owning_collection
 
     @property
     def pitch(self) -> Tuple[float, float]:
@@ -2585,11 +2585,11 @@ class SjInteractiveEntitySoundsDefaultsEvent(_PermanentJsonWalkerContainer):
         returned instead.
         '''
         if isinstance(self.json.data, str):
-            return self.entity_sounds_defaults.pitch
+            return self.owning_collection.pitch
         elif isinstance(self.json.data, dict):
             pitch = _get_float_tuple_range(self.json / 'default' / 'pitch')
             if pitch is None:
-                return self.entity_sounds_defaults.pitch
+                return self.owning_collection.pitch
             return pitch
 
     @property
@@ -2600,11 +2600,11 @@ class SjInteractiveEntitySoundsDefaultsEvent(_PermanentJsonWalkerContainer):
         returned instead.
         '''
         if isinstance(self.json.data, str):
-            return self.entity_sounds_defaults.volume
+            return self.owning_collection.volume
         elif isinstance(self.json.data, dict):
             volume = _get_float_tuple_range(self.json / 'default' / 'volume')
             if volume is None:
-                return self.entity_sounds_defaults.volume
+                return self.owning_collection.volume
             return volume
 
     @property
@@ -2625,15 +2625,15 @@ class SjInteractiveEntitySoundsEntity(_PermanentJsonWalkerContainer):
     A class with :class:`JsonWalker` with the content of
     sounds.json->interactive_sounds->entity_sounds->entities->[entity]
     '''
-    def __init__(self, json: JsonWalker, entity_sounds: SjInteractiveEntitySounds) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjInteractiveEntitySounds) -> None:
         super().__init__(json)
-        self._entity_sounds = entity_sounds
+        self._owning_collection = owning_collection
 
-    def entity_sounds(self) -> SjInteractiveEntitySounds:
+    def owning_collection(self) -> SjInteractiveEntitySounds:
         '''
         The interactive-entity-sounds object that contains this entity.
         '''
-        return self._entity_sounds
+        return self._owning_collection
 
     @property
     def pitch(self) -> Tuple[float, float]:
@@ -2688,16 +2688,16 @@ class SjInteractiveEntitySoundsEntityEvent(_PermanentJsonWalkerContainer):
     sounds.json->interactive_sounds->entity_sounds->entities->[entity]->
     events->[event]
     '''
-    def __init__(self, json: JsonWalker, entity_sounds_entity: SjInteractiveEntitySoundsEntity) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjInteractiveEntitySoundsEntity) -> None:
         super().__init__(json)
-        self._entity_sounds_entity = entity_sounds_entity
+        self._owning_collection = owning_collection
 
     @property
-    def entity_sounds_entity(self) -> SjInteractiveEntitySoundsEntity:
+    def owning_collection(self) -> SjInteractiveEntitySoundsEntity:
         '''
         The entity that contains this sound event.
         '''
-        return self._entity_sounds_entity
+        return self._owning_collection
 
     @property
     def sound(self) -> str:
@@ -2744,16 +2744,16 @@ class SjInteractiveEntitySoundsEntityEventBlock(_PermanentJsonWalkerContainer):
     sounds.json->interactive_sounds->entity_sounds->entities->[entity]->
     events->[event]->[block]
     '''
-    def __init__(self, json: JsonWalker, entity_sounds_entity_event: SjInteractiveEntitySoundsEntityEvent) -> None:
+    def __init__(self, json: JsonWalker, owning_collection: SjInteractiveEntitySoundsEntityEvent) -> None:
         super().__init__(json)
-        self._entity_sounds_entity_event = entity_sounds_entity_event
+        self._owning_collection = owning_collection
 
     @property
-    def entity_sounds_entity_event(self) -> SjInteractiveEntitySoundsEntityEvent:
+    def owning_collection(self) -> SjInteractiveEntitySoundsEntityEvent:
         '''
         The sound event that owns this object.
         '''
-        return self._entity_sounds_entity_event
+        return self._owning_collection
 
     @property
     def sound(self) -> str:
