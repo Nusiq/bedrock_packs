@@ -7,7 +7,7 @@ File Collections
 .. py:currentmodule:: bedrock_packs
 .. autoclass:: _McFileCollection
     :members:
-    :special-members: __getitem__
+    :special-members: __getitem__, __iter__
 .. autoclass:: _McFileCollectionSingle
     :members:
     :exclude-members: keys

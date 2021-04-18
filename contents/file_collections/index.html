@@ -180,6 +180,19 @@ an object that you want to access from the collection.</p>
 </dl>
 </dd></dl>
 <dl class="py method">
+<dt id="bedrock_packs._McFileCollection.__iter__">
+<code class="sig-name descname"><span class="pre">__iter__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._McFileCollection.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator which yields files contained in this collection
+using their keys. If a key matches to multiple files than only the
+first one is returned. If you want to iterate over every file use
+the “objects” property.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[~MCFILE]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
 <dt id="bedrock_packs._McFileCollection.keys">
 <em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bedrock_packs._McFileCollection.keys" title="Permalink to this definition">¶</a></dt>
 <dd><p>The list of the identifiers that can be used for __getitem__ method
