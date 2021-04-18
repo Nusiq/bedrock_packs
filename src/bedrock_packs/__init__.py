@@ -682,6 +682,17 @@ class _McFileCollection(Generic[MCPACK, MCFILE], ABC):
         '''The pack that owns this file collection.'''
         return self._pack
 
+
+    def __iter__(self) -> Iterator[MCFILE]:
+        '''
+        Returns an iterator which yields files contained in this collection
+        using their keys. If a key matches to multiple files than only the
+        first one is returned. If you want to iterate over every file use
+        the "objects" property.
+        '''
+        for k in self.keys():
+            yield self[:k:0]
+
     def __getitem__(self, key: Union[str, slice]) -> MCFILE:
         '''
         Get a file that belongs to this collection by using its path,
