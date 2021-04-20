@@ -566,9 +566,9 @@ class JsonWalker:
                 curr_item = curr_item / key
             else:
                 raise KeyError(key)
-            self._parent = curr_item.parent
-            self._parent_key = curr_item.parent_key
-            self.data = data
+        self._parent = curr_item.parent
+        self._parent_key = curr_item.parent_key
+        self.data = data
 
     @property
     def exists(self) -> bool:
@@ -584,9 +584,10 @@ class JsonWalker:
         except KeyError:
             pass
         keys = tuple(reversed(keys))
+        root_data = root.data
         try:
             for key in keys:
-                root = root[key]
+                root_data = root_data[key]
         except:
             return False
         return True

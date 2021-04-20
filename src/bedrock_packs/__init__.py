@@ -12,7 +12,7 @@ from pathlib import Path
 from .json import JSONCDecoder, JsonWalker
 
 # Package version
-VERSION = (1, 0)
+VERSION = (1, 1)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 
