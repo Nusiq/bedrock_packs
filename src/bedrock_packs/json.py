@@ -708,8 +708,11 @@ class JsonWalker:
         object to create :class:`JsonSplitWalker`.
         '''
         if isinstance(other, JsonWalker):
-            return JsonSplitWalker([self, other])
-        return JsonSplitWalker(other.data + [self])
+            data = [self, other]
+        else:
+            data = other.data + [self]
+        return JsonSplitWalker(
+            [i for i in data if not isinstance(i.data, Exception)])
 
 class JsonSplitWalker:
     '''
@@ -763,8 +766,11 @@ class JsonSplitWalker:
         object.
         '''
         if isinstance(other, JsonWalker):
-            return JsonSplitWalker(self.data + [other])
-        return JsonSplitWalker(self.data + other.data)
+            data = self.data + [other]
+        else:
+            data = self.data + other.data
+        return JsonSplitWalker(
+            [i for i in data if not isinstance(i.data, Exception)])
 
     def __iter__(self) -> Iterator[JsonWalker]:
         '''
