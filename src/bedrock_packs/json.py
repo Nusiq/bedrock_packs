@@ -416,7 +416,7 @@ class CompactEncoder(json.JSONEncoder):
 ## Type definitions
 JSON = Union[Dict, List, str, float, int, bool, None]
 JSON_KEY = Union[str, int]
-JSON_SPLIT_KEY = Union[str, Type[int], Type[str], None]
+JSON_SPLIT_KEY = Union[str, Type[int], Type[str], None, type(Ellipsis)]
 JSON_WALKER_DATA = Union[Dict, List, str, float, int, bool, None, Exception]
 
 class JsonWalker:
@@ -644,9 +644,12 @@ class JsonWalker:
 
         :param key: :code:`str` (any item from dictionary), :code:`int` (any
             item from listregular expression), regular expression (matches
-            dictionary keys) or :code:`None` (any item from dictionary or list)
+            dictionary keys), :code:`None` (any item from dictionary or list),
+            or :code:`Ellipsis` / :code:`...` (access to all list items if
+            current path points at list or skip this step and return
+            JsonSplitWalker with only current JsonWalker).
 
-        :rises:
+        :raises:
             :class:`TypeError` - invalid input data type
 
             :class:`re.error` - invlid regular expression.
@@ -686,12 +689,27 @@ class JsonWalker:
                         result.append(JsonWalker(
                             v, parent=self, parent_key=k))
                 return JsonSplitWalker(result)
+        # IF it's a list use ing key ELSE return split walker with self
+        elif key is ...:
+            if isinstance(self.data, list):
+                return self // int
+            else:
+                return JsonSplitWalker([self])
         else:  # INVALID KEY TYPE
             raise TypeError(
                 'Key must be a regular expression or one of the values: '
                 'str, int, or None')
         # DATA DOESN'T ACCEPT THIS TYPE OF KEY
         return JsonSplitWalker([])
+
+    def __add__(self, other: Union[JsonSplitWalker, JsonWalker]) -> JsonSplitWalker:
+        '''
+        Combine with :class:`JsonWalker` or  :class:`JsonSplitWalker`
+        object to create :class:`JsonSplitWalker`.
+        '''
+        if isinstance(other, JsonWalker):
+            return JsonSplitWalker([self, other])
+        return JsonSplitWalker(other.data + [self])
 
 class JsonSplitWalker:
     '''
@@ -739,10 +757,13 @@ class JsonSplitWalker:
             result.extend(new_walker.data)
         return JsonSplitWalker(result)
 
-    def __add__(self, other: JsonSplitWalker) -> JsonSplitWalker:
+    def __add__(self, other: Union[JsonSplitWalker, JsonWalker]) -> JsonSplitWalker:
         '''
-        Combine multiple :class:`JsonSplitWalker` objects.
+        Combine with :class:`JsonWalker` or  another :class:`JsonSplitWalker`
+        object.
         '''
+        if isinstance(other, JsonWalker):
+            return JsonSplitWalker(self.data + [other])
         return JsonSplitWalker(self.data + other.data)
 
     def __iter__(self) -> Iterator[JsonWalker]:
