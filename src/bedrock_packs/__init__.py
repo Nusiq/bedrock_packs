@@ -3,13 +3,15 @@ Python module for working with Minecraft bedrock edition projects.
 '''
 from __future__ import annotations
 from abc import ABC, abstractmethod, abstractproperty
+from enum import Enum, auto
+import re
 
 from typing import (
-    ClassVar, Dict, Iterator, List, Optional, Reversible, Sequence, Tuple, Type, TypeVar,
+    ClassVar, Dict, Iterator, List, NamedTuple, Optional, Reversible, Sequence, Tuple, Type, TypeVar,
     Generic, Union)
 from pathlib import Path
 
-from .json import JSONCDecoder, JsonWalker
+from .json import JSONCDecoder, JsonSplitWalker, JsonWalker
 
 # Package version
 VERSION = (1, 1)
@@ -958,9 +960,67 @@ class _McFileJsonMulti(_McFileMulti[MCFILE_COLLECTION]):
             file.
         '''
 
+    def __iter__(self) -> Iterator[JsonWalker]:
+        '''
+        Returns an iterator which yields parts of the JSON file which are
+        related to Minecraft objects in this file.
+        '''
+        for k in self.keys():
+            yield self[k]
+
 # OBJECTS (IMPLEMENTATION)
 class BpEntity(_McFileJsonSingle['BpEntities']):
     '''Behavior pack entity file.'''
+    class ConnectAnim(NamedTuple):
+        '''A reference inside the entity to an animation'''
+        short_name: str
+        identifier: str
+        json: JsonWalker
+
+    class ConnectAc(NamedTuple):
+        '''A reference inside the entity to an animation controller'''
+        short_name: str
+        identifier: str
+        json: JsonWalker
+
+    class ConnectLootType(Enum):
+        '''A type of reference to a loot table'''
+        LOOT = auto()
+        EQUIPMENT = auto()
+        DROP_ITEM_FOR = auto()
+        SNEEZE = auto()
+        BARTER = auto()
+        INTERACT_ADD_ITEMS = auto()
+        INTERACT_SPAWN_ITEMS = auto()
+
+    class ConnectLoot(NamedTuple):
+        '''A reference inside the entity to a loot table'''
+        identifier: str
+        json: JsonWalker
+        connection_type: BpEntity.ConnectLootType
+
+    class ConnectTradeType(Enum):
+        '''A type of reference to a trade table'''
+        ECONOMY_TRADE_TABLE = auto()
+        TRADE_TABLE = auto()
+
+    class ConnectTrade(NamedTuple):
+        '''A reference inside the entity to a trade table'''
+        identifier: str
+        json: JsonWalker
+        connection_type: BpEntity.ConnectTradeType
+
+    def __init__(
+                self, path: Path,
+                owning_collection: Optional[MCFILE_COLLECTION]
+            ) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._animations: Optional[Tuple[BpEntity.ConnectAnim, ...]] = None
+        self._animation_controllers: Optional[
+            Tuple[BpEntity.ConnectAc, ...]] = None
+        self._loot_tables: Optional[Tuple[BpEntity.ConnectLoot, ...]] = None
+        self._trade_tables: Optional[Tuple[BpEntity.ConnectTrade, ...]] = None
+
     @property
     def identifier(self) -> Optional[str]:
         id_walker = (
@@ -969,8 +1029,173 @@ class BpEntity(_McFileJsonSingle['BpEntities']):
             return id_walker.data
         return None
 
+    @property
+    def animations(self) -> Tuple[BpEntity.ConnectAnim, ...]:
+        '''
+        Returns a list of the references to an animation from this file.
+        '''
+        if self._animations is not None:
+            return self._animations
+        animations = (
+            self.json / 'minecraft:entity' / 'description' / 'animations' //
+            str)
+        result: List[BpEntity.ConnectAnim] = []
+        for animation in animations.data:
+            k, v = animation.parent_key, animation.data
+            if not isinstance(v, str):
+                continue
+            if v.startswith('animation.'):
+                result.append(BpEntity.ConnectAnim(k, v, animation))
+        self._animations = tuple(result)
+        return self._animations
+
+    @property
+    def animation_controllers(self) -> Tuple[BpEntity.ConnectAc, ...]:
+        '''
+        Returns a list of the references to an animation from this file.
+        '''
+        if self._animation_controllers is not None:
+            return self._animation_controllers
+        animations = (
+            self.json / 'minecraft:entity' / 'description' / 'animations' //
+            str)
+        result: List[BpEntity.ConnectAc] = []
+        for animation in animations.data:
+            k, v = animation.parent_key, animation.data
+            if not isinstance(v, str):
+                continue
+            if v.startswith('controller.animation.'):
+                result.append(BpEntity.ConnectAc(k, v, animation))
+        self._animation_controllers = tuple(result)
+        return self._animation_controllers
+
+    @property
+    def loot_tables(self) -> Tuple[BpEntity.ConnectLoot, ...]:
+        '''
+        Returns a list of the references to a loot table from this file.
+        '''
+        if self._loot_tables is not None:
+            return self._loot_tables
+        entity = self.json / 'minecraft:entity'
+        all_components = entity / 'component_groups' // str
+        all_components += entity / 'components'
+        result: List[BpEntity.ConnectLoot] = []
+        def try_add_result(json, _type):
+            v = json.data
+            if isinstance(v, str):
+                result.append(BpEntity.ConnectLoot(v, json, _type))
+        # LOOT
+        for i in all_components / "minecraft:loot" / "table":
+            try_add_result(i, BpEntity.ConnectLootType.LOOT)
+        # EQUIPMENT
+        for i in all_components / "minecraft:equipment" / "table":
+            try_add_result(i, BpEntity.ConnectLootType.EQUIPMENT)
+        # DROP_ITEM_FOR
+        for i in (
+                all_components / 'minecraft:behavior.drop_item_for' /
+                'loot_table'):
+            try_add_result(i, BpEntity.ConnectLootType.DROP_ITEM_FOR)
+        # SNEEZE
+        for i in all_components / 'minecraft:behavior.sneeze' / 'loot_table':
+            try_add_result(i, BpEntity.ConnectLootType.SNEEZE)
+        # BARTER
+        for i in all_components / 'minecraft:barter' / 'barter_table':
+            try_add_result(i, BpEntity.ConnectLootType.BARTER)
+        # INTERACT_ADD_ITEMS
+        # INTERACT_SPAWN_ITEMS
+        interact = all_components / 'minecraft:interact' 
+        for i in (
+                (interact / "interactions") +
+                (interact / "interactions" // int)):
+            try_add_result(
+                i / "spawn_items" / "table",
+                BpEntity.ConnectLootType.INTERACT_SPAWN_ITEMS)
+            try_add_result(
+                i / "add_items" / "table",
+                BpEntity.ConnectLootType.INTERACT_ADD_ITEMS)
+        self._loot_tables = tuple(result)
+        return self._loot_tables
+
+    @property
+    def trade_tables(self) -> Tuple[BpEntity.ConnectTrade, ...]:
+        if self._trade_tables is not None:
+            return self._trade_tables
+        entity = self.json / 'minecraft:entity'
+        all_components = entity / 'component_groups' // str
+        all_components += entity / 'components'
+        result: List[BpEntity.ConnectTrade] = []
+        for i in all_components / 'minecraft:economy_trade_table' / 'table':
+            v = i.data
+            if isinstance(v, str):
+                result.append(BpEntity.ConnectTrade(
+                    v, json, BpEntity.ConnectTradeType.ECONOMY_TRADE_TABLE))
+        for i in all_components / 'minecraft:trade_table' / 'table':
+            v = i.data
+            if isinstance(v, str):
+                result.append(BpEntity.ConnectTrade(
+                    v, json, BpEntity.ConnectTradeType.TRADE_TABLE))
+        self._trade_tables = tuple(result)
+        return self._trade_tables
+
 class RpEntity(_McFileJsonSingle['RpEntities']):
     '''Resource pack entity file.'''
+    class ConnectMaterial(NamedTuple):
+        '''A reference inside the entity to a material'''
+        short_name: str
+        identifier: str
+        json: JsonWalker
+
+    class ConnectTexture(NamedTuple):
+        '''A reference inside the entity to a texture'''
+        short_name: str
+        identifier: str
+        json: JsonWalker
+
+    class ConnectAnim(NamedTuple):
+        '''A reference inside the entity to an animation'''
+        short_name: str
+        identifier: str
+        json: JsonWalker
+
+    class ConnectAc(NamedTuple):
+        '''A reference inside the entity to an animation controller'''
+        short_name: str
+        identifier: str
+        json: JsonWalker
+
+    class ConnectGeo(NamedTuple):
+        '''A reference inside the entity to a geometry'''
+        short_name: str
+        identifier: str
+        json: JsonWalker
+
+    class ConnectRc(NamedTuple):
+        identifier: str
+        condition: Optional[str]
+        json: JsonWalker
+
+    class ConnectParticle(NamedTuple):
+        '''A reference from this file to a particle effect'''
+        short_name: str
+        identifier: str
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._materials: Optional[Tuple[RpEntity.ConnectMaterial, ...]] = None
+        self._textures: Optional[Tuple[RpEntity.ConnectTexture, ...]] = None
+        self._spawn_egg: Optional[RpEntity.ConnectSpawnEggTexture] = None
+        self._animations: Optional[Tuple[RpEntity.ConnectAnim, ...]] = None
+        self._animation_controllers: Optional[
+            Tuple[RpEntity.ConnectAc, ...]] = None
+        self._geometries: Optional[Tuple[RpEntity.ConnectGeo, ...]] = None
+        self._render_controllers: Optional[
+            Tuple[RpEntity.ConnectRc, ...]] = None
+        self._particle_effects: Optional[
+            Tuple[RpEntity.ConnectParticle, ...]] = None
+
     @property
     def identifier(self) -> Optional[str]:
         id_walker = (
@@ -980,8 +1205,179 @@ class RpEntity(_McFileJsonSingle['RpEntities']):
             return id_walker.data
         return None
 
+    @property
+    def materials(self) -> Tuple[ConnectMaterial, ...]:
+        '''Returns a list of references to the materials from this file.'''
+        if self._materials is not None:
+            return self._materials
+        materials = (
+            self.json / "minecraft:client_entity" / "description" /
+            "materials" // str)
+        result: List[RpEntity.ConnectMaterial] = []
+        for i in materials:
+            if isinstance(i.data, str):
+                result.append(RpEntity.ConnectMaterial(
+                    i.parent_key, i.data, i))
+        self._materials = tuple(result)
+        return self._materials
+
+    @property
+    def textures(self) -> Tuple[ConnectTexture, ...]:
+        '''Returns a list of references to textures from this file.'''
+        if self.textures is not None:
+            return self._textures
+        textures = (
+            self.json / "minecraft:client_entity" / "description" /
+            "textures" // str)
+        result: List[RpEntity.ConnectTexture] = []
+        for i in textures:
+            if isinstance(i.data, str):
+                result.append(RpEntity.ConnectTexture(
+                    i.parent_key, i.data, i))
+        self._textures = tuple(result)
+        return self._textures
+
+    @property
+    def animations(self) -> Tuple[ConnectAnim, ...]:
+        '''Returns a list of references to animations from this file.'''
+        if self._animations is not None:
+            return self._animations
+        animations = (
+            self.json / "minecraft:client_entity" / "description" /
+            "animations" // str)
+        result: List[RpEntity.ConnectAnim] = []
+        for i in animations:
+            if isinstance(i.data, str) and i.data.startswith('animation.'):
+                result.append(RpEntity.ConnectAnim(
+                    i.parent_key, i.data, i))
+        self._animations = tuple(result)
+        return self._animations
+
+    @property
+    def animation_controllers(self) -> Tuple[ConnectAc, ...]:
+        '''
+        Returns a list of references to animation controllers from this file.
+        '''
+        if self._animations is not None:
+            return self._animations
+        description = self.json / "minecraft:client_entity" / "description"
+        animation_controllers = description / "animation_controllers" // int
+        result: List[RpEntity.ConnectAc] = []
+        for i in animation_controllers:
+            if isinstance(i.data, dict):
+                if len(i.data) != 1:
+                    continue
+                k, v = list(i.data.items())[0]
+                if not k.startswith('controller.animation.'):
+                    continue
+                result.append(RpEntity.ConnectAc(k, v, i))
+        animations = description / "animations" // str
+        for i in animations:
+            if (
+                    isinstance(i.data, str) and
+                    i.data.startswith('controller.animation.')):
+                result.append(RpEntity.ConnectAc(
+                    i.parent_key, i.data, i))
+        self._animations = tuple(result)
+        return self._animations
+
+    @property
+    def geometries(self) -> Tuple[ConnectGeo, ...]:
+        '''Returns a list of references to models from this file.'''
+        if self._geometries is not None:
+            return self._geometries
+        geometries = (
+            self.json / "minecraft:client_entity" / "description" /
+            "geometry" // str)
+        result: List[RpEntity.ConnectGeo] = []
+        for i in geometries:
+            if isinstance(i.data, str) and i.data.startswith('geometry.'):
+                result.append(RpEntity.ConnectGeo(
+                    i.parent_key, i.data, i))
+        self._geometries = tuple(result)
+        return self._geometries
+
+    @property
+    def render_controllers(self) -> Tuple[ConnectRc, ...]:
+        '''
+        Returns a list of references to render controllers from this file.
+        '''
+        if self._render_controllers is not None:
+            return self._render_controllers
+        render_controllers = (
+            self.json / "minecraft:client_entity" / "description" /
+            "render_controllers" // int)
+        result: List[RpEntity.ConnectAnim] = []
+        for i in render_controllers:
+            if isinstance(i.data, str):
+                result.append(RpEntity.ConnectRc(i.data, None, i))
+            elif isinstance(i.data, dict) and len(i.data) == 1:
+                k, v = list(i.data.items())[0]
+                if isinstance(v, str):
+                    result.append(RpEntity.ConnectRc(k, v, i))
+        self._render_controllers = tuple(result)
+        return self._render_controllers
+
+    @property
+    def particle_effects(self) -> Tuple[ConnectParticle, ...]:
+        '''Returns a list of references to particles from this file.'''
+        if self._particle_effects is not None:
+            return self._particle_effects
+        particle_effects = (
+            self.json / "minecraft:client_entity" / "description" /
+            "particle_effects" // str)
+        result: List[RpEntity.ConnectParticle] = []
+        for i in particle_effects:
+            if isinstance(i.data, str) and i.data.startswith('animation.'):
+                result.append(RpEntity.ConnectParticle(
+                    i.parent_key, i.data, i))
+        self._particle_effects = tuple(result)
+        return self._particle_effects
+
 class _AnimationController(_McFileJsonMulti[MCFILE_COLLECTION]):  # GENERIC
     '''Generic type for resource pack/behavior pack animation controllers.'''
+    class ConnectAnim(NamedTuple):
+        '''A reference from this file to an animation.'''
+        short_name: str
+        condition: str
+        animation_controller: str
+        state: str
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._animations: Optional[
+            Tuple[_AnimationController.ConnectAnim, ...]] = None
+
+    @property
+    def animations(self) -> Tuple[ConnectAnim]:
+        '''Returns a list of references to animations from this file.'''
+        if self._animations is not None:
+            return self._animations
+        result: List[_AnimationController.ConnectAnim] = []
+        for ac in self:
+            for animation in (ac / 'states' // str / 'animations' // int):
+                if isinstance(animation.data, str):
+                    anim_name = animation.data
+                    state_name = animation.path[-3]
+                    ac_name = ac.parent_key
+                    result.append(_AnimationController.ConnectAnim(
+                        anim_name, None, ac_name, state_name, animation))
+                elif isinstance(animation.data, dict):
+                    if not len(animation.data, 1):
+                        continue
+                    anim_name, condition = list(animation.data.items())[0]
+                    if not isinstance(condition, str):
+                        continue
+                    state_name = animation.path[-3]
+                    ac_name = ac.parent_key
+                    result.append(_AnimationController.ConnectAnim(
+                        anim_name, condition, ac_name, state_name, animation))
+        self._animations = tuple(result)
+        return self._animations
+
     def keys(self) -> Tuple[str, ...]:
         id_walker = (self.json / "animation_controllers")
         if isinstance(id_walker.data, dict):
@@ -995,10 +1391,84 @@ class _AnimationController(_McFileJsonMulti[MCFILE_COLLECTION]):  # GENERIC
             if key in id_walker.data:
                 return id_walker / key
         raise KeyError(key)
+
 class BpAnimationController(_AnimationController['BpAnimationControllers']):
     '''Behavior pack animation controller.'''
+
 class RpAnimationController(_AnimationController['RpAnimationControllers']):
     '''Resource pack animation controller.'''
+    class ConnectParticle(NamedTuple):
+        '''A reference from this file to a particle effect'''
+        short_name: str
+        animation_controller: str
+        state: str
+        json: JsonWalker
+
+    class ConnectSound(NamedTuple):
+        '''A reference from this file to a particle effect'''
+        short_name: str
+        animation_controller: str
+        state: str
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[RpAnimationControllers]) -> None:
+        super().__init__(path, owning_collection)
+        self._particle_effects: Optional[
+            Tuple[RpAnimationController.ConnectParticle]] = None
+        self._sound_effects: Optional[
+            Tuple[RpAnimationController.ConnectSound]] = None
+
+    @property
+    def particle_effects(self) -> Tuple[ConnectParticle]:
+        '''
+        Returns a list of references to sound effects from this file.
+        Sound effect of an animation controller is a short name used
+        by the entity to reference a sound defined in sounds_definitions.json
+        '''
+        if self._particle_effects is not None:
+            return self._particle_effects
+        result: List[RpAnimationController.ConnectParticle] = []
+        for ac in self:
+            for particle in (
+                    ac / 'states' // str / 'particle_effects' // int):
+                if not isinstance(particle.data, dict):
+                    continue
+                if 'effect' not in particle.data:
+                    continue
+                particle_name = particle.data['effect']
+                if not isinstance(particle_name, str):
+                    continue
+                state_name = particle.path[-3]
+                ac_name = ac.parent_key
+                result.append(RpAnimationController.ConnectParticle(
+                    particle_name, ac_name, state_name, particle))
+        self._particle_effects = tuple(result)
+        return self._particle_effects
+
+    @property
+    def sound_effects(self) -> Tuple[ConnectSound]:
+        '''Returns a list of references to sounds from this file.'''
+        if self._sound_effects is not None:
+            return self._sound_effects
+        result: List[RpAnimationController.ConnectSound] = []
+        for ac in self:
+            for sound in (
+                    ac / 'states' // str / 'sound_effects' // int):
+                if not isinstance(sound.data, dict):
+                    continue
+                if 'effect' not in sound.data:
+                    continue
+                sound_name = sound.data['effect']
+                if not isinstance(sound_name, str):
+                    continue
+                state_name = sound.path[-3]
+                ac_name = ac.parent_key
+                result.append(RpAnimationController.ConnectSound(
+                    sound_name, ac_name, state_name, sound))
+        self._sound_effects = tuple(result)
+        return self._sound_effects
 
 class _Animation(_McFileJsonMulti[MCFILE_COLLECTION]):  # GENERIC
     '''Generic type for resource pack/behavior pack animations.'''
@@ -1015,10 +1485,88 @@ class _Animation(_McFileJsonMulti[MCFILE_COLLECTION]):  # GENERIC
             if key in id_walker.data:
                 return id_walker / key
         raise KeyError(key)
+
 class BpAnimation(_Animation['BpAnimations']):
     '''Behavior pack animation file.'''
+
 class RpAnimation(_Animation['RpAnimations']):
     '''Resource pack animation file.'''
+    class ConnectSound(NamedTuple):
+        '''A reference to a sound from this file'''
+        short_name: str
+        timestamp: str
+        animation: str
+        json: JsonWalker
+
+    class ConnectParticle(NamedTuple):
+        '''A reference to a particle from this file'''
+        short_name: str
+        timestamp: str
+        animation: str
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._sound_effects: Optional[
+            Tuple[RpAnimation.ConnectSound, ...]] = None
+        self._particle_effects: Optional[
+            Tuple[RpAnimation.ConnectParticle, ...]] = None
+    
+    @property
+    def particle_effects(self) -> Tuple[ConnectParticle, ...]:
+        '''
+        Returns a list of references to sound effects from this file.
+        Sound effect of an animation controller is a short name used
+        by the entity to reference a sound defined in sounds_definitions.json
+        '''
+        if self._particle_effects is not None:
+            return self._particle_effects
+        result: List[RpAnimation.ConnectParticle] = []
+        for ac in self:
+            for timestamp in (
+                    ac / 'animations' // str / 'particle_effects' //
+                    '^(\d+\.\d+|\d+)$'):
+                if isinstance(timestamp.data, dict):
+                    effect = timestamp / 'effect'
+                    if not isinstance(effect.data, str):
+                        continue
+                    result.append(RpAnimation.ConnectParticle(
+                        effect.data, timestamp.data,
+                        timestamp.path[-3], effect))
+                elif isinstance(timestamp.data, list):
+                    for effect in timestamp // int / 'effect':
+                        result.append(RpAnimation.ConnectParticle(
+                            effect.data, timestamp.data,
+                            timestamp.path[-3], effect))
+        self._particle_effects = tuple(result)
+        return self._particle_effects
+
+    @property
+    def sound_effects(self) -> Tuple[ConnectSound, ...]:
+        '''Returns a list of references to sounds from this file.'''
+        if self._sound_effects is not None:
+            return self._sound_effects
+        result: List[RpAnimation.ConnectSound] = []
+        for ac in self:
+            for timestamp in (
+                    ac / 'animations' // str / 'sound_effects' //
+                    '^(\d+\.\d+|\d+)$'):
+                if isinstance(timestamp.data, dict):
+                    effect = timestamp / 'effect'
+                    if not isinstance(effect.data, str):
+                        continue
+                    result.append(RpAnimation.ConnectSound(
+                        effect.data, timestamp.data,
+                        timestamp.path[-3], effect))
+                elif isinstance(timestamp.data, list):
+                    for effect in timestamp // int / 'effect':
+                        result.append(RpAnimation.ConnectSound(
+                            effect.data, timestamp.data,
+                            timestamp.path[-3], effect))
+        self._sound_effects = tuple(result)
+        return self._sound_effects
 
 class BpBlock(_McFileJsonSingle['BpBlocks']):
     '''Behavior pack block file.'''
@@ -1042,6 +1590,17 @@ class BpItem(_McFileJsonSingle['BpItems']):
 
 class RpItem(_McFileJsonSingle['RpItems']):
     '''Resource pack item file.'''
+
+    class ConnectItemTexture(NamedTuple):
+        identifier: str
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._icon: Optional[RpItem.ConnectItemTexture] = None
+
     @property
     def identifier(self) -> Optional[str]:
         id_walker = (
@@ -1050,8 +1609,35 @@ class RpItem(_McFileJsonSingle['RpItems']):
             return id_walker.data
         return None
 
+    @property
+    def icon(self) -> Optional[ConnectItemTexture]:
+        '''Returns a reference to a item texture from this file.'''
+        if self._icon is not None:
+            return self._icon
+        icon = self.json / "minecraft:item" / "components" / "minecraft:icon"
+        if isinstance(icon.data, str):
+            self._icon = RpItem.ConnectItemTexture(icon.data, icon)
+        return self._icon
+
 class BpLootTable(_McFileJsonSingle['BpLootTables']):
     '''Behavior pack loot table file.'''
+    class ConnectLootTable(NamedTuple):
+        identifier: str
+        json: JsonWalker
+    
+    class ConnectItem(NamedTuple):
+        identifier: str
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._items: Optional[
+            Tuple[BpLootTable.ConnectItem, ...]] = None
+        self._loot_tables: Optional[
+            Tuple[BpLootTable.ConnectLootTable, ...]] = None
+
     @property
     def identifier(self) -> Optional[str]:
         if (
@@ -1060,6 +1646,58 @@ class BpLootTable(_McFileJsonSingle['BpLootTables']):
             return None
         return self.path.relative_to(
             self.owning_collection.pack.path).as_posix()
+
+
+    @staticmethod
+    def _access_entries(
+            walkers: JsonSplitWalker, type: str) -> JsonSplitWalker:
+        '''
+        Recursively access the entries from the loot table (used to access the
+        item and loot table references).
+
+        :param walkers: usually the json split walker with root json walker
+            of this file inside
+        :type: the type of the entry ('item' or 'loot_table')
+        '''
+        good_walkers: List[JsonWalker] = []
+        for walker in walkers:
+            walker_type = walker / 'type'
+            if not (
+                    isinstance(walker_type.data, str) and
+                    walker_type.data == type):
+                continue
+            walker_name = walker / 'name'
+            if isinstance(walker_name.data, str):
+                good_walkers.append(walker)
+        result = JsonSplitWalker(good_walkers)
+        more_results = walkers / 'pools' // int / 'entries' // int
+        if len(more_results.data) != 0:
+            return result + BpLootTable._access_entries(more_results, type)
+        return result
+
+    @property
+    def items(self) -> Tuple[ConnectItem, ...]:
+        '''Returns a references to an item from this file.'''
+        if self._items is not None:
+            return self._items
+        result: List[BpLootTable.ConnectItem] = []
+        for i in BpLootTable._access_entries(
+                JsonSplitWalker([self.json]), type='item'):
+            result.append(BpLootTable.ConnectItem((i / 'name').data, i))
+        self._items = tuple(result)
+        return self._items
+
+    @property
+    def loot_tables(self) -> Tuple[ConnectItem, ...]:
+        '''Returns a references to the loot tables from this file.'''
+        if self._loot_tables is not None:
+            return self._loot_tables
+        result: List[BpLootTable.ConnectLootTable] = []
+        for i in BpLootTable._access_entries(
+                JsonSplitWalker([self.json]), type='loot_table'):
+            result.append(BpLootTable.ConnectLootTable((i / 'name').data, i))
+        self._loot_tables = tuple(result)
+        return self._loot_tables
 
 class BpFunction(_McFileSingle['BpFunctions']):
     '''A minecraft function file.'''
@@ -1109,6 +1747,17 @@ class BpSpawnRule(_McFileJsonSingle['BpSpawnRules']):
 
 class BpTrade(_McFileJsonSingle['BpTrades']):
     '''The trade file.'''
+    class ConnectItem(NamedTuple):
+        identifier: str
+        trade_wants: bool
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._items: Optional[Tuple[BpLootTable.ConnectItem, ...]] = None
+
     @property
     def identifier(self) -> Optional[str]:
         if (
@@ -1117,6 +1766,22 @@ class BpTrade(_McFileJsonSingle['BpTrades']):
             return None
         return self.path.relative_to(
             self.owning_collection.pack.path).as_posix()
+
+    @property
+    def items(self) -> Tuple[ConnectItem, ...]:
+        '''Returns a references to an item from this file.'''
+        if self._items is not None:
+            return self._items
+        result: List[BpTrade.ConnectItem] = []
+        trades = self.json / 'tiers' // int / 'trades' // int
+        for i in trades / 'wants' / 'item':
+            if isinstance(i.data, str):
+                result.append(BpTrade.ConnectItem(i.data, True, i))
+        for i in trades / 'gives' / 'item':
+            if isinstance(i.data, str):
+                result.append(BpTrade.ConnectItem(i.data, False, i))
+        self._items = tuple(result)
+        return self._items
 
 class RpModel(_McFileJsonMulti['RpModels']):
     '''The model file.'''
@@ -1145,7 +1810,7 @@ class RpModel(_McFileJsonMulti['RpModels']):
                 for k in self.json.data.keys():
                     if isinstance(k, str) and k.startswith('geometry.'):
                         result.append(k)
-        else:  # Probably something <= 1.16.0
+        else:  # Probably something > 1.10.0
             id_walker = (
                 self.json / 'minecraft:geometry' // int / 'description' /
                 'identifier')
@@ -1156,12 +1821,12 @@ class RpModel(_McFileJsonMulti['RpModels']):
         return tuple(result)
 
     def __getitem__(self, key: str) -> JsonWalker:
-        if not key.startswith('.geometry'):
-            raise AttributeError("Key must start with '.geometry'")
+        if not key.startswith('geometry.'):
+            raise AttributeError("Key must start with 'geometry.'")
         if self.format_version <= (1, 10, 0):
             if isinstance(self.json.data, dict):
                 return self.json / key
-        else:  # Probably something <= 1.16.0
+        else:  # Probably something > 1.10.0
             id_walker = (
                 self.json / 'minecraft:geometry' // int)
             for model in id_walker:
@@ -1173,6 +1838,23 @@ class RpModel(_McFileJsonMulti['RpModels']):
 
 class RpParticle(_McFileJsonSingle['RpParticles']):
     '''The particle file.'''
+    class ConnectParticle(NamedTuple):
+        identifier: str
+        event: str
+        json: JsonWalker
+
+    class ConnectTexture(NamedTuple):
+        identifier: str
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._particle_effects: Optional[
+            Tuple[RpParticle.ConnectParticle, ...]] = None
+        self._texture: Optional[RpParticle.ConnectTexture] = None
+
     @property
     def identifier(self) -> Optional[str]:
         id_walker = (
@@ -1181,8 +1863,159 @@ class RpParticle(_McFileJsonSingle['RpParticles']):
             return id_walker.data
         return None
 
-class RpRenderController(_McFileJsonMulti['RpRenderControllers']):  # GENERIC
+    @property
+    def particle_effects(self) -> Tuple[ConnectParticle, ...]:
+        '''Returns a reference to particle effects from this file.'''
+        if self._particle_effects is not None:
+            return self._particle_effects
+        result: List[RpParticle.ConnectParticle] = []
+        for event in self.json / 'particle_effect' / 'events' // str:
+            event_name = event.parent_key
+            effect = event / 'particle_effect' / 'effect'
+            if not isinstance(effect.data, str):
+                continue
+            result.append(
+                RpParticle.ConnectParticle(effect.data, event_name, effect))
+        self._particle_effects = tuple(result)
+        return self._particle_effects
+
+    @property
+    def texture(self) -> Optional[ConnectTexture]:
+        '''Returns a reference to a texture from this file.'''
+        if self._texture is not None:
+            return self._texture
+        texture = (
+            self.json / 'particle_effect' /'description' /
+            'basic_render_parameters' / 'texture')
+        if isinstance(texture.data, str):
+            self._texture = RpParticle.ConnectTexture(texture.data, texture)
+        return self._texture
+
+class RpRenderController(_McFileJsonMulti['RpRenderControllers']):
     '''The render controller file.'''
+    class ConnectGeo(NamedTuple):
+        '''A reference from this render controller to a geometry'''
+        short_name: str
+        render_controller:str
+        array: Optional[str]
+        json: JsonWalker
+
+    class ConnectTexture(NamedTuple):
+        '''A reference from this render controller to a texture'''
+        short_name: str
+        render_controller:str
+        array: Optional[str]
+        json: JsonWalker
+
+    class ConnectMaterial(NamedTuple):
+        '''A reference from this render controller to a material.'''
+        short_name: str
+        render_controller:str
+        array: Optional[str]
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[MCFILE_COLLECTION]) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._geometries: Optional[Tuple[RpRenderController.ConnectGeo]] = None
+        self._textures: Optional[
+            Tuple[RpRenderController.ConnectTexture]] = None
+        self._materials: Optional[
+            Tuple[RpRenderController.ConnectMaterial]] = None
+
+    @property
+    def geometries(self) -> Tuple[ConnectGeo, ...]:
+        '''Returns a list of references to models from this file.'''
+        if self.geometries is not None:
+            return self._geometries
+        result: List[RpEntity.ConnectGeo] = []
+        rcs = self.json / "render_controllers" // str
+        for rc in rcs:
+            # Direct reference
+            geometry = rc / "geometry"
+            if (
+                    isinstance(geometry.data, str) and
+                    re.fullmatch(r'(?i)geometry.(\w|\.)+', geometry.data)):
+                result.append(RpRenderController.ConnectGeo(
+                    geometry.data.lower(), rc.parent_key, None, geometry))
+            # Reference using an array
+            arrays = rc / "arrays" / "geometries" // r'(?i)array.(\w|\.)+'
+            for array in arrays:
+                for geometry in array // int:
+                    if not isinstance(geometry.data, str):
+                        continue
+                    if not re.fullmatch(
+                            r'(?i)geometry.(\w|\.)+', geometry.data):
+                        continue
+                    result.append(RpRenderController.ConnectGeo(
+                        geometry.data.lower(), rc.parent_key, array.parent_key,
+                        geometry))
+        self._geometries = tuple(result)
+        return self._geometries
+
+    @property
+    def textures(self) -> Tuple[ConnectTexture, ...]:
+        '''Returns a list of references to textures from this file.'''
+        if self.textures is not None:
+            return self._textures
+        result: List[RpEntity.ConnectTexture] = []
+        rcs = self.json / "render_controllers" // str
+        for rc in rcs:
+            # Direct reference
+            textures = rc / "textures" // int
+            for texture in textures:
+                if (
+                        isinstance(texture.data, str) and
+                        re.fullmatch(r'(?i)texture.(\w|\.)+', texture.data)):
+                    result.append(RpRenderController.ConnectTexture(
+                        texture.data.lower(), rc.parent_key, None, texture))
+            # Reference using an array
+            arrays = rc / "arrays" / "textures" // r'(?i)array.(\w|\.)+'
+            for array in arrays:
+                for texture in array // int:
+                    if not isinstance(texture.data, str):
+                        continue
+                    if not re.fullmatch(
+                            r'(?i)texture.(\w|\.)+', texture.data):
+                        continue
+                    result.append(RpRenderController.ConnectTexture(
+                        texture.data.lower(), rc.parent_key, array.parent_key,
+                        texture))
+        self._textures = tuple(result)
+        return self._textures
+
+    @property
+    def materials(self) -> Tuple[ConnectMaterial, ...]:
+        '''Returns a list of references to materials from this file.'''
+        if self.materials is not None:
+            return self._materials
+        result: List[RpEntity.ConnectMaterial] = []
+        rcs = self.json / "render_controllers" // str
+        for rc in rcs:
+            # Direct reference
+            materials = rc / "materials" // int // str
+            for material in materials:
+                if (
+                        isinstance(material.data, str) and
+                        re.fullmatch(r'(?i)material.(\w|\.)+', material.data)):
+                    result.append(RpRenderController.ConnectMaterial(
+                        material.data.lower(), rc.parent_key, None, material))
+            # Reference using an array
+            arrays = rc / "arrays" / "materials" // r'(?i)array.(\w|\.)+'
+            for array in arrays:
+                for material in array // int:
+                    if not isinstance(material.data, str):
+                        continue
+                    if not re.fullmatch(
+                            r'(?i)material.(\w|\.)+', material.data):
+                        continue
+                    result.append(RpRenderController.ConnectMaterial(
+                        material.data.lower(), rc.parent_key, array.parent_key,
+                        material))
+        self._materials = tuple(result)
+        return self._materials
+
     def keys(self) -> Tuple[str, ...]:
         id_walker = (self.json / "render_controllers")
         if isinstance(id_walker.data, dict):
@@ -1199,12 +2032,116 @@ class RpRenderController(_McFileJsonMulti['RpRenderControllers']):  # GENERIC
 
 class BpRecipe(_McFileJsonMulti['BpRecipes']):
     '''The recipe file.'''
+    class ConnectItemType(Enum):
+        '''The type of the item connection'''
+        INPUT = auto()
+        '''The input of the recipe'''
+        REAGENT = auto()
+        '''The reagent of the recipe (used for brewing recipes)'''
+        OUTPUT = auto()
+        '''Output of the recipe'''
+
+    class ConnectItem(NamedTuple):
+        '''A reference from this file to an item'''
+        identifier: str
+        recipe_type: str
+        connection_type: BpRecipe.ConnectItemType
+        recipe_key: Optional[str]
+        json: JsonWalker
+
+    def __init__(
+            self, path: Path,
+            owning_collection: Optional[BpRecipes]) -> None:
+        super().__init__(path, owning_collection=owning_collection)
+        self._items: Optional[Tuple[BpRecipe.ConnectItem, ...]] = None
+
+
+    @property
+    def items(self) -> Tuple[BpRecipe.ConnectItem, ...]:
+        '''Returns a list of references to items from this file.'''
+        if self._items is not None:
+            return self._items
+        result: List[BpRecipe.ConnectItem] = []
+        # RECIPE_SHAPED
+        recipe = self.json / 'minecraft:recipe_shaped'
+        if isinstance(recipe.data, dict):
+            for recipe_key in recipe / 'key' // str:
+                item = recipe_key / 'item'
+                if isinstance(item.data, str):
+                    result.append(BpRecipe.ConnectItem(
+                        item.data, 'minecraft:recipe_shaped',
+                        BpRecipe.ConnectItemType.INPUT,
+                        recipe_key.parent_key,  # type: ignore
+                        item))
+            for item in recipe / 'result' // ... / 'item':
+                if isinstance(item, str):
+                    result.append(BpRecipe.ConnectItem(
+                        item.data, 'minecraft:recipe_shaped',
+                        BpRecipe.ConnectItemType.OUTPUT,
+                        None, item))
+        # RECIPE_SHAPELESS
+        recipe = self.json /'minecraft:recipe_shapeless'
+        if isinstance(recipe.data, dict):
+            for item in recipe / 'ingredients' // ... / 'item':
+                if isinstance(item, str):
+                    result.append(BpRecipe.ConnectItem(
+                        item.data, 'minecraft:recipe_shapeless',
+                        BpRecipe.ConnectItemType.INPUT,
+                        None, item))
+            for item in recipe / 'result' // ... / 'item':
+                if isinstance(item, str):
+                    result.append(BpRecipe.ConnectItem(
+                        item.data, 'minecraft:recipe_shapeless',
+                        BpRecipe.ConnectItemType.OUTPUT,
+                        None, item))
+        # RECIPE_FURNACE
+        recipe = self.json /'minecraft:recipe_furnace'
+        if isinstance(recipe.data, dict):
+            item = recipe / 'input'
+            if isinstance(item.data, str):
+                result.append(BpRecipe.ConnectItem(
+                    item.data, 'minecraft:recipe_furnace',
+                    BpRecipe.ConnectItemType.INPUT,
+                    None, item))
+            item = recipe / 'output'
+            if isinstance(item.data, str):
+                result.append(BpRecipe.ConnectItem(
+                    item.data, 'minecraft:recipe_furnace',
+                    BpRecipe.ConnectItemType.OUTPUT,
+                    None, item))
+        # RECIPE_BREWING_MIX and RECIPE_BREWING_CONTAINER
+        for recipe_type in [
+                'minecraft:recipe_brewing_mix',
+                'minecraft:recipe_brewing_container']:
+            recipe = self.json / recipe_type
+            if isinstance(recipe.data, dict):
+                item = recipe / 'input'
+                if isinstance(item.data, str):
+                    result.append(BpRecipe.ConnectItem(
+                        item.data, recipe_type,
+                        BpRecipe.ConnectItemType.INPUT, None, item))
+                item = recipe / 'reagent'
+                if isinstance(item.data, str):
+                    result.append(BpRecipe.ConnectItem(
+                        item.data, recipe_type,
+                        BpRecipe.ConnectItemType.OUTPUT, None, item))
+                item = recipe / 'output'
+                if isinstance(item.data, str):
+                    result.append(BpRecipe.ConnectItem(
+                        item.data, recipe_type,
+                        BpRecipe.ConnectItemType.OUTPUT, None, item))
+
+        self._items = tuple(result)
+        return self._items
+
     def keys(self) -> Tuple[str, ...]:
         id_walker = (
-            self.json // '(minecraft:recipe_shaped)|(minecraft:recipe_furnace)'
-            '|(minecraft:recipe_shapeless)|(minecraft:recipe_brewing_mix)|'
-            '(minecraft:recipe_brewing_container)' / "description"  /
-            "identifier")
+            self.json / 'minecraft:recipe_shaped' +
+            self.json /'minecraft:recipe_furnace' +
+            self.json /'minecraft:recipe_shapeless' +
+            self.json /'minecraft:recipe_brewing_mix' +
+            self.json /'minecraft:recipe_brewing_container'
+        ) / "description"  / "identifier"
         result: List[str] = []
         for identifier_walker in id_walker.data:
             if isinstance(identifier_walker.data, str):
@@ -1212,14 +2149,16 @@ class BpRecipe(_McFileJsonMulti['BpRecipes']):
         return tuple(result)
 
     def __getitem__(self, key: str) -> JsonWalker:
-        id_walker = (
-            self.json // '(minecraft:recipe_shaped)|(minecraft:recipe_furnace)'
-            '|(minecraft:recipe_shapeless)|(minecraft:recipe_brewing_mix)|'
-            '(minecraft:recipe_brewing_container)' / "description"  /
-            "identifier")
-        if isinstance(id_walker.data, dict):
-            if key in id_walker.data:
-                return id_walker / key
+        recipes = (
+            self.json / 'minecraft:recipe_shaped' +
+            self.json /'minecraft:recipe_furnace' +
+            self.json /'minecraft:recipe_shapeless' +
+            self.json /'minecraft:recipe_brewing_mix' +
+            self.json /'minecraft:recipe_brewing_container'
+        ) 
+        for recipe in recipes:
+            if (recipe / "description"  / "identifier").data == key:
+                return recipe
         raise KeyError(key)
 
 # OBJECT COLLECTIONS (IMPLEMENTATIONS)
@@ -1262,7 +2201,7 @@ class _McFileCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
     def keys(self) -> Tuple[str, ...]:
         result: List[str] = []
         for obj in self.objects:
-            result.extend(obj.identifiers)
+            result.extend(obj.keys())
         return tuple(set(result))
 
     def _quick_access_list_views(self) -> Tuple[
@@ -1271,7 +2210,7 @@ class _McFileCollectionMulti(_McFileCollection[MCPACK, MCFILE_MULTI]):
         id_items: Dict[str, List[MCFILE_MULTI]] = {}
         for obj in self.objects:
             # path -> identifier
-            for identifier in obj.identifiers:
+            for identifier in obj.keys():
                 if obj.path in path_ids:
                     path_ids[obj.path].append(identifier)
                 else:
@@ -1530,7 +2469,7 @@ class _UniqueMcFileJsonMultiQuery(Generic[UNIQUE_MC_FILE_JSON_MULTI]):
         '''
         result: List[str] = []
         for pack_file in self.pack_files:
-            result.extend(pack_file.identifiers)
+            result.extend(pack_file.keys())
         return tuple(set(result))
 
 # SPECIAL PACK FILES - ONE FILE/PACK (IMPLEMENTATIONS)
